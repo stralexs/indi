@@ -1,6 +1,5 @@
-<p align="center">
 # indi
-</p>
+
 <p align="center">
 An English learning app
 </p>
