@@ -46,7 +46,7 @@ Here, the situation is played out when a json with a kit comes from the server: 
 To navigate between View Controllers a Navigation Controller is used.
 ### Testing protocol
 All possible options for learning words: testing, exam and workout are conforming to Testing protocol, that describes a set of methods for Models of these ways of learning.
-'''
+```
 protocol Testing {
     var userAnswer: String? { get set }
     func testStart()
@@ -55,10 +55,10 @@ protocol Testing {
     func nextQuestion()
     func resetResults()
 }
-'''
+```
 ### Custom types
 All data with kits and questions in "indi" is stored in Core Data in a form of Entities and its attributesd and relationships, but for a more visual representation, here I will write them as structures:
-'''
+```
 struct Question {
     var question: String?
     var correctAnswer: String?
@@ -70,9 +70,9 @@ struct Kit {
     var studyStage: Int64?
     var questions: [Question]? 
 }
-'''
+```
 You might notice that variable studyStage has a raw value of Int64, even though it's an enumeration that uses cases of type String:
-'''
+```
 enum StudyStage: Int64  {
     case newborn
     case preschool
@@ -83,7 +83,7 @@ enum StudyStage: Int64  {
     case constructionUniversity
     case sideJob
 }
-'''
+```
 Integer is used because it is the most convenient way to pass information between controllers: almost all UI elements, such as Buttons and TableViews, have a tag property.
 As an example: several buttons are bound to the same IBAction, and when pressed, the button tag corresponding to the raw value of its study stage is passed to the next View Controller.
 Int64 is used due to requirements of Core Data.
