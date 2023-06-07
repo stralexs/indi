@@ -100,6 +100,14 @@ For now it's working, however, I will soon revise the architecture and make it a
 ### Working with User's achievements
 To save User's progress, once User reaches the required score on a test or exam, the respective exam buttons are assigned a Reuse Identifier "Completed", that is stored in UserData class. This ensures that the walkthrough will not fail, even if User decides to add additional Kits of words to already completed Study stages.
 As soon as access to the next Study stage opens, all Buttons and lines are no longer translucent: their alpha equals 1.
+## Stack
+- Swift
+- UIKit
+- MVC
+- Singleton
+- Storyboard, autolayout
+- URLSession
+- GCD
 ## Well, that's it, folks! Have a great day and learn English :)
 
 
