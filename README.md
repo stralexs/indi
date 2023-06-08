@@ -107,6 +107,7 @@ As soon as access to the next Study stage opens, all Buttons and lines are no lo
 - Singleton
 - Storyboard, autolayout
 - URLSession
+- Core Data
 - GCD
 ## Well, that's it, folks! Have a great day and learn English :)
 
