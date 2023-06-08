@@ -18,14 +18,14 @@ An English learning app
 
 ### General hierarchy of Study stages
 User goes through the levels of learning the language, starting with the simplest, ending with more and more complex:
-*1. Newborn stage*
-*2. Preschool stage*
-*3. Early school stage*
-*4. High school + Life activities stage*
+- *1. Newborn stage*
+- *2. Preschool stage*
+- *3. Early school stage*
+- *4. High school + Life activities stage*
 And on the last stage User can choose what to learn, as well as any native speaker can choose what univerity one can attend. User has these options:
-*Programming university*
-*Construction university*
-*Side jobs*
+- *Programming university*
+- *Construction university*
+- *Side jobs*
 ### Main story gameplay
 User learns words in a form of tests. Each Study stage has kits of different words to learn. Each question has 4 different buttons with answers, which User has to choose which to answer.
 To proceed further User has to have a result of each kit above 70%. If so, access to the exam is then opened, where the user answers 10 random questions from the same word kits, but now he must write the answer himself in TextField.
