@@ -22,6 +22,7 @@ User goes through the levels of learning the language, starting with the simples
 - *2. Preschool stage*
 - *3. Early school stage*
 - *4. High school + Life activities stage*
+
 And on the last stage User can choose what to learn, as well as any native speaker can choose what univerity one can attend. User has these options:
 - *Programming university*
 - *Construction university*
