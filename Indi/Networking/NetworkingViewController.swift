@@ -26,6 +26,8 @@ class NetworkingViewController: UIViewController {
     
     private let networkingModel = NetworkingModel()
     
+    private var namesOfKitsOfSelectedStudyStage: [String] = []
+    
     private var questions: [Question] = []
     
     override func viewDidLoad() {
@@ -94,7 +96,7 @@ class NetworkingViewController: UIViewController {
         noInternetLabel.isHidden = true
     }
     
-    @IBAction func nameKitButtonIsPressed(_ sender: UIButton) {
+    @IBAction func nameKitButtonIsPressed(_ sender: UIButton?) {
         let newKitNameAlert = UIAlertController(title: "Введите название нового набора слов:", message: nil, preferredStyle: .alert)
         newKitNameAlert.addTextField() { textField in
             textField.clearButtonMode = .whileEditing
@@ -102,6 +104,8 @@ class NetworkingViewController: UIViewController {
         
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
         let continueAction = UIAlertAction(title: "Готово", style: .default) { _ in
+            let textWithoutSpaces = self.networkingModel.removingSpaces(for: newKitNameAlert.textFields?.first?.text ?? "")
+            
             if newKitNameAlert.textFields?.first?.text == Optional("") {
                 let emptyTextFieldAlert = UIAlertController(title: "Пожалуйста, введите название набора", message: nil, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ок", style: .default) { _ in
@@ -109,16 +113,24 @@ class NetworkingViewController: UIViewController {
                 }
                 emptyTextFieldAlert.addAction(okAction)
                 self.present(emptyTextFieldAlert, animated: true)
-            } else if newKitNameAlert.textFields?.first?.text!.count ?? 0 > 15 {
-                let extraLongNameAlert = UIAlertController(title: "Название набора не может быть длиннее 15 символов", message: nil, preferredStyle: .alert)
+                
+            } else if textWithoutSpaces == "" {
+                let emptyTextFieldAlert = UIAlertController(title: "Название набора не должно состоять только из пробелов", message: nil, preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ок", style: .default) { _ in
+                    self.present(newKitNameAlert, animated: true)
+                }
+                emptyTextFieldAlert.addAction(okAction)
+                self.present(emptyTextFieldAlert, animated: true)
+            } else if textWithoutSpaces.count > 30 {
+                let extraLongNameAlert = UIAlertController(title: "Название набора не может быть длиннее 30 символов", message: nil, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ок", style: .default) { _ in
                     self.present(newKitNameAlert, animated: true)
                 }
                 extraLongNameAlert.addAction(okAction)
                 self.present(extraLongNameAlert, animated: true)
             } else {
-                self.networkingModel.newNetworkKitName = newKitNameAlert.textFields?.first?.text
-                self.newKitLabel.text = newKitNameAlert.textFields?.first?.text
+                self.networkingModel.newNetworkKitName = textWithoutSpaces
+                self.newKitLabel.text = textWithoutSpaces
             }
         }
         newKitNameAlert.addAction(cancelAction)
@@ -134,34 +146,42 @@ class NetworkingViewController: UIViewController {
         let newbornAction = UIAlertAction(title: "\(StudyStage.newborn.getStudyStageName())", style: .default) {_ in
             self.networkingModel.newNetworkKitStudyStage = Int(StudyStage.newborn.rawValue)
             self.newKitStudyStageButton.setTitle("\(StudyStage.newborn.getStudyStageName())", for: .normal)
+            self.namesOfKitsOfSelectedStudyStage = KitsLibrary.shared.getKitNamesForStudyStage(with: [0])
         }
         let preschoolAction = UIAlertAction(title: "\(StudyStage.preschool.getStudyStageName())", style: .default) {_ in
             self.networkingModel.newNetworkKitStudyStage = Int(StudyStage.preschool.rawValue)
             self.newKitStudyStageButton.setTitle("\(StudyStage.preschool.getStudyStageName())", for: .normal)
+            self.namesOfKitsOfSelectedStudyStage = KitsLibrary.shared.getKitNamesForStudyStage(with: [1])
         }
         let earlySchoolAction = UIAlertAction(title: "\(StudyStage.earlySchool.getStudyStageName())", style: .default) {_ in
             self.networkingModel.newNetworkKitStudyStage = Int(StudyStage.earlySchool.rawValue)
             self.newKitStudyStageButton.setTitle("\(StudyStage.earlySchool.getStudyStageName())", for: .normal)
+            self.namesOfKitsOfSelectedStudyStage = KitsLibrary.shared.getKitNamesForStudyStage(with: [2])
         }
         let highSchoolAction = UIAlertAction(title: "\(StudyStage.highSchool.getStudyStageName())", style: .default) {_ in
             self.networkingModel.newNetworkKitStudyStage = Int(StudyStage.highSchool.rawValue)
             self.newKitStudyStageButton.setTitle("\(StudyStage.highSchool.getStudyStageName())", for: .normal)
+            self.namesOfKitsOfSelectedStudyStage = KitsLibrary.shared.getKitNamesForStudyStage(with: [3])
         }
         let lifeActivitiesAction = UIAlertAction(title: "\(StudyStage.lifeActivities.getStudyStageName())", style: .default) {_ in
             self.networkingModel.newNetworkKitStudyStage = Int(StudyStage.lifeActivities.rawValue)
             self.newKitStudyStageButton.setTitle("\(StudyStage.lifeActivities.getStudyStageName())", for: .normal)
+            self.namesOfKitsOfSelectedStudyStage = KitsLibrary.shared.getKitNamesForStudyStage(with: [4])
         }
         let programmingUniversityAction = UIAlertAction(title: "\(StudyStage.programmingUniversity.getStudyStageName())", style: .default) {_ in
             self.networkingModel.newNetworkKitStudyStage = Int(StudyStage.programmingUniversity.rawValue)
             self.newKitStudyStageButton.setTitle("\(StudyStage.programmingUniversity.getStudyStageName()))", for: .normal)
+            self.namesOfKitsOfSelectedStudyStage = KitsLibrary.shared.getKitNamesForStudyStage(with: [5])
         }
         let constructionUniversityAction = UIAlertAction(title: "\(StudyStage.constructionUniversity.getStudyStageName())", style: .default) {_ in
             self.networkingModel.newNetworkKitStudyStage = Int(StudyStage.constructionUniversity.rawValue)
             self.newKitStudyStageButton.setTitle("\(StudyStage.constructionUniversity.getStudyStageName())", for: .normal)
+            self.namesOfKitsOfSelectedStudyStage = KitsLibrary.shared.getKitNamesForStudyStage(with: [6])
         }
         let sideJobAction = UIAlertAction(title: "\(StudyStage.sideJob.getStudyStageName()))", style: .default) {_ in
             self.networkingModel.newNetworkKitStudyStage = Int(StudyStage.sideJob.rawValue)
             self.newKitStudyStageButton.setTitle("\(StudyStage.sideJob.getStudyStageName())", for: .normal)
+            self.namesOfKitsOfSelectedStudyStage = KitsLibrary.shared.getKitNamesForStudyStage(with: [7])
         }
         
         newKitStudyStageAlert.addAction(cancelAction)
@@ -189,6 +209,13 @@ class NetworkingViewController: UIViewController {
             let okAction = UIAlertAction(title: "Ок", style: .default)
             alert.addAction(okAction)
             self.present(alert, animated: true)
+        } else if self.namesOfKitsOfSelectedStudyStage.contains(newKitLabel.text!) {
+            let nameAlreadyExistsAlert = UIAlertController(title: "В выбранной стадии обучения уже существует набор с таким названием", message: "Выберите другое название", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ок", style: .default) {_ in
+                self.nameKitButtonIsPressed(nil)
+            }
+            nameAlreadyExistsAlert.addAction(okAction)
+            self.present(nameAlreadyExistsAlert, animated: true)
         } else {
             networkingModel.createNewKit()
             let alert = UIAlertController(title: "Новый набор успешно создан!", message: nil, preferredStyle: .alert)

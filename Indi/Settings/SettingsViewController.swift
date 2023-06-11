@@ -106,17 +106,23 @@ class SettingsViewController: UIViewController {
     @IBAction func applyChangesButtonIsPressed(_ sender: UIButton) {
         let emptyNameAlert = UIAlertController(title: "Пожалуйста, введите имя", message: nil, preferredStyle: .alert)
         let tooLongNameAlert = UIAlertController(title: "Имя не может быть длиннее 15 символов", message: nil, preferredStyle: .alert)
+        let onlySpacesInNameAlert = UIAlertController(title: "Имя не может содержать только пробелы", message: nil, preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "Ок", style: .default)
         emptyNameAlert.addAction(okAction)
         tooLongNameAlert.addAction(okAction)
+        onlySpacesInNameAlert.addAction(okAction)
+        
+        let nameWithoutSpaces = settingsModel.removingSpaces(for: nameTextField.text ?? "")
         
         if nameTextField.text == Optional("") {
             self.present(emptyNameAlert, animated: true)
         } else if nameTextField.text!.count > 15 {
             self.present(tooLongNameAlert, animated: true)
+        } else if nameWithoutSpaces == "" {
+            self.present(onlySpacesInNameAlert, animated: true)
         } else {
-            UserData.shared.saveUserName(for: nameTextField.text!)
+            UserData.shared.saveUserName(for: nameWithoutSpaces)
         }
         
         if resetAchievementsSwitch.isOn {

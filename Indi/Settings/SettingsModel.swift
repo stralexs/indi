@@ -98,6 +98,19 @@ class SettingsModel {
         return outputImage
     }
     
+    func removingSpaces(for text: String) -> String {
+        var outputText = text
+        
+        while outputText.first == " " {
+            outputText.removeFirst()
+        }
+        while outputText.last == " " {
+            outputText.removeLast()
+        }
+        
+        return outputText
+    }
+    
     init() {
         defaultAvatars = createAvatars()
     }

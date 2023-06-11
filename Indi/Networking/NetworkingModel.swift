@@ -32,6 +32,19 @@ class NetworkingModel {
         UserData.shared.createNewUserData(for: newNetworkKitName!)
     }
     
+    func removingSpaces(for text: String) -> String {
+        var outputText = text
+        
+        while outputText.first == " " {
+            outputText.removeFirst()
+        }
+        while outputText.last == " " {
+            outputText.removeLast()
+        }
+        
+        return outputText
+    }
+    
     private var dataFromServer: Record?
     private var questions: [Question] = []
         
