@@ -126,7 +126,6 @@ class SettingsViewController: UIViewController {
         let middleImageName = middleAvatarImage.image?.imageAsset?.value(forKey: "assetName") as! String
         let currentUserAvatar = UserData.shared.getUserAvatar()
         if isUserClickedToChangeAvatar && middleImageName != currentUserAvatar {
-            let imageName = middleAvatarImage.layer.name
             UserData.shared.saveUserAvatar(for: middleImageName)
         }
         

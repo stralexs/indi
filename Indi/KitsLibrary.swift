@@ -938,6 +938,27 @@ final class KitsLibrary {
                 }
             }
             
+            let questionsCorrectAnswers = ["Mother", "Father", "I love you", "He", "She", "It", "Car", "House", "Ball", "Table", "Blue", "Red", "Green", "Yellow", "Orange", "Purple", "Pink", "Black", "White", "Cat", "Dog", "Cow", "Hen", "Horse", "Pig", "Mouse", "Duck", "Goose", "Sheep", "B", "Y", "O", "F", "Q", "D", "R", "N", "G", "I", "Hand", "Nose", "Head", "Neck", "Cheek", "Ear", "Shoulder", "Arm", "Finger", "Mouth", "Left", "Right", "Spoon", "Plate", "Fork", "Knife", "Please", "Thanks", "How old are you?", "Tea", "Four", "Ninety six", "Five hundred", "Seven", "Seventy three", "Nineteen", "Sixteen", "Equals", "Twelve", "Three", "I did it", "I don't know where my pencil is", "Noun", "Men", "Women", "Adjective", "An apple", "This is my friends' house", "Where", "Do", "To summarise", "In order that", "The most", "Whoever", "Didn't think", "River", "Lake", "Earth", "Mountain", "Earth's crust", "Ocean", "Tide", "Migration", "Map", "Natural disaster", "Cell", "Photosynthesis", "Metabolism", "Genetics", "Molecule", "Evolution", "Natural selection", "Human brain", "Population", "Animal", "Broken", "Chose", "Cut", "Understood", "Thought", "Written", "Drew", "Found", "Cost", "Driven", "Commerical", "Camera", "Screen", "Theatre", "Board game", "Cinema", "Newspaper", "Competition", "Chess", "Magazine", "Basketball", "Volleyball", "Course", "Draw", "Trophy", "Amateur", "Rules", "Score", "Jockey", "Change", "Cheque", "Credit", "Bill", "Cash", "Inexpensive", "Luxury", "Shopping mall", "To pay for a purchase", "Bargain", "Variable", "Array", "Enumeration", "Integer", "Extension", "Class", "Closure", "viewDidLoad()", "Singleton", "Software", "Hard disk", "Browser", "Icon", "CPU", "Formatting", "Processing", "Cookies", "Motherboard", "Input", "Concrete", "Cement", "Steel", "Tile", "Brick", "Clay", "Gravel", "Asphalt", "Foreman", "Contractor", "Subcontractor", "Architect", "Designer", "Waiter", "Tip", "Cocktail", "Wineglass", "Etiquette", "Driver", "Vehicle", "Route", "Seat belt", "Courier", "Package", "To be late", "Politeness"]
+            
+            questionsCorrectAnswers.forEach { correctAnswer in
+                let removingDuplicatesFetch = Question.fetchRequest()
+                removingDuplicatesFetch.predicate = NSPredicate(format: "correctAnswer = %@", correctAnswer)
+
+                do {
+                    let duplicates = try CoreDataManager.shared.context.fetch(removingDuplicatesFetch)
+                    if duplicates.count > 0 {
+                        var duplicatesVar = duplicates
+                        duplicatesVar.removeFirst()
+                        duplicatesVar.forEach { duplicate in
+                            CoreDataManager.shared.context.delete(duplicate)
+                        }
+                    }
+                }
+                catch {
+                    print(error)
+                }
+            }
+            
             save()
         }
         
