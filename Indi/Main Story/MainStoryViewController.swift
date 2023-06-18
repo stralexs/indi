@@ -318,7 +318,7 @@ class MainStoryViewController: UIViewController {
                 self.navigationController?.pushViewController(statisticsVC, animated: true)
             }
         default:
-            if let networkingVC = sb.instantiateViewController(withIdentifier: "NetworkingVC") as? NetworkingViewController {
+            if let networkingVC = sb.instantiateViewController(withIdentifier: "NetworkingVC") as? NetworkViewController {
                 self.navigationController?.pushViewController(networkingVC, animated: true)
             }
         }
