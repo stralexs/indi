@@ -61,6 +61,9 @@ class TrainingModeViewController: UIViewController {
     }
     
     @objc private func longGestureAction(_ gesture: UITapGestureRecognizer) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
         let location = gesture.location(in: tableView)
         if let indexPath = tableView.indexPathForRow(at: location) {
             if KitsManager.shared.isBasicKitCheck(for: indexPath, for: indexPath.section) {

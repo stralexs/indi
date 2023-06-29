@@ -253,7 +253,7 @@ class UserNewKitViewController: UIViewController {
             self.present(nameAlreadyExistsAlert, animated: true)
         } else {
             newKitModel.createNewKit()
-            let alert = UIAlertController(title: "Новый набор успешно создан!", message: nil, preferredStyle: .alert)
+            let alert = UIAlertController(title: "Новый набор успешно создан!", message: "Удалить набор можно долгим нажатием", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ок", style: .default) {_ in
                 self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
             }

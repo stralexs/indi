@@ -85,6 +85,13 @@ class ExamViewController: UIViewController {
         } else {
             examResultLabel.text = "\(UserDataManager.shared.getUserResult(for: examModel.examName))%"
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
@@ -93,6 +100,7 @@ extension ExamViewController: UITextFieldDelegate {
         examModel.userAnswer = textField.text
         rootView.isUserInteractionEnabled = false
         if examModel.isRightAnswerCheck() {
+            SoundManager.shared.playCorrectSound()
             answerResultImage.image = UIImage(named: "Right_png")
             questionLabel.isHidden = true
             answerResultImage.isHidden = false
@@ -104,6 +112,7 @@ extension ExamViewController: UITextFieldDelegate {
                 rootView.isUserInteractionEnabled = true
             }
         } else {
+            SoundManager.shared.playWrongSound()
             answerResultImage.image = UIImage(named: "Wrong_png")
             questionLabel.isHidden = true
             answerResultImage.isHidden = false

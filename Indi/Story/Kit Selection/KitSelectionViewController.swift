@@ -38,6 +38,9 @@ class KitSelectionViewController: UIViewController {
     }
     
     @objc private func longGestureAction(_ gesture: UITapGestureRecognizer) {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
+        
         let location = gesture.location(in: collectionView)
         if let indexPath = collectionView.indexPathForItem(at: location) {
             if KitsManager.shared.isBasicKitCheck(for: indexPath, for: studyStageRawValue) {

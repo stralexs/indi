@@ -87,6 +87,13 @@ class SettingsAndStatisticsViewController: UIViewController {
         createContentForScrollView(for: settingsModel.getUserStatisticsInfo(for: 1), and: 1)
         createContentForScrollView(for: settingsModel.getUserStatisticsInfo(for: 2), and: 2)
         createContentForScrollView(for: settingsModel.getUserStatisticsInfo(for: 3), and: 3)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     private func createContentForScrollView(for userInfo: (String, String), and position: CGFloat) {

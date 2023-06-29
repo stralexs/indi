@@ -80,6 +80,7 @@ class TestViewController: UIViewController {
         testingModel.userAnswer = sender.titleLabel?.text
         rootView.isUserInteractionEnabled = false
         if testingModel.isRightAnswerCheck() {
+            SoundManager.shared.playCorrectSound()
             questionLabel.isHidden = true
             answerResultImage.image = UIImage(named: "Right_png")
             answerResultImage.isHidden = false
@@ -92,6 +93,7 @@ class TestViewController: UIViewController {
                 rootView.isUserInteractionEnabled = true
             }
         } else {
+            SoundManager.shared.playWrongSound()
             answerResultImage.image = UIImage(named: "Wrong_png")
             questionLabel.isHidden = true
             answerResultImage.isHidden = false

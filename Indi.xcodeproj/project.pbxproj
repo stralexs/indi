@@ -25,6 +25,9 @@
 		426AD3922A1CAECF000787D1 /* UserNewKitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426AD3912A1CAECF000787D1 /* UserNewKitTableViewCell.swift */; };
 		426B55112A2348DF004A87E0 /* LocalNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426B55102A2348DF004A87E0 /* LocalNotificationsManager.swift */; };
 		426C58DE2A1A56250036C037 /* TrainingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426C58DD2A1A56250036C037 /* TrainingTableViewCell.swift */; };
+		4281FE392A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4281FE372A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 */; };
+		4281FE3A2A4DC7CB00AFD405 /* Correct-answer-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4281FE382A4DC7CB00AFD405 /* Correct-answer-sound.mp3 */; };
+		4281FE3C2A4DC84600AFD405 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4281FE3B2A4DC84600AFD405 /* SoundManager.swift */; };
 		428DC3612A3F394200708F37 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DC3602A3F394200708F37 /* UIColorExtension.swift */; };
 		428DC3632A3F41BA00708F37 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DC3622A3F41BA00708F37 /* TabBarController.swift */; };
 		42943A5E2A1B840500D5BF62 /* TrainingTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42943A5D2A1B840500D5BF62 /* TrainingTestingViewController.swift */; };
@@ -74,6 +77,9 @@
 		426AD3912A1CAECF000787D1 /* UserNewKitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNewKitTableViewCell.swift; sourceTree = "<group>"; };
 		426B55102A2348DF004A87E0 /* LocalNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsManager.swift; sourceTree = "<group>"; };
 		426C58DD2A1A56250036C037 /* TrainingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTableViewCell.swift; sourceTree = "<group>"; };
+		4281FE372A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Wrong-answer-sound.mp3"; sourceTree = "<group>"; };
+		4281FE382A4DC7CB00AFD405 /* Correct-answer-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Correct-answer-sound.mp3"; sourceTree = "<group>"; };
+		4281FE3B2A4DC84600AFD405 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		428DC3602A3F394200708F37 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		428DC3622A3F41BA00708F37 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		42943A5D2A1B840500D5BF62 /* TrainingTestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTestingViewController.swift; sourceTree = "<group>"; };
@@ -232,6 +238,8 @@
 			children = (
 				42210DF729FD243400CE37D1 /* Assets.xcassets */,
 				4262506E29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf */,
+				4281FE382A4DC7CB00AFD405 /* Correct-answer-sound.mp3 */,
+				4281FE372A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -259,6 +267,7 @@
 			children = (
 				426B55102A2348DF004A87E0 /* LocalNotificationsManager.swift */,
 				42EF1AAD29FFD67800D1CD77 /* KitsManager.swift */,
+				4281FE3B2A4DC84600AFD405 /* SoundManager.swift */,
 				425A0EB82A1E0F05009154D0 /* UserDataManager.swift */,
 			);
 			path = Services;
@@ -351,6 +360,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4281FE3A2A4DC7CB00AFD405 /* Correct-answer-sound.mp3 in Resources */,
+				4281FE392A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 in Resources */,
 				42210DF829FD243400CE37D1 /* Assets.xcassets in Resources */,
 				42D057932A2603350001BF33 /* LaunchScreen.storyboard in Resources */,
 				4262506F29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf in Resources */,
@@ -388,6 +399,7 @@
 				422AC1142A1F77EA00B0B941 /* MainStoryModel.swift in Sources */,
 				42FF604B2A1A220F00375ACF /* SettingsAndStatisticsModel.swift in Sources */,
 				42EF93D12A3B6CB000C42646 /* StudyStageEnumeration.swift in Sources */,
+				4281FE3C2A4DC84600AFD405 /* SoundManager.swift in Sources */,
 				42F4956D2A17853E006B92F2 /* KitSelectionViewController.swift in Sources */,
 				4295362A2A1795C10028DBA4 /* Model.xcdatamodeld in Sources */,
 				42943A602A1B8A6200D5BF62 /* TrainingTestingModel.swift in Sources */,
