@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4205016F2A4CA35D0071CE67 /* NotificationCenterKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4205016E2A4CA35D0071CE67 /* NotificationCenterKeys.swift */; };
+		42050C392A4EFFEA00DF9725 /* Training.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42050C382A4EFFEA00DF9725 /* Training.storyboard */; };
+		42050C3B2A4F002300DF9725 /* NewKit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42050C3A2A4F002300DF9725 /* NewKit.storyboard */; };
+		42050C3D2A4F005F00DF9725 /* Story.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42050C3C2A4F005F00DF9725 /* Story.storyboard */; };
 		420EE8152A17BB8C00E55188 /* TestingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420EE8142A17BB8C00E55188 /* TestingModel.swift */; };
 		421801152A446A99004B9020 /* NewKitSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421801142A446A99004B9020 /* NewKitSelectionViewController.swift */; };
 		421E2CC12A1FD4DD002A495E /* NetworkNewKitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E2CC02A1FD4DD002A495E /* NetworkNewKitTableViewCell.swift */; };
@@ -58,6 +61,9 @@
 
 /* Begin PBXFileReference section */
 		4205016E2A4CA35D0071CE67 /* NotificationCenterKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterKeys.swift; sourceTree = "<group>"; };
+		42050C382A4EFFEA00DF9725 /* Training.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Training.storyboard; sourceTree = "<group>"; };
+		42050C3A2A4F002300DF9725 /* NewKit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewKit.storyboard; sourceTree = "<group>"; };
+		42050C3C2A4F005F00DF9725 /* Story.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Story.storyboard; sourceTree = "<group>"; };
 		420EE8142A17BB8C00E55188 /* TestingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingModel.swift; sourceTree = "<group>"; };
 		421801142A446A99004B9020 /* NewKitSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitSelectionViewController.swift; sourceTree = "<group>"; };
 		421E2CC02A1FD4DD002A495E /* NetworkNewKitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNewKitTableViewCell.swift; sourceTree = "<group>"; };
@@ -129,6 +135,18 @@
 			path = UserNewKit;
 			sourceTree = "<group>";
 		};
+		42050C372A4EFF7300DF9725 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				42050C3C2A4F005F00DF9725 /* Story.storyboard */,
+				42050C3A2A4F002300DF9725 /* NewKit.storyboard */,
+				42050C382A4EFFEA00DF9725 /* Training.storyboard */,
+				42D057922A2603350001BF33 /* LaunchScreen.storyboard */,
+				42210DF429FD243300CE37D1 /* Main.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
 		42210DE229FD243300CE37D1 = {
 			isa = PBXGroup;
 			children = (
@@ -153,8 +171,7 @@
 				422AC1152A1F77EF00B0B941 /* Story */,
 				42943A632A1BD09700D5BF62 /* New Kit */,
 				42FF60502A1A545900375ACF /* Training */,
-				42D057922A2603350001BF33 /* LaunchScreen.storyboard */,
-				42210DF429FD243300CE37D1 /* Main.storyboard */,
+				42050C372A4EFF7300DF9725 /* Storyboard */,
 				42C1B4B42A3B45A600D79211 /* SupportingFiles */,
 				42C1B4B52A3B45D600D79211 /* Resources */,
 			);
@@ -360,10 +377,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42050C392A4EFFEA00DF9725 /* Training.storyboard in Resources */,
 				4281FE3A2A4DC7CB00AFD405 /* Correct-answer-sound.mp3 in Resources */,
+				42050C3B2A4F002300DF9725 /* NewKit.storyboard in Resources */,
 				4281FE392A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 in Resources */,
 				42210DF829FD243400CE37D1 /* Assets.xcassets in Resources */,
 				42D057932A2603350001BF33 /* LaunchScreen.storyboard in Resources */,
+				42050C3D2A4F005F00DF9725 /* Story.storyboard in Resources */,
 				4262506F29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf in Resources */,
 				42210DF629FD243300CE37D1 /* Main.storyboard in Resources */,
 			);
