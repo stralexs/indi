@@ -14,14 +14,12 @@ class NewKitSelectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tuneUI()
         addTapGesture()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         UIView.animate(withDuration: 0.3) {
             self.topBlurredView.effect = UIBlurEffect(style: UIBlurEffect.Style.systemUltraThinMaterialDark)
         }

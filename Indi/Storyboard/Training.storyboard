@@ -130,7 +130,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ccw-Y4-33P">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="8cQ-Pr-gCi">
+                        <barButtonItem key="rightBarButtonItem" id="8cQ-Pr-gCi">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="4Hj-d7-efV">
                                 <rect key="frame" x="286.66666666666669" y="3.3333333333333321" width="90.333333333333314" height="37.333333333333343"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

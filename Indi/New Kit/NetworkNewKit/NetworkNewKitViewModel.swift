@@ -43,9 +43,9 @@ final class NetworkNewKitViewModel {
         }
     }
 
-    func cellViewModel(for indexPath: IndexPath) -> NetworkNewKitTableViewCellViewModel? {
+    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModel? {
         let question = questions.value[indexPath.row]
-        return NetworkNewKitTableViewCellViewModel(question: ObservableObject(question))
+        return NewKitTableViewCellViewModel(question: ObservableObject(question))
     }
 
     func newKitName(_ newName: String) -> String {
@@ -82,7 +82,7 @@ final class NetworkNewKitViewModel {
         } else if questions.value.isEmpty {
             output = "Questions not loaded"
         } else {
-            KitsManager.shared.createNewKit(newNetworkKitName.value ?? "", newNetworkKitStudyStage!, questions.value)
+            KitsManager.shared.createNewKit(newNetworkKitName.value ?? "", newNetworkKitStudyStage ?? 0, questions.value)
             UserDataManager.shared.createNewUserData(for: newNetworkKitName.value ?? "")
         }
         

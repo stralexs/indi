@@ -30,14 +30,14 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="newKitStudyStageButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="o3u-WK-lCH"/>
+                                    <action selector="studyStageButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="o3u-WK-lCH"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="70" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="K0G-Ie-cw6">
                                 <rect key="frame" x="10" y="201" width="373" height="531"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="zo3-0w-wHx" customClass="UserNewKitTableViewCell" customModule="Indi" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="zo3-0w-wHx" customClass="NewKitTableViewCell" customModule="Indi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="373" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zo3-0w-wHx" id="qRZ-xO-k1o">
@@ -174,7 +174,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="pencil.line" catalog="system"/>
                                 <connections>
-                                    <action selector="newKitEditButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="Qvh-iE-j6X"/>
+                                    <action selector="newKitButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="Qvh-iE-j6X"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jo6-yh-Ej3">
@@ -186,7 +186,7 @@
                                     <fontDescription key="titleFontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="20"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="addKit:" destination="hnx-aL-OSR" eventType="touchUpInside" id="aYO-pY-1po"/>
+                                    <action selector="addNewKit:" destination="hnx-aL-OSR" eventType="touchUpInside" id="aYO-pY-1po"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7F-n0-TS4">
@@ -281,7 +281,7 @@
                                 <buttonConfiguration key="configuration" style="plain" image="pencil.line" catalog="system"/>
                                 <connections>
                                     <action selector="nameKitButtonIsPressed:" destination="6Ob-5J-50G" eventType="touchUpInside" id="xVE-OM-7a4"/>
-                                    <action selector="newKitEditButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="mES-2o-pdv"/>
+                                    <action selector="newKitButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="mES-2o-pdv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTO-6B-xSZ">
@@ -296,15 +296,15 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="newKitStudyStageButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="COj-oZ-PZs"/>
                                     <action selector="studyStageButtonIsPressed:" destination="6Ob-5J-50G" eventType="touchUpInside" id="0dN-hi-dpa"/>
+                                    <action selector="studyStageButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="COj-oZ-PZs"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="70" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0ca-NO-r7C">
                                 <rect key="frame" x="10" y="187" width="373" height="625"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="90i-DJ-izi" customClass="NetworkNewKitTableViewCell" customModule="Indi" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="90i-DJ-izi" customClass="NewKitTableViewCell" customModule="Indi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="373" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="90i-DJ-izi" id="yBd-EE-Nah">
@@ -429,8 +429,8 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Готово"/>
                                 <connections>
-                                    <action selector="addKit:" destination="hnx-aL-OSR" eventType="touchUpInside" id="vjm-OC-yh5"/>
-                                    <action selector="addNetworkKitButtonIsPressed:" destination="6Ob-5J-50G" eventType="touchUpInside" id="UdE-oV-TKY"/>
+                                    <action selector="addNewKit:" destination="6Ob-5J-50G" eventType="touchUpInside" id="UdE-oV-TKY"/>
+                                    <action selector="addNewKit:" destination="hnx-aL-OSR" eventType="touchUpInside" id="vjm-OC-yh5"/>
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jlp-Qo-Ivk">
@@ -458,7 +458,7 @@
                                     <color key="titleColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
-                                    <action selector="addKit:" destination="hnx-aL-OSR" eventType="touchUpInside" id="OcS-nn-QhS"/>
+                                    <action selector="addNewKit:" destination="hnx-aL-OSR" eventType="touchUpInside" id="OcS-nn-QhS"/>
                                     <action selector="cancelButtonIsPressed:" destination="6Ob-5J-50G" eventType="touchUpInside" id="Hx9-ps-OlY"/>
                                 </connections>
                             </button>

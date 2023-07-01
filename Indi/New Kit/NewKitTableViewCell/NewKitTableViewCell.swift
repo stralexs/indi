@@ -1,5 +1,5 @@
 //
-//  NetworkNewKitTableViewCell.swift
+//  NewKitTableViewCell.swift
 //  Indi
 //
 //  Created by Alexander Sivko on 25.05.23.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class NetworkNewKitTableViewCell: UITableViewCell {
+final class NewKitTableViewCell: UITableViewCell {
     @IBOutlet var background: UIView!
     @IBOutlet var questionLabel: UILabel!
     @IBOutlet var correctAnswerLabel: UILabel!
@@ -15,7 +15,7 @@ final class NetworkNewKitTableViewCell: UITableViewCell {
     @IBOutlet var secondIncorrectAnswer: UILabel!
     @IBOutlet var thirdIncorrectAnswer: UILabel!
     
-    var viewModel: NetworkNewKitTableViewCellViewModel! {
+    var viewModel: NewKitTableViewCellViewModel! {
         didSet {
             setupBinders()
         }

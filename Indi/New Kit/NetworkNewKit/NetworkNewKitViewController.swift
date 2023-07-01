@@ -151,7 +151,7 @@ final class NetworkNewKitViewController: UIViewController {
         self.present(newKitStudyStageAlert, animated: true)
     }
     
-    @IBAction func addNetworkKitButtonIsPressed(_ sender: Any) {
+    @IBAction func addNewKit(_ sender: Any) {
         let newKitResult = viewModel.createNewKit()
         
         if newKitResult == "No kit name" {
@@ -168,8 +168,8 @@ final class NetworkNewKitViewController: UIViewController {
             
         } else if newKitResult == "Name already exists" {
             let nameAlreadyExistsAlert = UIAlertController(title: "В выбранной стадии обучения уже существует набор с таким названием", message: "Выберите другое название", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ок", style: .default) {_ in
-                self.nameKitButtonIsPressed(nil)
+            let okAction = UIAlertAction(title: "Ок", style: .default) { [weak self] _ in
+                self?.nameKitButtonIsPressed(nil)
             }
             nameAlreadyExistsAlert.addAction(okAction)
             self.present(nameAlreadyExistsAlert, animated: true)
@@ -182,15 +182,14 @@ final class NetworkNewKitViewController: UIViewController {
             
         } else {
             let alert = UIAlertController(title: "Новый набор успешно создан!", message: "Удалить набор можно долгим нажатием", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ок", style: .default) {_ in
-                self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+            let okAction = UIAlertAction(title: "Ок", style: .default) { [weak self] _ in
+                self?.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
             }
             
             alert.addAction(okAction)
             self.present(alert, animated: true)
         }
     }
-    
     
     @IBAction func cancelButtonIsPressed(_ sender: UIButton) {
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
@@ -204,7 +203,7 @@ extension NetworkNewKitViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NetworkNewKitTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewKitTableViewCell
         let cellViewModel = viewModel.cellViewModel(for: indexPath)
         cell.viewModel = cellViewModel
         return cell

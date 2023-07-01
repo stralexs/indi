@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class NetworkNewKitTableViewCellViewModel {
+final class NewKitTableViewCellViewModel {
     var question: ObservableObject<Question>
 
     var questionText: String? {
