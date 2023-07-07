@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewKitSelectionViewController: UIViewController {
+final class NewKitSelectionViewController: UIViewController {
     @IBOutlet var topBlurredView: UIVisualEffectView!
     @IBOutlet var buttonsBackgroundView: UIView!
     @IBOutlet var newKitButtons: [UIButton]!

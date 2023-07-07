@@ -174,7 +174,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="pencil.line" catalog="system"/>
                                 <connections>
-                                    <action selector="newKitButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="Qvh-iE-j6X"/>
+                                    <action selector="nameKitButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="Qvh-iE-j6X"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jo6-yh-Ej3">
@@ -281,7 +281,6 @@
                                 <buttonConfiguration key="configuration" style="plain" image="pencil.line" catalog="system"/>
                                 <connections>
                                     <action selector="nameKitButtonIsPressed:" destination="6Ob-5J-50G" eventType="touchUpInside" id="xVE-OM-7a4"/>
-                                    <action selector="newKitButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="mES-2o-pdv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTO-6B-xSZ">
@@ -297,7 +296,6 @@
                                 </state>
                                 <connections>
                                     <action selector="studyStageButtonIsPressed:" destination="6Ob-5J-50G" eventType="touchUpInside" id="0dN-hi-dpa"/>
-                                    <action selector="studyStageButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="COj-oZ-PZs"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="70" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0ca-NO-r7C">
@@ -430,7 +428,6 @@
                                 <state key="normal" title="Готово"/>
                                 <connections>
                                     <action selector="addNewKit:" destination="6Ob-5J-50G" eventType="touchUpInside" id="UdE-oV-TKY"/>
-                                    <action selector="addNewKit:" destination="hnx-aL-OSR" eventType="touchUpInside" id="vjm-OC-yh5"/>
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jlp-Qo-Ivk">
@@ -458,7 +455,6 @@
                                     <color key="titleColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
-                                    <action selector="addNewKit:" destination="hnx-aL-OSR" eventType="touchUpInside" id="OcS-nn-QhS"/>
                                     <action selector="cancelButtonIsPressed:" destination="6Ob-5J-50G" eventType="touchUpInside" id="Hx9-ps-OlY"/>
                                 </connections>
                             </button>

@@ -16,15 +16,15 @@ class NewKitViewModel {
     //MARK: - Private Property
     private var namesOfKitsOfSelectedStudyStage: [String] = []
     
-    //MARK: - Public Functions and Properties
+    //MARK: - Public Properties and Methods
     var numberOfRows: Int? {
         return questions.value.count
     }
     var newKitStudyStage: Int? {
         didSet {
-            if let newUserKitStudyStage = newKitStudyStage {
-                self.namesOfKitsOfSelectedStudyStage = KitsManager.shared.getKitNamesForStudyStage(with: [newUserKitStudyStage])
-                self.newKitStudyStageName.value = StudyStage.getStudyStageName(studyStage: newUserKitStudyStage)
+            if let newKitStudyStage = newKitStudyStage {
+                self.namesOfKitsOfSelectedStudyStage = KitsManager.shared.getKitNamesForStudyStage(with: [newKitStudyStage])
+                self.newKitStudyStageName.value = StudyStage.getStudyStageName(studyStage: newKitStudyStage)
             }
         }
     }
@@ -59,16 +59,14 @@ class NewKitViewModel {
     func createNewKit() -> String {
         var output = ""
         
-        if newKitName.value == "Название набора" {
+        if questions.value.count == 0 {
+            output = "No questions"
+        } else if newKitName.value == "Название набора" {
             output = "No kit name"
         } else if newKitStudyStage == nil {
             output = "No study stage"
-        } else if questions.value.count == 0 {
-            output = "No questions"
         } else if namesOfKitsOfSelectedStudyStage.contains(newKitName.value ?? "") {
             output = "Name already exists"
-        } else if questions.value.isEmpty {
-            output = "Questions not loaded"
         } else {
             KitsManager.shared.createNewKit(newKitName.value ?? "", newKitStudyStage ?? 0, questions.value)
             UserDataManager.shared.createNewUserData(for: newKitName.value ?? "")
