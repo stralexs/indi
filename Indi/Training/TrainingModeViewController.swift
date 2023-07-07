@@ -8,6 +8,7 @@
 import UIKit
 
 class TrainingModeViewController: UIViewController {
+    //MARK: - Variables
     @IBOutlet var background: UIView!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var slider: UISlider!
@@ -15,12 +16,18 @@ class TrainingModeViewController: UIViewController {
     @IBOutlet var startButton: UIButton!
     @IBOutlet var sliderBackgroundView: UIView!
     
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tuneUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
+    //MARK: - Private Methods
     private func tuneUI() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = UIColor.indiMainBlue
@@ -58,6 +65,8 @@ class TrainingModeViewController: UIViewController {
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureAction(_:)))
         tableView.addGestureRecognizer(longPressGesture)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableViewData), name: Notification.Name(rawValue: trainingModeReloadTableViewNotificationKey), object: nil)
     }
     
     @objc private func longGestureAction(_ gesture: UITapGestureRecognizer) {
@@ -85,11 +94,15 @@ class TrainingModeViewController: UIViewController {
         }
     }
     
-    @IBAction func sliderAction(_ sender: UISlider) {
+    @objc private func reloadTableViewData() {
+        self.tableView.reloadData()
+    }
+    
+    @IBAction private func sliderAction(_ sender: UISlider) {
         countOfQuestionsLabel.text = "\(Int(sender.value))"
     }
     
-    @IBAction func startButtonIsPressed(_ sender: UIButton) {
+    @IBAction private func startButtonIsPressed(_ sender: UIButton) {
         let alert = UIAlertController(title: "Пожалуйста, выберите хотя бы один набор слов", message: nil, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ок", style: .default)
         alert.addAction(okAction)
@@ -98,7 +111,7 @@ class TrainingModeViewController: UIViewController {
         }
         
         let sb = UIStoryboard(name: "Main", bundle: nil)
-        if let workoutTestVC = sb.instantiateViewController(withIdentifier: "WorkoutTestVC") as? TrainingTestingViewController,
+        if let workoutTestVC = sb.instantiateViewController(withIdentifier: "WorkoutTestVC") as? TrainingModeTestingViewController,
            let indexPaths = tableView.indexPathsForSelectedRows {
             NotificationCenter.default.post(name: Notification.Name(rawValue: chosenWorkoutNotificationKey), object: (indexPaths, Int(slider.value)))
             workoutTestVC.hidesBottomBarWhenPushed = true
@@ -107,6 +120,7 @@ class TrainingModeViewController: UIViewController {
     }
 }
 
+//MARK: - TableView Data Source and Delegate
 extension TrainingModeViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return StudyStage.countOfStudyStages()
@@ -150,7 +164,7 @@ extension TrainingModeViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TrainingTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TrainingModeTableViewCell
         cell.label.text = KitsManager.shared.getKitName(for: indexPath.section, with: indexPath)
         cell.selectionStyle = .none
         

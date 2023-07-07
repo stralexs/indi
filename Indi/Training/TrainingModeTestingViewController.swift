@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TrainingTestingViewController: UIViewController {
+class TrainingModeTestingViewController: UIViewController {
     @IBOutlet var rootView: UIView!
     @IBOutlet var questionBackground: UIView!
     @IBOutlet var answersButtons: [UIButton]!
@@ -16,7 +16,7 @@ class TrainingTestingViewController: UIViewController {
     @IBOutlet var answerResultImage: UIImageView!
     @IBOutlet var progressView: UIProgressView!
     
-    private let trainingTestingModel = TrainingTestingModel()
+    private let trainingTestingModel = TrainingModeTestingModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -2,7 +2,7 @@
 //  NotificationCenterKeys.swift
 //  Indi
 //
-//  Created by Alexander Strelnikov on 28.06.23.
+//  Created by Alexander Sivko on 28.06.23.
 //
 
 import Foundation
@@ -14,3 +14,4 @@ let examResultNotificationKey = "com.indi.examResult.notificationKey"
 let chosenWorkoutNotificationKey = "com.indi.workoutResult.notificationKey"
 let workoutResultNotificationKey = "com.indi.workoutResult.notificationKey"
 let workoutIsDoneNotificationKey = "com.indi.workoutIsDone.notificationKey"
+let trainingModeReloadTableViewNotificationKey = "com.indi.reloadTableView.notificationKey"

@@ -25,6 +25,11 @@ class NewKitViewController: UIViewController {
         setupBinders()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: trainingModeReloadTableViewNotificationKey), object: nil)
+    }
+    
     //MARK: - Public Methods
     func tuneUI() {
         background.backgroundColor = UIColor.indiMainYellow

@@ -26,14 +26,14 @@
 		425B67D22A1FB39D003AA954 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B67D12A1FB39D003AA954 /* NetworkManager.swift */; };
 		4262506F29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4262506E29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf */; };
 		426B55112A2348DF004A87E0 /* LocalNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426B55102A2348DF004A87E0 /* LocalNotificationsManager.swift */; };
-		426C58DE2A1A56250036C037 /* TrainingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426C58DD2A1A56250036C037 /* TrainingTableViewCell.swift */; };
+		426C58DE2A1A56250036C037 /* TrainingModeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426C58DD2A1A56250036C037 /* TrainingModeTableViewCell.swift */; };
 		4281FE392A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4281FE372A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 */; };
 		4281FE3A2A4DC7CB00AFD405 /* Correct-answer-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4281FE382A4DC7CB00AFD405 /* Correct-answer-sound.mp3 */; };
 		4281FE3C2A4DC84600AFD405 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4281FE3B2A4DC84600AFD405 /* SoundManager.swift */; };
 		428DC3612A3F394200708F37 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DC3602A3F394200708F37 /* UIColorExtension.swift */; };
 		428DC3632A3F41BA00708F37 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DC3622A3F41BA00708F37 /* TabBarController.swift */; };
-		42943A5E2A1B840500D5BF62 /* TrainingTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42943A5D2A1B840500D5BF62 /* TrainingTestingViewController.swift */; };
-		42943A602A1B8A6200D5BF62 /* TrainingTestingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42943A5F2A1B8A6200D5BF62 /* TrainingTestingModel.swift */; };
+		42943A5E2A1B840500D5BF62 /* TrainingModeTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42943A5D2A1B840500D5BF62 /* TrainingModeTestingViewController.swift */; };
+		42943A602A1B8A6200D5BF62 /* TrainingModeTestingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42943A5F2A1B8A6200D5BF62 /* TrainingModeTestingModel.swift */; };
 		42943A622A1BD04100D5BF62 /* UserNewKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42943A612A1BD04100D5BF62 /* UserNewKitViewModel.swift */; };
 		4295362A2A1795C10028DBA4 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 429536282A1795C10028DBA4 /* Model.xcdatamodeld */; };
 		429536372A1797BB0028DBA4 /* Kit+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429536332A1797BB0028DBA4 /* Kit+CoreDataClass.swift */; };
@@ -82,14 +82,14 @@
 		425B67D12A1FB39D003AA954 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4262506E29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTWalsheimPro-Regular.ttf"; sourceTree = "<group>"; };
 		426B55102A2348DF004A87E0 /* LocalNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsManager.swift; sourceTree = "<group>"; };
-		426C58DD2A1A56250036C037 /* TrainingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTableViewCell.swift; sourceTree = "<group>"; };
+		426C58DD2A1A56250036C037 /* TrainingModeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingModeTableViewCell.swift; sourceTree = "<group>"; };
 		4281FE372A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Wrong-answer-sound.mp3"; sourceTree = "<group>"; };
 		4281FE382A4DC7CB00AFD405 /* Correct-answer-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Correct-answer-sound.mp3"; sourceTree = "<group>"; };
 		4281FE3B2A4DC84600AFD405 /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		428DC3602A3F394200708F37 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		428DC3622A3F41BA00708F37 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		42943A5D2A1B840500D5BF62 /* TrainingTestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTestingViewController.swift; sourceTree = "<group>"; };
-		42943A5F2A1B8A6200D5BF62 /* TrainingTestingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingTestingModel.swift; sourceTree = "<group>"; };
+		42943A5D2A1B840500D5BF62 /* TrainingModeTestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingModeTestingViewController.swift; sourceTree = "<group>"; };
+		42943A5F2A1B8A6200D5BF62 /* TrainingModeTestingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingModeTestingModel.swift; sourceTree = "<group>"; };
 		42943A612A1BD04100D5BF62 /* UserNewKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNewKitViewModel.swift; sourceTree = "<group>"; };
 		429536292A1795C10028DBA4 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		429536332A1797BB0028DBA4 /* Kit+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kit+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -315,9 +315,9 @@
 			isa = PBXGroup;
 			children = (
 				42FF60442A1A0BC100375ACF /* TrainingModeViewController.swift */,
-				426C58DD2A1A56250036C037 /* TrainingTableViewCell.swift */,
-				42943A5D2A1B840500D5BF62 /* TrainingTestingViewController.swift */,
-				42943A5F2A1B8A6200D5BF62 /* TrainingTestingModel.swift */,
+				426C58DD2A1A56250036C037 /* TrainingModeTableViewCell.swift */,
+				42943A5D2A1B840500D5BF62 /* TrainingModeTestingViewController.swift */,
+				42943A5F2A1B8A6200D5BF62 /* TrainingModeTestingModel.swift */,
 			);
 			path = Training;
 			sourceTree = "<group>";
@@ -426,12 +426,12 @@
 				4281FE3C2A4DC84600AFD405 /* SoundManager.swift in Sources */,
 				42F4956D2A17853E006B92F2 /* KitSelectionViewController.swift in Sources */,
 				4295362A2A1795C10028DBA4 /* Model.xcdatamodeld in Sources */,
-				42943A602A1B8A6200D5BF62 /* TrainingTestingModel.swift in Sources */,
+				42943A602A1B8A6200D5BF62 /* TrainingModeTestingModel.swift in Sources */,
 				42FF60452A1A0BC100375ACF /* TrainingModeViewController.swift in Sources */,
 				4205016F2A4CA35D0071CE67 /* NotificationCenterKeys.swift in Sources */,
 				425B67D02A1FB392003AA954 /* NetworkNewKitViewController.swift in Sources */,
-				42943A5E2A1B840500D5BF62 /* TrainingTestingViewController.swift in Sources */,
-				426C58DE2A1A56250036C037 /* TrainingTableViewCell.swift in Sources */,
+				42943A5E2A1B840500D5BF62 /* TrainingModeTestingViewController.swift in Sources */,
+				426C58DE2A1A56250036C037 /* TrainingModeTableViewCell.swift in Sources */,
 				42DE84672A18BEC500E48956 /* ExamModel.swift in Sources */,
 				420EE8152A17BB8C00E55188 /* TestingModel.swift in Sources */,
 				428DC3632A3F41BA00708F37 /* TabBarController.swift in Sources */,

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TrainingTestingModel: Testing {
+class TrainingModeTestingModel: Testing {
     private func createNotificationCenterObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(createWorkout(_:)), name: Notification.Name(rawValue: chosenWorkoutNotificationKey), object: nil)
     }

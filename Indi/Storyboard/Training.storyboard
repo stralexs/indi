@@ -12,7 +12,7 @@
         <!--Training Mode View Controller-->
         <scene sceneID="v62-kq-TvD">
             <objects>
-                <viewController storyboardIdentifier="WorkoutVC" id="w8I-Fv-g9b" customClass="TrainingModeViewController" customModule="Indi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TrainingVC" id="w8I-Fv-g9b" customClass="TrainingModeViewController" customModule="Indi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4Bc-iX-veA">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,7 +24,7 @@
                                         <rect key="frame" x="10" y="30" width="373" height="495"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="xyr-fe-I0G" customClass="TrainingTableViewCell" customModule="Indi" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="xyr-fe-I0G" customClass="TrainingModeTableViewCell" customModule="Indi" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="50" width="373" height="40"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xyr-fe-I0G" id="c2z-db-ULx">
@@ -158,10 +158,10 @@
             </objects>
             <point key="canvasLocation" x="9795" y="731"/>
         </scene>
-        <!--Training Testing View Controller-->
+        <!--Training Mode Testing View Controller-->
         <scene sceneID="Zg8-6Z-HIk">
             <objects>
-                <viewController storyboardIdentifier="WorkoutTestVC" id="Imx-AJ-MO5" customClass="TrainingTestingViewController" customModule="Indi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WorkoutTestVC" id="Imx-AJ-MO5" customClass="TrainingModeTestingViewController" customModule="Indi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cSf-io-TCh">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TrainingTableViewCell: UITableViewCell {
+class TrainingModeTableViewCell: UITableViewCell {
     @IBOutlet var label: UILabel!
     
     override func awakeFromNib() {
