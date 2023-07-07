@@ -7,16 +7,17 @@
 
 import UIKit
 
-class TrainingModeTableViewCell: UITableViewCell {
+final class TrainingModeTableViewCell: UITableViewCell {
     @IBOutlet var label: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    var viewModel: TrainingModeTableViewCellViewModel! {
+        didSet {
+            label.text = viewModel.kitName
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
         self.accessoryType = selected ? .checkmark : .none
         self.backgroundColor = selected ? UIColor.indiLightPink : .white
     }

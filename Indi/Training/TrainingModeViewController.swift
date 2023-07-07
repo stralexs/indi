@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TrainingModeViewController: UIViewController {
+final class TrainingModeViewController: UIViewController {
     //MARK: - Variables
     @IBOutlet var background: UIView!
     @IBOutlet var tableView: UITableView!
@@ -16,10 +16,14 @@ class TrainingModeViewController: UIViewController {
     @IBOutlet var startButton: UIButton!
     @IBOutlet var sliderBackgroundView: UIView!
     
+    private var viewModel = TrainingModeViewModel()
+    
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tuneUI()
+        addNotificationCenterObserver()
+        addLongGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,11 +66,15 @@ class TrainingModeViewController: UIViewController {
         
         countOfQuestionsLabel.text = "1"
         countOfQuestionsLabel.textColor = UIColor.white
-        
+    }
+    
+    private func addNotificationCenterObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableViewData), name: Notification.Name(rawValue: trainingModeReloadTableViewNotificationKey), object: nil)
+    }
+    
+    private func addLongGesture() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureAction(_:)))
         tableView.addGestureRecognizer(longPressGesture)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableViewData), name: Notification.Name(rawValue: trainingModeReloadTableViewNotificationKey), object: nil)
     }
     
     @objc private func longGestureAction(_ gesture: UITapGestureRecognizer) {
@@ -123,33 +131,21 @@ class TrainingModeViewController: UIViewController {
 //MARK: - TableView Data Source and Delegate
 extension TrainingModeViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return StudyStage.countOfStudyStages()
+        return viewModel.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return KitsManager.shared.countOfKits(for: section)
+        return viewModel.numberOfRowsInSection(for: section)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var value: Int = 0
-        
         guard let indexPaths = tableView.indexPathsForSelectedRows else { return }
-        for index in indexPaths {
-            value += KitsManager.shared.getKitForTesting(for: index[0], and: index[1]).count
-        }
-        
-        slider.maximumValue = Float(value)
+        slider.maximumValue = viewModel.sliderMaximumValue(for: indexPaths)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        var value: Int = 0
-        
         guard let indexPaths = tableView.indexPathsForSelectedRows else { return }
-        for index in indexPaths {
-            value += KitsManager.shared.getKitForTesting(for: index[0], and: index[1]).count
-        }
-        
-        slider.maximumValue = Float(value)
+        slider.maximumValue = viewModel.sliderMaximumValue(for: indexPaths)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -158,16 +154,16 @@ extension TrainingModeViewController: UITableViewDataSource, UITableViewDelegate
         let titleLabel = UILabel(frame: CGRect(x: 20, y: 0, width: view.frame.width, height: 50))
         titleLabel.textColor = .black
         titleLabel.font = UIFont(name: "GTWalsheimPro-Regular", size: 20)
-        titleLabel.text = StudyStage.getStudyStageName(studyStage: section)
+        titleLabel.text = viewModel.headerInSectionName(for: section)
         view.addSubview(titleLabel)
         return view
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TrainingModeTableViewCell
-        cell.label.text = KitsManager.shared.getKitName(for: indexPath.section, with: indexPath)
+        let cellViewModel = viewModel.cellViewModel(for: indexPath.section, and: indexPath)
+        cell.viewModel = cellViewModel
         cell.selectionStyle = .none
-        
         return cell
     }
 }

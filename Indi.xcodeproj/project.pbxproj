@@ -14,6 +14,8 @@
 		420EE8152A17BB8C00E55188 /* TestingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420EE8142A17BB8C00E55188 /* TestingModel.swift */; };
 		421801152A446A99004B9020 /* NewKitSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421801142A446A99004B9020 /* NewKitSelectionViewController.swift */; };
 		421E2CC12A1FD4DD002A495E /* NewKitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E2CC02A1FD4DD002A495E /* NewKitTableViewCell.swift */; };
+		42202CDB2A5830C200C34921 /* TrainingModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42202CDA2A5830C200C34921 /* TrainingModeViewModel.swift */; };
+		42202CDD2A583BED00C34921 /* TrainingModeTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42202CDC2A583BED00C34921 /* TrainingModeTableViewCellViewModel.swift */; };
 		42210DEF29FD243300CE37D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42210DEE29FD243300CE37D1 /* AppDelegate.swift */; };
 		42210DF129FD243300CE37D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42210DF029FD243300CE37D1 /* SceneDelegate.swift */; };
 		42210DF629FD243300CE37D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42210DF429FD243300CE37D1 /* Main.storyboard */; };
@@ -68,6 +70,8 @@
 		420EE8142A17BB8C00E55188 /* TestingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingModel.swift; sourceTree = "<group>"; };
 		421801142A446A99004B9020 /* NewKitSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitSelectionViewController.swift; sourceTree = "<group>"; };
 		421E2CC02A1FD4DD002A495E /* NewKitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitTableViewCell.swift; sourceTree = "<group>"; };
+		42202CDA2A5830C200C34921 /* TrainingModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingModeViewModel.swift; sourceTree = "<group>"; };
+		42202CDC2A583BED00C34921 /* TrainingModeTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingModeTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		42210DEB29FD243300CE37D1 /* Indi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Indi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42210DEE29FD243300CE37D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42210DF029FD243300CE37D1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -146,6 +150,15 @@
 				42050C382A4EFFEA00DF9725 /* Training.storyboard */,
 			);
 			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		42202CDE2A583C0700C34921 /* TrainingModeTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				426C58DD2A1A56250036C037 /* TrainingModeTableViewCell.swift */,
+				42202CDC2A583BED00C34921 /* TrainingModeTableViewCellViewModel.swift */,
+			);
+			path = TrainingModeTableViewCell;
 			sourceTree = "<group>";
 		};
 		42210DE229FD243300CE37D1 = {
@@ -315,7 +328,8 @@
 			isa = PBXGroup;
 			children = (
 				42FF60442A1A0BC100375ACF /* TrainingModeViewController.swift */,
-				426C58DD2A1A56250036C037 /* TrainingModeTableViewCell.swift */,
+				42202CDA2A5830C200C34921 /* TrainingModeViewModel.swift */,
+				42202CDE2A583C0700C34921 /* TrainingModeTableViewCell */,
 				42943A5D2A1B840500D5BF62 /* TrainingModeTestingViewController.swift */,
 				42943A5F2A1B8A6200D5BF62 /* TrainingModeTestingModel.swift */,
 			);
@@ -403,6 +417,7 @@
 				425A0EB92A1E0F05009154D0 /* UserDataManager.swift in Sources */,
 				421E2CC12A1FD4DD002A495E /* NewKitTableViewCell.swift in Sources */,
 				424B53A929FFABC0002AE9D9 /* TestViewController.swift in Sources */,
+				42202CDB2A5830C200C34921 /* TrainingModeViewModel.swift in Sources */,
 				42EF1AAE29FFD67800D1CD77 /* KitsManager.swift in Sources */,
 				42DE84652A18BEAE00E48956 /* ExamViewController.swift in Sources */,
 				42210DEF29FD243300CE37D1 /* AppDelegate.swift in Sources */,
@@ -429,6 +444,7 @@
 				42943A602A1B8A6200D5BF62 /* TrainingModeTestingModel.swift in Sources */,
 				42FF60452A1A0BC100375ACF /* TrainingModeViewController.swift in Sources */,
 				4205016F2A4CA35D0071CE67 /* NotificationCenterKeys.swift in Sources */,
+				42202CDD2A583BED00C34921 /* TrainingModeTableViewCellViewModel.swift in Sources */,
 				425B67D02A1FB392003AA954 /* NetworkNewKitViewController.swift in Sources */,
 				42943A5E2A1B840500D5BF62 /* TrainingModeTestingViewController.swift in Sources */,
 				426C58DE2A1A56250036C037 /* TrainingModeTableViewCell.swift in Sources */,

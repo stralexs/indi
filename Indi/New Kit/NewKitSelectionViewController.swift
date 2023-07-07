@@ -40,7 +40,6 @@ final class NewKitSelectionViewController: UIViewController {
     private func addTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissVC(_:)))
         topBlurredView.addGestureRecognizer(tapGesture)
-        
     }
     
     @objc private func dismissVC(_ gesture: UITapGestureRecognizer) {
