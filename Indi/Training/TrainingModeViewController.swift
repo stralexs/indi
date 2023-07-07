@@ -72,6 +72,10 @@ final class TrainingModeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadTableViewData), name: Notification.Name(rawValue: trainingModeReloadTableViewNotificationKey), object: nil)
     }
     
+    @objc private func reloadTableViewData() {
+        self.tableView.reloadData()
+    }
+    
     private func addLongGesture() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureAction(_:)))
         tableView.addGestureRecognizer(longPressGesture)
@@ -83,16 +87,16 @@ final class TrainingModeViewController: UIViewController {
         
         let location = gesture.location(in: tableView)
         if let indexPath = tableView.indexPathForRow(at: location) {
-            if KitsManager.shared.isBasicKitCheck(for: indexPath, for: indexPath.section) {
+            if viewModel.isBasicKitCheck(for: indexPath, for: indexPath.section) {
                 let alert = UIAlertController(title: "Базовые наборы слов удалять нельзя", message: nil, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ок", style: .default)
                 alert.addAction(okAction)
                 self.present(alert, animated: true)
             } else {
                 let alert = UIAlertController(title: "Вы действительно хотите удалить этот набор слов?", message: nil, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ок", style: .destructive) { _ in
-                    KitsManager.shared.deleteUserKit(for: indexPath, for: indexPath.section)
-                    self.tableView.reloadData()
+                let okAction = UIAlertAction(title: "Ок", style: .destructive) { [weak self] _ in
+                    self?.viewModel.deleteUserKit(for: indexPath, for: indexPath.section)
+                    self?.tableView.reloadData()
                 }
                 let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
                 alert.addAction(okAction)
@@ -100,10 +104,6 @@ final class TrainingModeViewController: UIViewController {
                 self.present(alert, animated: true)
             }
         }
-    }
-    
-    @objc private func reloadTableViewData() {
-        self.tableView.reloadData()
     }
     
     @IBAction private func sliderAction(_ sender: UISlider) {
@@ -121,7 +121,7 @@ final class TrainingModeViewController: UIViewController {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         if let workoutTestVC = sb.instantiateViewController(withIdentifier: "WorkoutTestVC") as? TrainingModeTestingViewController,
            let indexPaths = tableView.indexPathsForSelectedRows {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: chosenWorkoutNotificationKey), object: (indexPaths, Int(slider.value)))
+            viewModel.userSettingsForTraining = (indexPaths, Int(slider.value))
             workoutTestVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(workoutTestVC, animated: true)
         }

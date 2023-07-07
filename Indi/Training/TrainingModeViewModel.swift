@@ -8,6 +8,16 @@
 import Foundation
 
 final class TrainingModeViewModel {
+    var numberOfSections: Int {
+        return StudyStage.countOfStudyStages()
+    }
+    
+    var userSettingsForTraining: ([IndexPath], Int)? {
+        didSet {
+            NotificationCenter.default.post(name: Notification.Name(rawValue: chosenWorkoutNotificationKey), object: userSettingsForTraining)
+        }
+    }
+    
     func cellViewModel(for section: Int, and indexPath: IndexPath) -> TrainingModeTableViewCellViewModel? {
         let kitName = KitsManager.shared.getKitName(for: section, with: indexPath)
         return TrainingModeTableViewCellViewModel(kitName: kitName)
@@ -17,15 +27,9 @@ final class TrainingModeViewModel {
         return StudyStage.getStudyStageName(studyStage: tableViewSection)
     }
     
-    var numberOfSections: Int {
-        return StudyStage.countOfStudyStages()
-    }
-    
     func numberOfRowsInSection(for section: Int) -> Int {
         return KitsManager.shared.countOfKits(for: section)
     }
-    
-    private var countOfQuestions: Int = 1
     
     func sliderMaximumValue(for indexPaths: [IndexPath]) -> Float {
         var value: Int = 0
@@ -33,5 +37,13 @@ final class TrainingModeViewModel {
             value += KitsManager.shared.getKitForTesting(for: index[0], and: index[1]).count
         }
         return Float(value)
+    }
+    
+    func isBasicKitCheck(for indexPath: IndexPath, for indexPathSection: Int) -> Bool {
+        return KitsManager.shared.isBasicKitCheck(for: indexPath, for: indexPathSection)
+    }
+    
+    func deleteUserKit(for indexPath: IndexPath, for indexPathSection: Int) {
+        KitsManager.shared.deleteUserKit(for: indexPath, for: indexPathSection)
     }
 }
