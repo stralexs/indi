@@ -11,7 +11,7 @@
 		42050C392A4EFFEA00DF9725 /* Training.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42050C382A4EFFEA00DF9725 /* Training.storyboard */; };
 		42050C3B2A4F002300DF9725 /* NewKit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42050C3A2A4F002300DF9725 /* NewKit.storyboard */; };
 		42050C3D2A4F005F00DF9725 /* Story.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42050C3C2A4F005F00DF9725 /* Story.storyboard */; };
-		420EE8152A17BB8C00E55188 /* TestingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420EE8142A17BB8C00E55188 /* TestingModel.swift */; };
+		420EE8152A17BB8C00E55188 /* StoryModeTestingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420EE8142A17BB8C00E55188 /* StoryModeTestingViewModel.swift */; };
 		421801152A446A99004B9020 /* NewKitSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421801142A446A99004B9020 /* NewKitSelectionViewController.swift */; };
 		421E2CC12A1FD4DD002A495E /* NewKitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E2CC02A1FD4DD002A495E /* NewKitTableViewCell.swift */; };
 		42202CDB2A5830C200C34921 /* TrainingModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42202CDA2A5830C200C34921 /* TrainingModeViewModel.swift */; };
@@ -22,12 +22,14 @@
 		42210DF829FD243400CE37D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42210DF729FD243400CE37D1 /* Assets.xcassets */; };
 		4222B49B2A25FB90003C4343 /* TestingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4222B49A2A25FB90003C4343 /* TestingProtocol.swift */; };
 		422AC1142A1F77EA00B0B941 /* MainStoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AC1132A1F77EA00B0B941 /* MainStoryModel.swift */; };
-		424B53A929FFABC0002AE9D9 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424B53A829FFABC0002AE9D9 /* TestViewController.swift */; };
+		424B53A929FFABC0002AE9D9 /* StoryModeTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424B53A829FFABC0002AE9D9 /* StoryModeTestingViewController.swift */; };
 		425A0EB92A1E0F05009154D0 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A0EB82A1E0F05009154D0 /* UserDataManager.swift */; };
 		425B67D02A1FB392003AA954 /* NetworkNewKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B67CF2A1FB392003AA954 /* NetworkNewKitViewController.swift */; };
 		425B67D22A1FB39D003AA954 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B67D12A1FB39D003AA954 /* NetworkManager.swift */; };
 		4262506F29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4262506E29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf */; };
 		426B55112A2348DF004A87E0 /* LocalNotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426B55102A2348DF004A87E0 /* LocalNotificationsManager.swift */; };
+		426B89CD2A5975B500EF1361 /* StoryModeKitSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426B89CC2A5975B500EF1361 /* StoryModeKitSelectionViewModel.swift */; };
+		426B89CF2A5975F100EF1361 /* StoryModeKitSelectionCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426B89CE2A5975F100EF1361 /* StoryModeKitSelectionCollectionViewCellViewModel.swift */; };
 		426C58DE2A1A56250036C037 /* TrainingModeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426C58DD2A1A56250036C037 /* TrainingModeTableViewCell.swift */; };
 		4281FE392A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4281FE372A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 */; };
 		4281FE3A2A4DC7CB00AFD405 /* Correct-answer-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4281FE382A4DC7CB00AFD405 /* Correct-answer-sound.mp3 */; };
@@ -49,13 +51,13 @@
 		42D057932A2603350001BF33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42D057922A2603350001BF33 /* LaunchScreen.storyboard */; };
 		42D57D162A0F8AED00991007 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D57D152A0F8AED00991007 /* CoreDataManager.swift */; };
 		42DC4B2B2A1754D000028E29 /* MainStoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DC4B2A2A1754D000028E29 /* MainStoryViewController.swift */; };
-		42DE84652A18BEAE00E48956 /* ExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE84642A18BEAE00E48956 /* ExamViewController.swift */; };
-		42DE84672A18BEC500E48956 /* ExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE84662A18BEC500E48956 /* ExamModel.swift */; };
+		42DE84652A18BEAE00E48956 /* StoryModeExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE84642A18BEAE00E48956 /* StoryModeExamViewController.swift */; };
+		42DE84672A18BEC500E48956 /* StoryModeExamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE84662A18BEC500E48956 /* StoryModeExamViewModel.swift */; };
 		42EF1AAE29FFD67800D1CD77 /* KitsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF1AAD29FFD67800D1CD77 /* KitsManager.swift */; };
 		42EF93CF2A3B6C0100C42646 /* ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF93CE2A3B6C0100C42646 /* ObservableObject.swift */; };
 		42EF93D12A3B6CB000C42646 /* StudyStageEnumeration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF93D02A3B6CB000C42646 /* StudyStageEnumeration.swift */; };
-		42F4956D2A17853E006B92F2 /* KitSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F4956C2A17853E006B92F2 /* KitSelectionViewController.swift */; };
-		42F4956F2A17867F006B92F2 /* KitSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F4956E2A17867F006B92F2 /* KitSelectionCollectionViewCell.swift */; };
+		42F4956D2A17853E006B92F2 /* StoryModeKitSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F4956C2A17853E006B92F2 /* StoryModeKitSelectionViewController.swift */; };
+		42F4956F2A17867F006B92F2 /* StoryModeKitSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F4956E2A17867F006B92F2 /* StoryModeKitSelectionCollectionViewCell.swift */; };
 		42FF60432A1A0B3D00375ACF /* SettingsAndStatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FF60422A1A0B3D00375ACF /* SettingsAndStatisticsViewController.swift */; };
 		42FF60452A1A0BC100375ACF /* TrainingModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FF60442A1A0BC100375ACF /* TrainingModeViewController.swift */; };
 		42FF60472A1A0C1B00375ACF /* UserNewKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FF60462A1A0C1B00375ACF /* UserNewKitViewController.swift */; };
@@ -67,7 +69,7 @@
 		42050C382A4EFFEA00DF9725 /* Training.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Training.storyboard; sourceTree = "<group>"; };
 		42050C3A2A4F002300DF9725 /* NewKit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewKit.storyboard; sourceTree = "<group>"; };
 		42050C3C2A4F005F00DF9725 /* Story.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Story.storyboard; sourceTree = "<group>"; };
-		420EE8142A17BB8C00E55188 /* TestingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingModel.swift; sourceTree = "<group>"; };
+		420EE8142A17BB8C00E55188 /* StoryModeTestingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeTestingViewModel.swift; sourceTree = "<group>"; };
 		421801142A446A99004B9020 /* NewKitSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitSelectionViewController.swift; sourceTree = "<group>"; };
 		421E2CC02A1FD4DD002A495E /* NewKitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitTableViewCell.swift; sourceTree = "<group>"; };
 		42202CDA2A5830C200C34921 /* TrainingModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingModeViewModel.swift; sourceTree = "<group>"; };
@@ -80,12 +82,14 @@
 		42210DFC29FD243400CE37D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4222B49A2A25FB90003C4343 /* TestingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingProtocol.swift; sourceTree = "<group>"; };
 		422AC1132A1F77EA00B0B941 /* MainStoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStoryModel.swift; sourceTree = "<group>"; };
-		424B53A829FFABC0002AE9D9 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		424B53A829FFABC0002AE9D9 /* StoryModeTestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeTestingViewController.swift; sourceTree = "<group>"; };
 		425A0EB82A1E0F05009154D0 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		425B67CF2A1FB392003AA954 /* NetworkNewKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNewKitViewController.swift; sourceTree = "<group>"; };
 		425B67D12A1FB39D003AA954 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4262506E29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTWalsheimPro-Regular.ttf"; sourceTree = "<group>"; };
 		426B55102A2348DF004A87E0 /* LocalNotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsManager.swift; sourceTree = "<group>"; };
+		426B89CC2A5975B500EF1361 /* StoryModeKitSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeKitSelectionViewModel.swift; sourceTree = "<group>"; };
+		426B89CE2A5975F100EF1361 /* StoryModeKitSelectionCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeKitSelectionCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		426C58DD2A1A56250036C037 /* TrainingModeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingModeTableViewCell.swift; sourceTree = "<group>"; };
 		4281FE372A4DC7CB00AFD405 /* Wrong-answer-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Wrong-answer-sound.mp3"; sourceTree = "<group>"; };
 		4281FE382A4DC7CB00AFD405 /* Correct-answer-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Correct-answer-sound.mp3"; sourceTree = "<group>"; };
@@ -107,13 +111,13 @@
 		42D057922A2603350001BF33 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42D57D152A0F8AED00991007 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		42DC4B2A2A1754D000028E29 /* MainStoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStoryViewController.swift; sourceTree = "<group>"; };
-		42DE84642A18BEAE00E48956 /* ExamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamViewController.swift; sourceTree = "<group>"; };
-		42DE84662A18BEC500E48956 /* ExamModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamModel.swift; sourceTree = "<group>"; };
+		42DE84642A18BEAE00E48956 /* StoryModeExamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeExamViewController.swift; sourceTree = "<group>"; };
+		42DE84662A18BEC500E48956 /* StoryModeExamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeExamViewModel.swift; sourceTree = "<group>"; };
 		42EF1AAD29FFD67800D1CD77 /* KitsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitsManager.swift; sourceTree = "<group>"; };
 		42EF93CE2A3B6C0100C42646 /* ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableObject.swift; sourceTree = "<group>"; };
 		42EF93D02A3B6CB000C42646 /* StudyStageEnumeration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyStageEnumeration.swift; sourceTree = "<group>"; };
-		42F4956C2A17853E006B92F2 /* KitSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitSelectionViewController.swift; sourceTree = "<group>"; };
-		42F4956E2A17867F006B92F2 /* KitSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		42F4956C2A17853E006B92F2 /* StoryModeKitSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeKitSelectionViewController.swift; sourceTree = "<group>"; };
+		42F4956E2A17867F006B92F2 /* StoryModeKitSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeKitSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		42FF60422A1A0B3D00375ACF /* SettingsAndStatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAndStatisticsViewController.swift; sourceTree = "<group>"; };
 		42FF60442A1A0BC100375ACF /* TrainingModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingModeViewController.swift; sourceTree = "<group>"; };
 		42FF60462A1A0C1B00375ACF /* UserNewKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNewKitViewController.swift; sourceTree = "<group>"; };
@@ -200,7 +204,7 @@
 				42FF604C2A1A336200375ACF /* Settings and Statistics */,
 				42FF604D2A1A33B800375ACF /* Kit Selection */,
 				42DE84682A18BEDA00E48956 /* Exam */,
-				42DE84692A18BEF100E48956 /* Test */,
+				42DE84692A18BEF100E48956 /* Testing */,
 			);
 			path = Story;
 			sourceTree = "<group>";
@@ -225,6 +229,15 @@
 				42C1B4AD2A3B3D2500D79211 /* NetworkNewKitViewModel.swift */,
 			);
 			path = NetworkNewKit;
+			sourceTree = "<group>";
+		};
+		426B89D02A5976F000EF1361 /* StoryModeKitSelectionCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				42F4956E2A17867F006B92F2 /* StoryModeKitSelectionCollectionViewCell.swift */,
+				426B89CE2A5975F100EF1361 /* StoryModeKitSelectionCollectionViewCellViewModel.swift */,
+			);
+			path = StoryModeKitSelectionCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		42943A632A1BD09700D5BF62 /* New Kit */ = {
@@ -279,19 +292,19 @@
 		42DE84682A18BEDA00E48956 /* Exam */ = {
 			isa = PBXGroup;
 			children = (
-				42DE84642A18BEAE00E48956 /* ExamViewController.swift */,
-				42DE84662A18BEC500E48956 /* ExamModel.swift */,
+				42DE84642A18BEAE00E48956 /* StoryModeExamViewController.swift */,
+				42DE84662A18BEC500E48956 /* StoryModeExamViewModel.swift */,
 			);
 			path = Exam;
 			sourceTree = "<group>";
 		};
-		42DE84692A18BEF100E48956 /* Test */ = {
+		42DE84692A18BEF100E48956 /* Testing */ = {
 			isa = PBXGroup;
 			children = (
-				420EE8142A17BB8C00E55188 /* TestingModel.swift */,
-				424B53A829FFABC0002AE9D9 /* TestViewController.swift */,
+				424B53A829FFABC0002AE9D9 /* StoryModeTestingViewController.swift */,
+				420EE8142A17BB8C00E55188 /* StoryModeTestingViewModel.swift */,
 			);
-			path = Test;
+			path = Testing;
 			sourceTree = "<group>";
 		};
 		42EF93D22A3B6CD300C42646 /* Services */ = {
@@ -318,8 +331,9 @@
 		42FF604D2A1A33B800375ACF /* Kit Selection */ = {
 			isa = PBXGroup;
 			children = (
-				42F4956C2A17853E006B92F2 /* KitSelectionViewController.swift */,
-				42F4956E2A17867F006B92F2 /* KitSelectionCollectionViewCell.swift */,
+				42F4956C2A17853E006B92F2 /* StoryModeKitSelectionViewController.swift */,
+				426B89CC2A5975B500EF1361 /* StoryModeKitSelectionViewModel.swift */,
+				426B89D02A5976F000EF1361 /* StoryModeKitSelectionCollectionViewCell */,
 			);
 			path = "Kit Selection";
 			sourceTree = "<group>";
@@ -416,13 +430,13 @@
 				429536372A1797BB0028DBA4 /* Kit+CoreDataClass.swift in Sources */,
 				425A0EB92A1E0F05009154D0 /* UserDataManager.swift in Sources */,
 				421E2CC12A1FD4DD002A495E /* NewKitTableViewCell.swift in Sources */,
-				424B53A929FFABC0002AE9D9 /* TestViewController.swift in Sources */,
+				424B53A929FFABC0002AE9D9 /* StoryModeTestingViewController.swift in Sources */,
 				42202CDB2A5830C200C34921 /* TrainingModeViewModel.swift in Sources */,
 				42EF1AAE29FFD67800D1CD77 /* KitsManager.swift in Sources */,
-				42DE84652A18BEAE00E48956 /* ExamViewController.swift in Sources */,
+				42DE84652A18BEAE00E48956 /* StoryModeExamViewController.swift in Sources */,
 				42210DEF29FD243300CE37D1 /* AppDelegate.swift in Sources */,
 				42FF60432A1A0B3D00375ACF /* SettingsAndStatisticsViewController.swift in Sources */,
-				42F4956F2A17867F006B92F2 /* KitSelectionCollectionViewCell.swift in Sources */,
+				42F4956F2A17867F006B92F2 /* StoryModeKitSelectionCollectionViewCell.swift in Sources */,
 				42C1B4B32A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift in Sources */,
 				42C1B4AE2A3B3D2500D79211 /* NetworkNewKitViewModel.swift in Sources */,
 				42943A622A1BD04100D5BF62 /* UserNewKitViewModel.swift in Sources */,
@@ -439,7 +453,7 @@
 				42FF604B2A1A220F00375ACF /* SettingsAndStatisticsModel.swift in Sources */,
 				42EF93D12A3B6CB000C42646 /* StudyStageEnumeration.swift in Sources */,
 				4281FE3C2A4DC84600AFD405 /* SoundManager.swift in Sources */,
-				42F4956D2A17853E006B92F2 /* KitSelectionViewController.swift in Sources */,
+				42F4956D2A17853E006B92F2 /* StoryModeKitSelectionViewController.swift in Sources */,
 				4295362A2A1795C10028DBA4 /* Model.xcdatamodeld in Sources */,
 				42943A602A1B8A6200D5BF62 /* TrainingModeTestingViewModel.swift in Sources */,
 				42FF60452A1A0BC100375ACF /* TrainingModeViewController.swift in Sources */,
@@ -447,9 +461,11 @@
 				42202CDD2A583BED00C34921 /* TrainingModeTableViewCellViewModel.swift in Sources */,
 				425B67D02A1FB392003AA954 /* NetworkNewKitViewController.swift in Sources */,
 				42943A5E2A1B840500D5BF62 /* TrainingModeTestingViewController.swift in Sources */,
+				426B89CF2A5975F100EF1361 /* StoryModeKitSelectionCollectionViewCellViewModel.swift in Sources */,
 				426C58DE2A1A56250036C037 /* TrainingModeTableViewCell.swift in Sources */,
-				42DE84672A18BEC500E48956 /* ExamModel.swift in Sources */,
-				420EE8152A17BB8C00E55188 /* TestingModel.swift in Sources */,
+				42DE84672A18BEC500E48956 /* StoryModeExamViewModel.swift in Sources */,
+				426B89CD2A5975B500EF1361 /* StoryModeKitSelectionViewModel.swift in Sources */,
+				420EE8152A17BB8C00E55188 /* StoryModeTestingViewModel.swift in Sources */,
 				428DC3632A3F41BA00708F37 /* TabBarController.swift in Sources */,
 				4295363A2A1797BB0028DBA4 /* Question+CoreDataProperties.swift in Sources */,
 				42DC4B2B2A1754D000028E29 /* MainStoryViewController.swift in Sources */,

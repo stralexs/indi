@@ -232,8 +232,8 @@ class MainStoryViewController: UIViewController {
             self.present(alert, animated: true)
         } else {
             let sb = UIStoryboard(name: "Main", bundle: nil)
-            if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? KitSelectionViewController {
-                kitSelectionVC.studyStageRawValue = sender.tag
+            if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: chosenStudyStageNotificationKey), object: sender.tag)
                 kitSelectionVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(kitSelectionVC, animated: true)
             }
@@ -248,7 +248,7 @@ class MainStoryViewController: UIViewController {
             self.present(alert, animated: true)
         } else {
             let sb = UIStoryboard(name: "Main", bundle: nil)
-            if let examVC = sb.instantiateViewController(withIdentifier: "ExamVC") as? ExamViewController {
+            if let examVC = sb.instantiateViewController(withIdentifier: "ExamVC") as? StoryModeExamViewController {
                 NotificationCenter.default.post(name: Notification.Name(rawValue: chosenExamNotificationKey), object: sender.tag)
                 examVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(examVC, animated: true)
@@ -271,8 +271,8 @@ class MainStoryViewController: UIViewController {
                 sender.restorationIdentifier = UserDataManager.shared.getStageSelection(for: sender.tag)
                 UserDataManager.shared.saveSelectedStages(for: sender.tag)
                 let sb = UIStoryboard(name: "Main", bundle: nil)
-                if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? KitSelectionViewController {
-                    kitSelectionVC.studyStageRawValue = sender.tag
+                if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: chosenStudyStageNotificationKey), object: sender.tag)
                     kitSelectionVC.hidesBottomBarWhenPushed = true
                     self.navigationController?.pushViewController(kitSelectionVC, animated: true)
                 }
@@ -283,8 +283,8 @@ class MainStoryViewController: UIViewController {
             self.present(alert, animated: true)
         } else {
             let sb = UIStoryboard(name: "Main", bundle: nil)
-            if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? KitSelectionViewController {
-                kitSelectionVC.studyStageRawValue = sender.tag
+            if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: chosenStudyStageNotificationKey), object: sender.tag)
                 kitSelectionVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(kitSelectionVC, animated: true)
             }

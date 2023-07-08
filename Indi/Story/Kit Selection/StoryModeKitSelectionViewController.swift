@@ -1,5 +1,5 @@
 //
-//  KitSelectionViewController.swift
+//  StoryModeKitSelectionViewController.swift
 //  Indi
 //
 //  Created by Alexander Sivko on 19.05.23.
@@ -7,17 +7,19 @@
 
 import UIKit
 
-class KitSelectionViewController: UIViewController {
+final class StoryModeKitSelectionViewController: UIViewController {
+    //MARK: - Variables
     @IBOutlet var collectionView: UICollectionView!
+    private var viewModel = StoryModeKitSelectionViewModel()
     
-    var studyStageRawValue = 0
-    
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        addLongGesture()
         tuneUI()
     }
     
+    //MARK: - Private Methods
     private func tuneUI() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = UIColor.indiMainBlue
@@ -32,7 +34,9 @@ class KitSelectionViewController: UIViewController {
         layout.itemSize = CGSize.init(width: 130, height: 130)
 
         collectionView.collectionViewLayout = layout
-        
+    }
+    
+    private func addLongGesture() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureAction(_:)))
         collectionView.addGestureRecognizer(longPressGesture)
     }
@@ -43,16 +47,16 @@ class KitSelectionViewController: UIViewController {
         
         let location = gesture.location(in: collectionView)
         if let indexPath = collectionView.indexPathForItem(at: location) {
-            if KitsManager.shared.isBasicKitCheck(for: indexPath, for: studyStageRawValue) {
+            if viewModel.isBasicKitCheck(for: indexPath) {
                 let alert = UIAlertController(title: "Базовые наборы слов удалять нельзя", message: nil, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ок", style: .default)
                 alert.addAction(okAction)
                 self.present(alert, animated: true)
             } else {
                 let alert = UIAlertController(title: "Вы действительно хотите удалить этот набор слов?", message: nil, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ок", style: .destructive) { _ in
-                    KitsManager.shared.deleteUserKit(for: indexPath, for: self.studyStageRawValue)
-                    self.collectionView.reloadData()
+                let okAction = UIAlertAction(title: "Ок", style: .destructive) { [weak self] _ in
+                    self?.viewModel.deleteUserKit(for: indexPath)
+                    self?.collectionView.reloadData()
                 }
                 let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
                 alert.addAction(okAction)
@@ -63,32 +67,23 @@ class KitSelectionViewController: UIViewController {
     }
 }
 
-extension KitSelectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+//MARK: - CollectionView Data Source and Delegate
+extension StoryModeKitSelectionViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return KitsManager.shared.countOfKits(for: studyStageRawValue)
+        return viewModel.numberOfItemsInSection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! KitSelectionCollectionViewCell
-        
-        var totalHeight: Double {
-            Double(cell.frame.height)
-        }
-        var coefficient: Double {
-            totalHeight / 100
-        }
-        let kitName = KitsManager.shared.getKitName(for: studyStageRawValue, with: indexPath)
-
-        cell.progressViewHeight.constant = CGFloat(Double(UserDataManager.shared.getUserResult(for: kitName)) * coefficient)
-        cell.label.text = KitsManager.shared.getKitName(for: studyStageRawValue, with: indexPath)
-        cell.testResultLabel.text = "\(UserDataManager.shared.getUserResult(for: kitName))%"
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! StoryModeKitSelectionCollectionViewCell
+        let cellViewModel = viewModel.cellViewModel(for: indexPath)
+        cell.viewModel = cellViewModel
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
-        if let testVC = sb.instantiateViewController(withIdentifier: "TestVC") as? TestViewController {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: chosenTestNotificationKey), object: (indexPath, studyStageRawValue))
+        if let testVC = sb.instantiateViewController(withIdentifier: "TestVC") as? StoryModeTestingViewController {
+            viewModel.postChosenTestNotification(for: indexPath)
             self.navigationController?.pushViewController(testVC, animated: true)
         }
     }

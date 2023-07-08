@@ -9,6 +9,7 @@ import Foundation
 
 let chosenExamNotificationKey = "com.indi.chosenExam.notificationKey"
 let chosenTestNotificationKey = "com.indi.chosenTest.notificationKey"
+let chosenStudyStageNotificationKey = "com.indi.chosenStudyStage.notificationKey"
 let testNotificationKey = "com.indi.testResult.notificationKey"
 let examResultNotificationKey = "com.indi.examResult.notificationKey"
 let chosenTrainingNotificationKey = "com.indi.trainingResult.notificationKey"

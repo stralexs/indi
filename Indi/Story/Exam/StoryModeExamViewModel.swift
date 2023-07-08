@@ -1,5 +1,5 @@
 //
-//  ExamModel.swift
+//  StoryModeExamViewModel.swift
 //  Indi
 //
 //  Created by Alexander Sivko on 20.05.23.
@@ -8,7 +8,18 @@
 import Foundation
 import UIKit
 
-class ExamModel: Testing {
+final class StoryModeExamViewModel: Testing {
+    //MARK: - Private Variables
+    private var examName: String = ""
+    private var kitsForExam: [Int] = []
+    private var examQuestions: [Question] = []
+    private var totalQuestionsCount: Int = 0
+    private var correctAnswersCount: Int = 0
+    
+    //MARK: - Public Variables
+    var userAnswer: String?
+    
+    //MARK: - Private Methods
     private func createNotificationCenterObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(createKitsForExam(_:)), name: Notification.Name(rawValue: chosenExamNotificationKey), object: nil)
     }
@@ -34,14 +45,11 @@ class ExamModel: Testing {
             }
         }
     }
-    
-    var examName: String = ""
-    private var kitsForExam: [Int] = []
-    private var examQuestions: [Question] = []
-    private var totalQuestionsCount: Int = 0
-    private var correctAnswersCount: Int = 0
-    
-    var userAnswer: String?
+        
+    //MARK: - Public Methods
+    func userResultForExam() -> Int {
+        return UserDataManager.shared.getUserResult(for: examName)
+    }
     
     func testStart() {
         var allExamQuestions = KitsManager.shared.getKitsForExam(with: kitsForExam).shuffled()
@@ -102,11 +110,9 @@ class ExamModel: Testing {
         totalQuestionsCount = 0
         examQuestions = []
     }
-
+    
+    //MARK: - Initialization
     init() {
         createNotificationCenterObserver()
-    }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
 }

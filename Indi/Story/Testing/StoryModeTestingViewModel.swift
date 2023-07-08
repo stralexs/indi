@@ -1,5 +1,5 @@
 //
-//  TestingModel.swift
+//  StoryModeTestingViewModel.swift
 //  Indi
 //
 //  Created by Alexander Sivko on 19.05.23.
@@ -8,7 +8,19 @@
 import Foundation
 import UIKit
 
-class TestingModel: Testing {
+final class StoryModeTestingViewModel: Testing {
+    //MARK: - Private Variables
+    private var selectedStudyStage: Int?
+    private var selectedKit: Int?
+    private var selectedKitName: String?
+    private var testingQuestions: [Question] = []
+    private var totalQuestionsCount: Int = 0
+    private var correctAnswersCount: Int = 0
+    
+    //MARK: - Public Variables
+    var userAnswer: String?
+    
+    //MARK: - Private Methods
     private func createNotificationCenterObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(setSelectedKit(_:)), name: Notification.Name(rawValue: chosenTestNotificationKey), object: nil)
     }
@@ -21,16 +33,7 @@ class TestingModel: Testing {
         }
     }
     
-    private var selectedStudyStage: Int?
-    private var selectedKit: Int?
-    private var selectedKitName: String?
-    
-    private var testingQuestions: [Question] = []
-    private var totalQuestionsCount: Int = 0
-    private var correctAnswersCount: Int = 0
-    
-    var userAnswer: String?
-    
+    //MARK: - Public Methods
     func testStart() {
         guard let selectedStudyStage = selectedStudyStage,
               let selectedKit = selectedKit else { return }
@@ -88,10 +91,8 @@ class TestingModel: Testing {
         testingQuestions = []
     }
     
+    //MARK: - Initialization
     init() {
         createNotificationCenterObserver()
-    }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
 }

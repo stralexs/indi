@@ -9,6 +9,25 @@ import Foundation
 import UIKit
 
 final class TrainingModeTestingViewModel: Testing {
+    //MARK: - Private Variables
+    private var selectedKits: [IndexPath]?
+    private var selectedQuestionsCount: Int?
+    private var totalQuestionsCountForProgress: Int = 0
+    private var totalCorrectAnswersCountForProgress: Int = 0
+    private var testingQuestions: [Question] = []
+    private var totalQuestionsCount: Int = 0
+    private var correctAnswersCount: Int = 0
+    private var incorrectAnswers: [Question] = []
+    
+    //MARK: - Public Variables
+    var testingProgress: Double {
+        var testResult: Double = 0
+        testResult = Double(totalCorrectAnswersCountForProgress) / Double(totalQuestionsCountForProgress)
+        return testResult
+    }
+    var userAnswer: String?
+    
+    //MARK: - Private Methods
     private func createNotificationCenterObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(createTraining(_:)), name: Notification.Name(rawValue: chosenTrainingNotificationKey), object: nil)
     }
@@ -20,25 +39,7 @@ final class TrainingModeTestingViewModel: Testing {
         }
     }
     
-    private var selectedKits: [IndexPath]?
-    private var selectedQuestionsCount: Int?
-        
-    private var totalQuestionsCountForProgress: Int = 0
-    private var totalCorrectAnswersCountForProgress: Int = 0
-    
-    private var testingQuestions: [Question] = []
-    private var totalQuestionsCount: Int = 0
-    private var correctAnswersCount: Int = 0
-    private var incorrectAnswers: [Question] = []
-    
-    var testingProgress: Double {
-        var testResult: Double = 0
-        testResult = Double(totalCorrectAnswersCountForProgress) / Double(totalQuestionsCountForProgress)
-        return testResult
-    }
-    
-    var userAnswer: String?
-    
+    //MARK: - Public Methods
     func testStart() {
         guard let selectedKits = selectedKits,
               let selectedQuestionsCount = selectedQuestionsCount else { return }
@@ -117,6 +118,7 @@ final class TrainingModeTestingViewModel: Testing {
         incorrectAnswers = []
     }
     
+    //MARK: - Initialization
     init() {
         createNotificationCenterObserver()
     }
