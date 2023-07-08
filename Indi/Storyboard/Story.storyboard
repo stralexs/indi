@@ -500,7 +500,7 @@
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yb1-vq-0tg">
                                                     <rect key="frame" x="3" y="3" width="161" height="138"/>
-                                                    <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="25"/>
+                                                    <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="22"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -718,10 +718,10 @@
             </objects>
             <point key="canvasLocation" x="8285" y="2099"/>
         </scene>
-        <!--Main Story View Controller-->
+        <!--Story Mode View Controller-->
         <scene sceneID="lrd-R4-aqg">
             <objects>
-                <viewController storyboardIdentifier="MainVC" id="SIC-gv-CMI" customClass="MainStoryViewController" customModule="Indi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainVC" id="SIC-gv-CMI" customClass="StoryModeViewController" customModule="Indi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M2L-bh-F9i">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="2310"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

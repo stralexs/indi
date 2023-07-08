@@ -21,7 +21,7 @@
 		42210DF629FD243300CE37D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42210DF429FD243300CE37D1 /* Main.storyboard */; };
 		42210DF829FD243400CE37D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42210DF729FD243400CE37D1 /* Assets.xcassets */; };
 		4222B49B2A25FB90003C4343 /* TestingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4222B49A2A25FB90003C4343 /* TestingProtocol.swift */; };
-		422AC1142A1F77EA00B0B941 /* MainStoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AC1132A1F77EA00B0B941 /* MainStoryModel.swift */; };
+		422AC1142A1F77EA00B0B941 /* StoryModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AC1132A1F77EA00B0B941 /* StoryModeViewModel.swift */; };
 		424B53A929FFABC0002AE9D9 /* StoryModeTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424B53A829FFABC0002AE9D9 /* StoryModeTestingViewController.swift */; };
 		425A0EB92A1E0F05009154D0 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A0EB82A1E0F05009154D0 /* UserDataManager.swift */; };
 		425B67D02A1FB392003AA954 /* NetworkNewKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B67CF2A1FB392003AA954 /* NetworkNewKitViewController.swift */; };
@@ -50,7 +50,7 @@
 		42C1B4B32A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1B4B22A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift */; };
 		42D057932A2603350001BF33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42D057922A2603350001BF33 /* LaunchScreen.storyboard */; };
 		42D57D162A0F8AED00991007 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D57D152A0F8AED00991007 /* CoreDataManager.swift */; };
-		42DC4B2B2A1754D000028E29 /* MainStoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DC4B2A2A1754D000028E29 /* MainStoryViewController.swift */; };
+		42DC4B2B2A1754D000028E29 /* StoryModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DC4B2A2A1754D000028E29 /* StoryModeViewController.swift */; };
 		42DE84652A18BEAE00E48956 /* StoryModeExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE84642A18BEAE00E48956 /* StoryModeExamViewController.swift */; };
 		42DE84672A18BEC500E48956 /* StoryModeExamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE84662A18BEC500E48956 /* StoryModeExamViewModel.swift */; };
 		42EF1AAE29FFD67800D1CD77 /* KitsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF1AAD29FFD67800D1CD77 /* KitsManager.swift */; };
@@ -81,7 +81,7 @@
 		42210DF729FD243400CE37D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42210DFC29FD243400CE37D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4222B49A2A25FB90003C4343 /* TestingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingProtocol.swift; sourceTree = "<group>"; };
-		422AC1132A1F77EA00B0B941 /* MainStoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStoryModel.swift; sourceTree = "<group>"; };
+		422AC1132A1F77EA00B0B941 /* StoryModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeViewModel.swift; sourceTree = "<group>"; };
 		424B53A829FFABC0002AE9D9 /* StoryModeTestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeTestingViewController.swift; sourceTree = "<group>"; };
 		425A0EB82A1E0F05009154D0 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		425B67CF2A1FB392003AA954 /* NetworkNewKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNewKitViewController.swift; sourceTree = "<group>"; };
@@ -110,7 +110,7 @@
 		42C1B4B22A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		42D057922A2603350001BF33 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42D57D152A0F8AED00991007 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		42DC4B2A2A1754D000028E29 /* MainStoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStoryViewController.swift; sourceTree = "<group>"; };
+		42DC4B2A2A1754D000028E29 /* StoryModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeViewController.swift; sourceTree = "<group>"; };
 		42DE84642A18BEAE00E48956 /* StoryModeExamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeExamViewController.swift; sourceTree = "<group>"; };
 		42DE84662A18BEC500E48956 /* StoryModeExamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeExamViewModel.swift; sourceTree = "<group>"; };
 		42EF1AAD29FFD67800D1CD77 /* KitsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitsManager.swift; sourceTree = "<group>"; };
@@ -199,8 +199,8 @@
 		422AC1152A1F77EF00B0B941 /* Story */ = {
 			isa = PBXGroup;
 			children = (
-				42DC4B2A2A1754D000028E29 /* MainStoryViewController.swift */,
-				422AC1132A1F77EA00B0B941 /* MainStoryModel.swift */,
+				42DC4B2A2A1754D000028E29 /* StoryModeViewController.swift */,
+				422AC1132A1F77EA00B0B941 /* StoryModeViewModel.swift */,
 				42FF604C2A1A336200375ACF /* Settings and Statistics */,
 				42FF604D2A1A33B800375ACF /* Kit Selection */,
 				42DE84682A18BEDA00E48956 /* Exam */,
@@ -449,7 +449,7 @@
 				426B55112A2348DF004A87E0 /* LocalNotificationsManager.swift in Sources */,
 				42BCF6F42A5016710076837B /* NewKitViewController.swift in Sources */,
 				421801152A446A99004B9020 /* NewKitSelectionViewController.swift in Sources */,
-				422AC1142A1F77EA00B0B941 /* MainStoryModel.swift in Sources */,
+				422AC1142A1F77EA00B0B941 /* StoryModeViewModel.swift in Sources */,
 				42FF604B2A1A220F00375ACF /* SettingsAndStatisticsViewModel.swift in Sources */,
 				42EF93D12A3B6CB000C42646 /* StudyStageEnumeration.swift in Sources */,
 				4281FE3C2A4DC84600AFD405 /* SoundManager.swift in Sources */,
@@ -468,7 +468,7 @@
 				420EE8152A17BB8C00E55188 /* StoryModeTestingViewModel.swift in Sources */,
 				428DC3632A3F41BA00708F37 /* TabBarController.swift in Sources */,
 				4295363A2A1797BB0028DBA4 /* Question+CoreDataProperties.swift in Sources */,
-				42DC4B2B2A1754D000028E29 /* MainStoryViewController.swift in Sources */,
+				42DC4B2B2A1754D000028E29 /* StoryModeViewController.swift in Sources */,
 				42EF93CF2A3B6C0100C42646 /* ObservableObject.swift in Sources */,
 				4222B49B2A25FB90003C4343 /* TestingProtocol.swift in Sources */,
 				429536392A1797BB0028DBA4 /* Question+CoreDataClass.swift in Sources */,

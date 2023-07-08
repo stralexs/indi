@@ -1,5 +1,5 @@
 //
-//  MainStoryViewController.swift
+//  StoryModeViewController.swift
 //  Indi
 //
 //  Created by Alexander Sivko on 19.05.23.
@@ -7,19 +7,16 @@
 
 import UIKit
 
-class MainStoryViewController: UIViewController {
+final class StoryModeViewController: UIViewController {
+    //MARK: - Variables
     @IBOutlet var backgroundView: UIView!
-    
     @IBOutlet var studyStageButtons: [UIButton]!
     @IBOutlet var examButtons: [UIButton]!
     @IBOutlet var finalStudyStageButtons: [UIButton]!
-        
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var userAvatarImage: UIImageView!
-        
     @IBOutlet var becomeIndigenousLabel: UILabel!
     @IBOutlet var gameCompletionLabel: UILabel!
-    
     @IBOutlet var userInfoBackground: UIView!
     
     @IBOutlet var newbornToExamLine: UIView!
@@ -35,36 +32,30 @@ class MainStoryViewController: UIViewController {
     @IBOutlet var variationsToSideJobsLine: UIView!
     @IBOutlet var variationsToFinalExamLine: UIImageView!
     
-    private let mainStoryModel = MainStoryModel()
+    private var viewModel = StoryModeViewModel()
     
-    //MARK: - viewDidLoad
-    
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-        
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
         
         backgroundView.backgroundColor = UIColor.indiMainBlue
         userInfoBackground.backgroundColor = UIColor.indiLightPink
         userInfoBackground.layer.cornerRadius = 20
-                
         studyStageButtons.forEach { button in
             button.layer.cornerRadius = 20
             button.layer.borderWidth = 5
             button.layer.borderColor = UIColor.white.cgColor
             button.titleLabel?.textAlignment = .center
         }
-        
         examButtons.forEach { button in
             button.layer.cornerRadius = 20
             button.tintColor = .white
             button.backgroundColor = UIColor.indiSaturatedPink
             button.titleLabel?.textAlignment = .center
-            button.setTitle(StudyStage.getExamName(studyStage: button.tag), for: .normal)
+            button.setTitle(viewModel.examName(for: button.tag), for: .normal)
         }
-        
         finalStudyStageButtons.forEach { button in
             button.layer.cornerRadius = 20
             button.layer.borderWidth = 5
@@ -72,43 +63,31 @@ class MainStoryViewController: UIViewController {
             button.titleLabel?.textAlignment = .center
             button.tintColor = UIColor.indiLightPink
         }
-        
         finalStudyStageButtons[0].titleLabel?.numberOfLines = 2
         finalStudyStageButtons[1].titleLabel?.numberOfLines = 2
-        
-        userNameLabel.text = UserDataManager.shared.getUserName()
     }
-    
-    //MARK: - viewWillAppear
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         navigationController?.setNavigationBarHidden(true, animated: false)
-        
         navigationItem.backBarButtonItem?.tintColor = UIColor.indiMainYellow
         
-        userAvatarImage.image = UIImage(named: UserDataManager.shared.getUserAvatar())
-        userNameLabel.text = UserDataManager.shared.getUserName()
+        userAvatarImage.image = UIImage(named: viewModel.userAvatar)
+        userNameLabel.text = viewModel.userName
         userNameLabel.adjustsFontSizeToFitWidth = true
         
         examButtons.forEach { button in
-            button.restorationIdentifier = UserDataManager.shared.getExamCompletion(for: button.tag)
-            if button.restorationIdentifier == "Uncompleted" {
-                if mainStoryModel.examAccessControl(for: button.tag) {
-                    button.alpha = 1
-                    if UserDataManager.shared.getUserResult(for: StudyStage.getExamName(studyStage: button.tag)) >= 50 {
-                        UserDataManager.shared.saveExamCompletion(for: button.tag)
-                    }
-                    button.restorationIdentifier = UserDataManager.shared.getExamCompletion(for: button.tag)
-                } else {
-                    button.alpha = 0.5
-                }
+            button.restorationIdentifier = viewModel.setExamButtonCompletion(for: button.tag)
+            if viewModel.setExamButtonAccess(for: button.tag) {
+                button.alpha = 1
+                button.restorationIdentifier = viewModel.setExamButtonCompletion(for: button.tag)
+            } else {
+                button.alpha = 0.5
             }
         }
                 
         studyStageButtons.forEach { button in
-            if mainStoryModel.studyStageAccessControl(for: button.tag) {
+            if viewModel.studyStageAccessControl(for: button.tag) {
                 button.alpha = 1
             } else {
                 button.alpha = 0.5
@@ -116,9 +95,9 @@ class MainStoryViewController: UIViewController {
         }
         
         finalStudyStageButtons.forEach { button in
-            button.restorationIdentifier = UserDataManager.shared.getStageSelection(for: button.tag)
-            if button.restorationIdentifier == "Unselected" {
-                if mainStoryModel.studyStageAccessControl(for: button.tag) {
+            button.restorationIdentifier = viewModel.setFinalStudyStageButtonSelection(for: button.tag)
+            if viewModel.setFinalStudyStageButtonSelection(for: button.tag) {
+                if viewModel.studyStageAccessControl(for: button.tag) {
                     button.backgroundColor = UIColor.indiLightPink
                     button.tintColor = .black
                     button.alpha = 1
@@ -133,7 +112,7 @@ class MainStoryViewController: UIViewController {
             }
         }
         
-        if UserDataManager.shared.getUserResult(for: "Final exam") >= 50 {
+        if viewModel.isFinalExamCompleted {
             becomeIndigenousLabel.isHidden = true
             gameCompletionLabel.isHidden = false
         } else {
@@ -144,23 +123,19 @@ class MainStoryViewController: UIViewController {
         tuneLinesUI()
     }
     
-    //MARK: - viewWillDisappear
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
-    //MARK: - Tuninig UI of lines
-    
+    //MARK: - Tuninig UI of Lines
     private func tuneLinesUI() {
         if examButtons[0].alpha == 0.5 {
             newbornToExamLine.alpha = 0.5
         } else {
             newbornToExamLine.alpha = 1
         }
-        if mainStoryModel.studyStageAccessControl(for: 1) {
+        if viewModel.studyStageAccessControl(for: 1) {
             newbornExamToPreschoolLine.alpha = 1
         } else {
             newbornExamToPreschoolLine.alpha = 0.5
@@ -171,7 +146,7 @@ class MainStoryViewController: UIViewController {
         } else {
             preschoolToExamLine.alpha = 1
         }
-        if mainStoryModel.studyStageAccessControl(for: 2) {
+        if viewModel.studyStageAccessControl(for: 2) {
             preschoolExamToEarlySchoolLine.alpha = 1
         } else {
             preschoolExamToEarlySchoolLine.alpha = 0.5
@@ -182,7 +157,7 @@ class MainStoryViewController: UIViewController {
         } else {
             earlySchoolToExamLine.alpha = 1
         }
-        if mainStoryModel.studyStageAccessControl(for: 3) && mainStoryModel.studyStageAccessControl(for: 4) {
+        if viewModel.studyStageAccessControl(for: 3) && viewModel.studyStageAccessControl(for: 4) {
             earlySchoolExamToHighAndLifeLine.alpha = 1
         } else {
             earlySchoolExamToHighAndLifeLine.alpha = 0.5
@@ -193,7 +168,7 @@ class MainStoryViewController: UIViewController {
         } else {
             highAndLifeToExamLine.alpha = 1
         }
-        if mainStoryModel.studyStageAccessControl(for: 5) {
+        if viewModel.studyStageAccessControl(for: 5) {
             highAndLifeExamToVariationsLine.alpha = 1
         } else {
             highAndLifeExamToVariationsLine.alpha = 0.5
@@ -222,9 +197,8 @@ class MainStoryViewController: UIViewController {
         }
     }
     
-    //MARK: - Casual tests and exams IBActions
-    
-    @IBAction func studyStageButtonIsPressed(_ sender: UIButton) {
+    //MARK: - Casual Tests and Exams
+    @IBAction private func studyStageButtonIsPressed(_ sender: UIButton) {
         if sender.alpha == 0.5 {
             let alert = UIAlertController(title: "Доступ закрыт!", message: "Чтобы открыть доступ к данной стадии обучения, вы должны пройти экзамен предыдущего уровня не менее чем на 50%", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ок", style: .default)
@@ -240,7 +214,7 @@ class MainStoryViewController: UIViewController {
         }
     }
     
-    @IBAction func examButtonIsPressed(_ sender: UIButton) {
+    @IBAction private func examButtonIsPressed(_ sender: UIButton) {
         if sender.alpha == 0.5 {
             let alert = UIAlertController(title: "Доступ закрыт!", message: "Чтобы открыть доступ к экзамену, вы должны выполнить все тесты соответствующей стадии обучения более чем на 70%", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ок", style: .default)
@@ -256,20 +230,18 @@ class MainStoryViewController: UIViewController {
         }
     }
     
-    //MARK: - Final Tests with Variability IBActions
-    
-    @IBAction func finalStudyStageButtonIsPressed(_ sender: UIButton) {
+    //MARK: - Final Tests with Variability
+    @IBAction private func finalStudyStageButtonIsPressed(_ sender: UIButton) {
         if sender.alpha == 0.5 {
             let alert = UIAlertController(title: "Доступ закрыт!", message: "Чтобы открыть доступ к данной стадии обучения, вы должны пройти экзамен предыдущего уровня не менее чем на 50%", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ок", style: .default)
             alert.addAction(okAction)
             self.present(alert, animated: true)
+            
         } else if sender.backgroundColor == UIColor.indiLightPink {
             let alert = UIAlertController(title: "Пора выбирать!", message: "На этом этапе вы можете выбирать, что хотите учить. Открыть эту стадию обучения? (Вопросы из этой стадии появятся на финальном экзамене)", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ок", style: .cancel) { _ in
-                UserDataManager.shared.saveStageSelection(for: sender.tag)
-                sender.restorationIdentifier = UserDataManager.shared.getStageSelection(for: sender.tag)
-                UserDataManager.shared.saveSelectedStages(for: sender.tag)
+                sender.restorationIdentifier = self.viewModel.saveSelectedStage(for: sender.tag)
                 let sb = UIStoryboard(name: "Main", bundle: nil)
                 if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
                     NotificationCenter.default.post(name: Notification.Name(rawValue: chosenStudyStageNotificationKey), object: sender.tag)
@@ -281,6 +253,7 @@ class MainStoryViewController: UIViewController {
             alert.addAction(okAction)
             alert.addAction(cancelAction)
             self.present(alert, animated: true)
+            
         } else {
             let sb = UIStoryboard(name: "Main", bundle: nil)
             if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
@@ -291,7 +264,8 @@ class MainStoryViewController: UIViewController {
         }
     }
     
-    @IBAction func settingsButtonIsPressed(_ sender: UIButton) {
+    //MARK: - Settings and Statistics
+    @IBAction private func settingsButtonIsPressed(_ sender: UIButton) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         if let settingsVC = sb.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsAndStatisticsViewController {
             settingsVC.hidesBottomBarWhenPushed = true
