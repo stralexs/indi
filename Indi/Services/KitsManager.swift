@@ -1,5 +1,5 @@
 //
-//  KitsLibrary.swift
+//  KitsManager.swift
 //  Indi
 //
 //  Created by Alexander Sivko on 1.05.23.
@@ -14,7 +14,6 @@ final class KitsManager {
     
     private func createKits() {
         // MARK: - Newborn Kits
-                
         let mother = Question(context: CoreDataManager.shared.context)
         mother.question = "Мама"
         mother.correctAnswer = "Mother"
@@ -150,7 +149,6 @@ final class KitsManager {
         newbornFarmAnimalsKit.name = "Farm animals"
         
         // MARK: - Preschool Kits
-        
         let missingB = Question(context: CoreDataManager.shared.context)
         missingB.question = "A, _, C, D"
         missingB.correctAnswer = "B"
@@ -289,8 +287,7 @@ final class KitsManager {
         preschoolBasicWords.questions = [left, right, spoon, plate, fork, knife, please, thanks, howOldAreYou, tea]
         preschoolBasicWords.name = "More basic words"
         
-        // MARK: - Early school kits
-        
+        // MARK: - Early School Kits
         let twoPlusTwo = Question(context: CoreDataManager.shared.context)
         twoPlusTwo.question = "Two + two = ?"
         twoPlusTwo.correctAnswer = "Four"
@@ -371,8 +368,7 @@ final class KitsManager {
         earlySchoolBasicEnglishKit.questions = [did, pencilQuestion, pen, menMultiple, women, amazing, appleArticle]
         earlySchoolBasicEnglishKit.name = "Basic English grammar"
         
-        // MARK: - High school kits
-        
+        // MARK: - High School Kits
         let friends = Question(context: CoreDataManager.shared.context)
         friends.question = "Переведите предложение: Это дом моих друзей"
         friends.correctAnswer = "This is my friends' house"
@@ -549,8 +545,7 @@ final class KitsManager {
         highSchoolIrregularVerbsKit.questions = [broken, chose, cut, understood, think, written, drew, found, cost, driven]
         highSchoolIrregularVerbsKit.name = "Irregular verbs"
         
-        // MARK: - Life activities kits
-        
+        // MARK: - Life Activities Kits
         let commercial = Question(context: CoreDataManager.shared.context)
         commercial.question = "A commercially sponsored ad on radio or television"
         commercial.correctAnswer = "Commerical"
@@ -685,8 +680,7 @@ final class KitsManager {
         shoppingKit.questions = [change, cheque, credit, bill, cash, inexpensive, luxury, mall, payForPurchase, bargain]
         shoppingKit.name = "Shopping"
         
-        //MARK: - Programming University kits
-        
+        //MARK: - Programming University Kits
         let varr = Question(context: CoreDataManager.shared.context)
         varr.question = "'var' stands for ___"
         varr.correctAnswer = "Variable"
@@ -775,8 +769,7 @@ final class KitsManager {
         computerKit.questions = [software, hardDisk, browser, icon, cpu, formatting, processing, cookies, motherboard, mouseInput]
         computerKit.name = "Computer"
         
-        // MARK: - Construction University kits
-        
+        // MARK: - Construction University Kits
         let concrete = Question(context: CoreDataManager.shared.context)
         concrete.question = "Composite material that is created by mixing binding material along with the aggregate and water"
         concrete.correctAnswer = "Concrete"
@@ -841,8 +834,7 @@ final class KitsManager {
         constructionParticipantsKit.questions = [foreman, contractor, subcontractor, architect, designer]
         constructionParticipantsKit.name = "Construction participants"
         
-        // MARK: - Side job kits
-        
+        // MARK: - Side Job Kits
         let waiter = Question(context: CoreDataManager.shared.context)
         waiter.question = "A person who works in food-serving and drinking establishments"
         waiter.correctAnswer = "Waiter"
@@ -914,8 +906,7 @@ final class KitsManager {
         courierKit.name = "Courier"
         
 
-        // MARK: - Removing duplicates and saving kits
-        
+        // MARK: - Removing Duplicates and Saving Kits
         func removingDuplicatesFetch() {
             let kitsNames = ["Basic words", "More basic words", "Basic colors", "Farm animals", "Basic alphabet", "Body parts", "Maths", "Basic English grammar", "Irregular verbs", "Geography", "Biology", "Advanced English grammar", "Entertainment and media", "Sports", "Shopping", "Swift", "Computer", "Construction materials", "Construction participants", "Waiter", "Taxi driver", "Courier"]
             
@@ -968,8 +959,7 @@ final class KitsManager {
         }
     }
     
-    // MARK: - Private common functions
-    
+    // MARK: - Private Common Methods
     private func save() {
         CoreDataManager.shared.save { error in
             guard let _ = error else {
@@ -988,8 +978,7 @@ final class KitsManager {
         return fetchRequest
     }
     
-    // MARK: - Functions to get info from Database
-    
+    // MARK: - Methods to Get Info from Database
     func getAllKitsNames() -> [String] {
         var fetchedKits: [Kit] = []
         do {
@@ -1089,8 +1078,7 @@ final class KitsManager {
         return outputQuestions
     }
     
-    // MARK: - Creating and deleting User's kits
-    
+    // MARK: - Creating and Deleting User's Kits
     func createQuestionWithoutSaving(_ question: String, _ correctAnswer: String, _ incorrectAnswers: [String]) -> Question {
         let newQuestion = Question(context: CoreDataManager.shared.context)
         newQuestion.question = question
@@ -1145,7 +1133,6 @@ final class KitsManager {
     }
     
     // MARK: - Initialization
-    
     private init() {
         createKits()
     }

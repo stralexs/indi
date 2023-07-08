@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class SettingsAndStatisticsViewModel {
+final class SettingsAndStatisticsViewModel {
     //MARK: - Private Variables
     private var defaultAvatars: [UIImage] = []
     private var userStatistics: [String: String] = [

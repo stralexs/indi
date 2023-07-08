@@ -8,7 +8,7 @@
 import Foundation
 import UserNotifications
 
-class LocalNotificationsManager {
+final class LocalNotificationsManager {
     let notificationCenter = UNUserNotificationCenter.current()
     
     private func notificationSetup() {

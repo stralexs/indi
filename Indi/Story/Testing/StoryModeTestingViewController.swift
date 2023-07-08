@@ -38,8 +38,8 @@ final class StoryModeTestingViewController: UIViewController {
         if let result = notification.object {
             let alert = UIAlertController(title: "Ваш результат: \(result)%", message: nil, preferredStyle: .alert)
             
-            let backAction = UIAlertAction(title: "В главное меню", style: .default) { _ in
-                self.navigationController?.popToRootViewController(animated: true)
+            let backAction = UIAlertAction(title: "К выбору тестов", style: .default) { _ in
+                self.navigationController?.popViewController(animated: true)
             }
             let onceAgainAction = UIAlertAction(title: "Попробовать ещё раз", style: .cancel) {_ in
                 self.viewModel.testStart()

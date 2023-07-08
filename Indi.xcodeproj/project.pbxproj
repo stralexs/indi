@@ -187,7 +187,7 @@
 				424BF28F2A0AB811007A013C /* CoreData */,
 				42EF93D22A3B6CD300C42646 /* Services */,
 				422AC1152A1F77EF00B0B941 /* Story */,
-				42943A632A1BD09700D5BF62 /* New Kit */,
+				42943A632A1BD09700D5BF62 /* NewKit */,
 				42FF60502A1A545900375ACF /* Training */,
 				42050C372A4EFF7300DF9725 /* Storyboard */,
 				42C1B4B42A3B45A600D79211 /* SupportingFiles */,
@@ -240,7 +240,7 @@
 			path = StoryModeKitSelectionCollectionViewCell;
 			sourceTree = "<group>";
 		};
-		42943A632A1BD09700D5BF62 /* New Kit */ = {
+		42943A632A1BD09700D5BF62 /* NewKit */ = {
 			isa = PBXGroup;
 			children = (
 				421801142A446A99004B9020 /* NewKitSelectionViewController.swift */,
@@ -250,7 +250,7 @@
 				4205016D2A4CA0190071CE67 /* UserNewKit */,
 				425B67D32A1FB3A3003AA954 /* NetworkNewKit */,
 			);
-			path = "New Kit";
+			path = NewKit;
 			sourceTree = "<group>";
 		};
 		42C1B4AF2A3B403F00D79211 /* NewKitTableViewCell */ = {

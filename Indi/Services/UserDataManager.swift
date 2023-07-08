@@ -68,8 +68,7 @@ final class UserDataManager {
         let _: String = UserDefaults.standard.string(forKey: "UserAvatar") ?? "Cat_emoji"
     }
     
-    //MARK: - User's results and achievements
-    
+    //MARK: - User's Results and Achievements
     func createNewUserData(for newKitName: String) {
         UserDefaults.standard.set(0, forKey: newKitName)
     }
@@ -146,9 +145,7 @@ final class UserDataManager {
         return UserDefaults.standard.integer(forKey: keyName)
     }
     
-    
-    //MARK: - User's name and user's avatar
-    
+    //MARK: - User's Name and User's Avatar
     func saveUserName(for newName: String) {
         UserDefaults.standard.set(newName, forKey: "UserName")
     }
@@ -165,8 +162,7 @@ final class UserDataManager {
         return UserDefaults.standard.string(forKey: "UserAvatar") ?? "Cat_emoji"
     }
     
-    //MARK: - Exam completion
-    
+    //MARK: - Exam Completion
     func getExamCompletion(for buttonTag: Int) -> String {
         return UserDefaults.standard.string(forKey: String(buttonTag)) ?? "Uncompleted"
     }
@@ -175,8 +171,7 @@ final class UserDataManager {
         UserDefaults.standard.set("Completed", forKey: String(buttonTag))
     }
     
-    //MARK: - Final study stages selection
-    
+    //MARK: - Final Study Stages Selection
     func saveStageSelection(for buttonTag: Int) {
         switch buttonTag {
         case 5:
@@ -212,6 +207,7 @@ final class UserDataManager {
         return output
     }
 
+    //MARK: - Initialization
     private init() {
         createBasicUserData()
     }

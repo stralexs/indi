@@ -8,10 +8,12 @@
 import UIKit
 
 final class NewKitSelectionViewController: UIViewController {
+    //MARK: - Variables
     @IBOutlet var topBlurredView: UIVisualEffectView!
     @IBOutlet var buttonsBackgroundView: UIView!
     @IBOutlet var newKitButtons: [UIButton]!
     
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tuneUI()
@@ -25,6 +27,7 @@ final class NewKitSelectionViewController: UIViewController {
         }
     }
     
+    //MARK: - Methods
     private func tuneUI() {
         buttonsBackgroundView.layer.cornerRadius = 15
         buttonsBackgroundView.backgroundColor = UIColor.indiMainYellow

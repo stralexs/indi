@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsAndStatisticsViewController: UIViewController {
+final class SettingsAndStatisticsViewController: UIViewController {
     //MARK: - Variables
     @IBOutlet var nameTextField: UITextField!
     @IBOutlet var leftAvatarButton: UIButton!
