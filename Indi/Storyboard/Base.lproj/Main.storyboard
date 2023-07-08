@@ -35,10 +35,10 @@
             </objects>
             <point key="canvasLocation" x="8883" y="356"/>
         </scene>
-        <!--WorkoutTestVC-->
+        <!--TrainingTestVC-->
         <scene sceneID="g9o-Ra-wZb">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="WorkoutTestVC" storyboardName="Training" referencedIdentifier="WorkoutTestVC" id="GhK-Wt-jbh" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="TrainingTestVC" storyboardName="Training" referencedIdentifier="TrainingTestVC" id="GhK-Wt-jbh" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="76o-1K-2al" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="8881" y="448"/>

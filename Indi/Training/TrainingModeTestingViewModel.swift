@@ -1,5 +1,5 @@
 //
-//  TrainingTestingModel.swift
+//  TrainingModeTestingViewModel.swift
 //  Indi
 //
 //  Created by Alexander Sivko on 22.05.23.
@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-class TrainingModeTestingModel: Testing {
+final class TrainingModeTestingViewModel: Testing {
     private func createNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(createWorkout(_:)), name: Notification.Name(rawValue: chosenWorkoutNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(createTraining(_:)), name: Notification.Name(rawValue: chosenTrainingNotificationKey), object: nil)
     }
     
-    @objc private func createWorkout(_ notification: NSNotification) {
+    @objc private func createTraining(_ notification: NSNotification) {
         if let selectedKitsAndQuestions = notification.object as? (kits: [IndexPath], questions: Int) {
             selectedKits = selectedKitsAndQuestions.kits
             selectedQuestionsCount = selectedKitsAndQuestions.questions
@@ -96,10 +96,10 @@ class TrainingModeTestingModel: Testing {
         guard testingQuestions.isEmpty == false else { return }
         testingQuestions.removeFirst()
         if testingProgress == 1 {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: workoutIsDoneNotificationKey), object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: trainingIsDoneNotificationKey), object: nil)
         }
         if testingQuestions.count < 1 {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: workoutResultNotificationKey), object: [correctAnswersCount, totalQuestionsCount])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: trainingResultNotificationKey), object: [correctAnswersCount, totalQuestionsCount])
             correctAnswersCount = 0
         }
     }
@@ -119,8 +119,5 @@ class TrainingModeTestingModel: Testing {
     
     init() {
         createNotificationCenterObserver()
-    }
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
 }

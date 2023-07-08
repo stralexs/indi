@@ -161,7 +161,7 @@
         <!--Training Mode Testing View Controller-->
         <scene sceneID="Zg8-6Z-HIk">
             <objects>
-                <viewController storyboardIdentifier="WorkoutTestVC" id="Imx-AJ-MO5" customClass="TrainingModeTestingViewController" customModule="Indi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TrainingTestVC" id="Imx-AJ-MO5" customClass="TrainingModeTestingViewController" customModule="Indi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cSf-io-TCh">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -400,7 +400,7 @@
         <scene sceneID="PvV-l4-Bu6">
             <objects>
                 <navigationController storyboardIdentifier="UINavigationController-AwG-eE-By9" automaticallyAdjustsScrollViewInsets="NO" id="AwG-eE-By9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Тренировка" image="Workout" id="oy9-29-oeI"/>
+                    <tabBarItem key="tabBarItem" title="Тренировка" image="Training" id="oy9-29-oeI"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lqQ-3D-xgR">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -417,7 +417,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Workout" width="25" height="25"/>
+        <image name="Training" width="25" height="25"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

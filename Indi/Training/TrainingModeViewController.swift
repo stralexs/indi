@@ -119,11 +119,11 @@ final class TrainingModeViewController: UIViewController {
         }
         
         let sb = UIStoryboard(name: "Main", bundle: nil)
-        if let workoutTestVC = sb.instantiateViewController(withIdentifier: "WorkoutTestVC") as? TrainingModeTestingViewController,
+        if let trainingTestVC = sb.instantiateViewController(withIdentifier: "TrainingTestVC") as? TrainingModeTestingViewController,
            let indexPaths = tableView.indexPathsForSelectedRows {
             viewModel.userSettingsForTraining = (indexPaths, Int(slider.value))
-            workoutTestVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(workoutTestVC, animated: true)
+            trainingTestVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(trainingTestVC, animated: true)
         }
     }
 }

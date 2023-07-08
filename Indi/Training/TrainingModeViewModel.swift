@@ -14,7 +14,7 @@ final class TrainingModeViewModel {
     
     var userSettingsForTraining: ([IndexPath], Int)? {
         didSet {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: chosenWorkoutNotificationKey), object: userSettingsForTraining)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: chosenTrainingNotificationKey), object: userSettingsForTraining)
         }
     }
     

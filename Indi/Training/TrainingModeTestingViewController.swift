@@ -1,5 +1,5 @@
 //
-//  TrainingTestingViewController.swift
+//  TrainingModeTestingViewController.swift
 //  Indi
 //
 //  Created by Alexander Sivko on 22.05.23.
@@ -7,7 +7,8 @@
 
 import UIKit
 
-class TrainingModeTestingViewController: UIViewController {
+final class TrainingModeTestingViewController: UIViewController {
+    //MARK: - Variables
     @IBOutlet var rootView: UIView!
     @IBOutlet var questionBackground: UIView!
     @IBOutlet var answersButtons: [UIButton]!
@@ -16,24 +17,29 @@ class TrainingModeTestingViewController: UIViewController {
     @IBOutlet var answerResultImage: UIImageView!
     @IBOutlet var progressView: UIProgressView!
     
-    private let trainingTestingModel = TrainingModeTestingModel()
+    private var viewModel = TrainingModeTestingViewModel()
     
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tuneUI()
-        trainingTestingModel.testStart()
-        trainingTestingModel.test(questionLabel: questionLabel, buttons: answersButtons, countLabel: questionsCountLabel)
+        viewModel.testStart()
+        viewModel.test(questionLabel: questionLabel, buttons: answersButtons, countLabel: questionsCountLabel)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(presentResult(_:)), name: Notification.Name(rawValue: workoutResultNotificationKey), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(workoutIsDone(_:)), name: Notification.Name(rawValue: workoutIsDoneNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(presentResult(_:)), name: Notification.Name(rawValue: trainingResultNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(trainingIsDone(_:)), name: Notification.Name(rawValue: trainingIsDoneNotificationKey), object: nil)
     }
     
-    @objc func workoutIsDone(_ notification: NSNotification) {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel.resetResults()
+    }
+    
+    //MARK: - Methods
+    @objc func trainingIsDone(_ notification: NSNotification) {
         let alert = UIAlertController(title: "Поздравляем, все слова выучены!", message: nil, preferredStyle: .alert)
         
         let backAction = UIAlertAction(title: "В главное меню", style: .cancel) { _ in
@@ -51,21 +57,14 @@ class TrainingModeTestingViewController: UIViewController {
                 self.navigationController?.popToRootViewController(animated: true)
             }
             let onceAgainAction = UIAlertAction(title: "Продолжить учить оставшиеся", style: .cancel) {_ in
-                self.trainingTestingModel.anotherTest()
-                self.trainingTestingModel.test(questionLabel: self.questionLabel, buttons: self.answersButtons, countLabel: self.questionsCountLabel)
+                self.viewModel.anotherTest()
+                self.viewModel.test(questionLabel: self.questionLabel, buttons: self.answersButtons, countLabel: self.questionsCountLabel)
             }
             alert.addAction(backAction)
             alert.addAction(onceAgainAction)
             
             self.present(alert, animated: true)
         }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        trainingTestingModel.resetResults()
-        NotificationCenter.default.removeObserver(self)
     }
     
     private func tuneUI() {       
@@ -91,34 +90,34 @@ class TrainingModeTestingViewController: UIViewController {
     
     @IBAction func answerButtonPressed(_ sender: UIButton) {
         sender.backgroundColor = UIColor.indiButtonPink
-        trainingTestingModel.userAnswer = sender.titleLabel?.text
+        viewModel.userAnswer = sender.titleLabel?.text
         rootView.isUserInteractionEnabled = false
-        if trainingTestingModel.isRightAnswerCheck() {
+        if viewModel.isRightAnswerCheck() {
             SoundManager.shared.playCorrectSound()
-            progressView.progress = Float(trainingTestingModel.testingProgress)
+            progressView.progress = Float(viewModel.testingProgress)
             answerResultImage.image = UIImage(named: "Right_png")
             questionLabel.isHidden = true
             answerResultImage.isHidden = false
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [self] _ in
-                trainingTestingModel.nextQuestion()
-                trainingTestingModel.test(questionLabel: questionLabel, buttons: answersButtons, countLabel: questionsCountLabel)
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+                self?.viewModel.nextQuestion()
+                self?.viewModel.test(questionLabel: self?.questionLabel, buttons: self?.answersButtons, countLabel: self?.questionsCountLabel)
                 sender.backgroundColor = UIColor.indiMainBlue
-                questionLabel.isHidden = false
-                answerResultImage.isHidden = true
-                rootView.isUserInteractionEnabled = true
+                self?.questionLabel.isHidden = false
+                self?.answerResultImage.isHidden = true
+                self?.rootView.isUserInteractionEnabled = true
             }
         } else {
             SoundManager.shared.playWrongSound()
             answerResultImage.image = UIImage(named: "Wrong_png")
             questionLabel.isHidden = true
             answerResultImage.isHidden = false
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [self] _ in
-                trainingTestingModel.nextQuestion()
-                trainingTestingModel.test(questionLabel: questionLabel, buttons: answersButtons, countLabel: questionsCountLabel)
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
+                self?.viewModel.nextQuestion()
+                self?.viewModel.test(questionLabel: self?.questionLabel, buttons: self?.answersButtons, countLabel: self?.questionsCountLabel)
                 sender.backgroundColor = UIColor.indiMainBlue
-                questionLabel.isHidden = false
-                answerResultImage.isHidden = true
-                rootView.isUserInteractionEnabled = true
+                self?.questionLabel.isHidden = false
+                self?.answerResultImage.isHidden = true
+                self?.rootView.isUserInteractionEnabled = true
             }
         }
     }
