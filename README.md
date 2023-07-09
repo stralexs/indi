@@ -4,7 +4,9 @@
 An English learning app
 </p>
 
-![Screenshot 2023-06-06 at 21 18 31](https://github.com/stralexs/indi/assets/123239625/87984af6-f795-48fc-8889-1d6aeee826a7)
+![1](https://github.com/stralexs/indi/assets/123239625/651ecc98-f3d3-412a-b7b6-d04e21649513)
+
+![2](https://github.com/stralexs/indi/assets/123239625/6ff435ed-769b-4690-a639-5b35ecb15611)
 
 ## Concept
 ### Problem: how to make a person with 0-level English knowledge a native speaker?
@@ -14,7 +16,7 @@ An English learning app
 
 ## Gameplay
 
-![ds](https://github.com/stralexs/indi/assets/123239625/d40efe6c-32d0-4f52-8355-0a47309db25b)
+![Deleting User achievements](https://github.com/stralexs/indi/assets/123239625/52d90abf-cf48-442f-972c-862a6047509a)
 
 ### General hierarchy of Study stages
 User goes through the levels of learning the language, starting with the simplest, ending with more and more complex:
