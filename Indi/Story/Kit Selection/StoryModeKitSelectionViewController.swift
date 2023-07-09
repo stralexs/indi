@@ -19,6 +19,11 @@ final class StoryModeKitSelectionViewController: UIViewController {
         tuneUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
+    }
+    
     //MARK: - Private Methods
     private func tuneUI() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
