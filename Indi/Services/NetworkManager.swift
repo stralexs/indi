@@ -64,7 +64,7 @@ final class NetworkManager {
     var isConnectedToInternet: ObservableObject<Bool> = ObservableObject(true)
         
     func retrieveQuestions(completion: @escaping ([Question]) -> ()) {
-        guard let url = URL(string: "https://api.jsonbin.io/v3/b/64a7e8379d312622a37bad64") else { return completion([]) }
+        guard let url = URL(string: "https://api.jsonbin.io/v3/b/64aac27a8e4aa6225ebb89bb") else { return completion([]) }
 
         let params: [String: Any] = [
             "userName": UserDataManager.shared.getUserName(),
