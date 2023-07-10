@@ -118,8 +118,9 @@ KitsManger class is responsible for fetching data, creating Kits and working wit
 User's achievements are stored in User Defaults and UserDataManager class is responsible for storing, saving and deleting User data.
 
 ### Architecture
-<img width="1067" alt="4" src="https://github.com/stralexs/indi/assets/123239625/fcc2dd26-4c98-4283-8d3d-95613897c1c5">
-<p align="center">
+![4](https://github.com/stralexs/indi/assets/123239625/a552ba60-d3d0-41b5-b91c-e25d1cdb2944)
+<p ![Uploading 4.jpg…]()
+align="center">
 App's MVVM Architecture
 </p>
 Architecture of the application is MVVM: each View Controller has a View Model, that interacts with KitsManger and UserDataManager classes, that are responsible for processing of data.
