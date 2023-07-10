@@ -118,7 +118,7 @@ KitsManger class is responsible for fetching data, creating Kits and working wit
 User's achievements are stored in User Defaults and UserDataManager class is responsible for storing, saving and deleting User data.
 
 ### Architecture
-<img width="1067" alt="4" src="https://github.com/stralexs/indi/assets/123239625/7dee779c-6a91-4633-96ac-daf210636039">
+<img width="1067" alt="4" src="https://github.com/stralexs/indi/assets/123239625/fcc2dd26-4c98-4283-8d3d-95613897c1c5">
 <p align="center">
 App's MVVM Architecture
 </p>
@@ -168,6 +168,6 @@ Int64 is used due to requirements of Core Data.
 - GCD
 - Core Data, User Defaults
 
-![5](https://github.com/stralexs/indi/assets/123239625/d28545b3-3165-48b6-aaf5-b28213113aa2)
+![5](https://github.com/stralexs/indi/assets/123239625/06fb4eb1-bee6-4bb5-8b4a-a4323c11d6d9)
 
 ## Well, that's it, folks! Have a great day and learn English :)
