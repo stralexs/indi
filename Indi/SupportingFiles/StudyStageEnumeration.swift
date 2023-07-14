@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StudyStage: Int64  {
+enum StudyStage: Int64, CaseIterable  {
     case newborn
     case preschool
     case earlySchool
@@ -16,31 +16,6 @@ enum StudyStage: Int64  {
     case programmingUniversity
     case constructionUniversity
     case sideJob
-    
-    func getStudyStageName() -> String {
-        var output = ""
-        
-        switch self {
-        case .newborn:
-            output = "Newborn"
-        case .preschool:
-            output = "Preschool"
-        case .earlySchool:
-            output = "Early school"
-        case .highSchool:
-            output = "High school"
-        case .lifeActivities:
-            output = "Life activities"
-        case .programmingUniversity:
-            output = "Programming university"
-        case .constructionUniversity:
-            output = "Construction university"
-        case .sideJob:
-            output = "Side jobs"
-        }
-        
-        return output
-    }
     
     static func getStudyStageName(studyStage rawValue: Int) -> String {
         var output = ""
@@ -87,6 +62,6 @@ enum StudyStage: Int64  {
     }
     
     static func countOfStudyStages() -> Int {
-        return Int(StudyStage.sideJob.rawValue + 1)
+        return StudyStage.allCases.count
     }
 }

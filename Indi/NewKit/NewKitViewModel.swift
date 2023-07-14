@@ -75,6 +75,10 @@ class NewKitViewModel {
         return output
     }
     
+    func studyStageTitleName(for studyStageRawValue: Int) -> String {
+        return StudyStage.getStudyStageName(studyStage: studyStageRawValue)
+    }
+    
     //MARK: - Initialization
     init() {}
 }

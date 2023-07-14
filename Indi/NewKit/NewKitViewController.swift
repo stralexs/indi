@@ -99,14 +99,14 @@ class NewKitViewController: UIViewController {
             }
         }
         
-        let newbornAction = UIAlertAction(title: "Newborn", style: .default, handler: completionHandler)
-        let preschoolAction = UIAlertAction(title: "Preschool", style: .default, handler: completionHandler)
-        let earlySchoolAction = UIAlertAction(title: "Early school", style: .default, handler: completionHandler)
-        let highSchoolAction = UIAlertAction(title: "High school", style: .default, handler: completionHandler)
-        let lifeActivitiesAction = UIAlertAction(title: "Life activities", style: .default, handler: completionHandler)
-        let programmingUniversityAction = UIAlertAction(title: "Programming university", style: .default, handler: completionHandler)
-        let constructionUniversityAction = UIAlertAction(title: "Construction university", style: .default, handler: completionHandler)
-        let sideJobAction = UIAlertAction(title: "Side jobs)", style: .default, handler: completionHandler)
+        let newbornAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 0), style: .default, handler: completionHandler)
+        let preschoolAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 1), style: .default, handler: completionHandler)
+        let earlySchoolAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 2), style: .default, handler: completionHandler)
+        let highSchoolAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 3), style: .default, handler: completionHandler)
+        let lifeActivitiesAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 4), style: .default, handler: completionHandler)
+        let programmingUniversityAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 5), style: .default, handler: completionHandler)
+        let constructionUniversityAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 6), style: .default, handler: completionHandler)
+        let sideJobAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 7), style: .default, handler: completionHandler)
         
         newKitStudyStageAlert.addAction(cancelAction)
         newKitStudyStageAlert.addAction(newbornAction)
