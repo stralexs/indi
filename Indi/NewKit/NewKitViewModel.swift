@@ -24,7 +24,7 @@ class NewKitViewModel {
         didSet {
             if let newKitStudyStage = newKitStudyStage {
                 self.namesOfKitsOfSelectedStudyStage = KitsManager.shared.getKitNamesForStudyStage(with: [newKitStudyStage])
-                self.newKitStudyStageName.value = StudyStage.getStudyStageName(studyStage: newKitStudyStage)
+                self.newKitStudyStageName.value = StudyStage[newKitStudyStage]
             }
         }
     }
@@ -76,7 +76,7 @@ class NewKitViewModel {
     }
     
     func studyStageTitleName(for studyStageRawValue: Int) -> String {
-        return StudyStage.getStudyStageName(studyStage: studyStageRawValue)
+        return StudyStage[studyStageRawValue]
     }
     
     //MARK: - Initialization

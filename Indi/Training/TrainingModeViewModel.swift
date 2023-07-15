@@ -9,7 +9,7 @@ import Foundation
 
 final class TrainingModeViewModel {
     var numberOfSections: Int {
-        return StudyStage.countOfStudyStages()
+        return StudyStage.countOfStudyStages
     }
     
     var userSettingsForTraining: ([IndexPath], Int)? {
@@ -24,7 +24,7 @@ final class TrainingModeViewModel {
     }
     
     func headerInSectionName(for tableViewSection: Int) -> String {
-        return StudyStage.getStudyStageName(studyStage: tableViewSection)
+        return StudyStage[tableViewSection]
     }
     
     func numberOfRowsInSection(for section: Int) -> Int {

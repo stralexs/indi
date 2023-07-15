@@ -17,10 +17,10 @@ enum StudyStage: Int64, CaseIterable  {
     case constructionUniversity
     case sideJob
     
-    static func getStudyStageName(studyStage rawValue: Int) -> String {
+    static subscript(studyStageRawValue: Int) -> String {
         var output = ""
         
-        switch rawValue {
+        switch studyStageRawValue {
         case 0:
             output = "Newborn"
         case 1:
@@ -61,7 +61,7 @@ enum StudyStage: Int64, CaseIterable  {
         return output
     }
     
-    static func countOfStudyStages() -> Int {
+    static var countOfStudyStages: Int {
         return StudyStage.allCases.count
     }
 }

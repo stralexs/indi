@@ -10,63 +10,111 @@ import Foundation
 final class UserDataManager {
     static let shared = UserDataManager()
     
-    private func createBasicUserData() {
-        let _: Int = UserDefaults.standard.integer(forKey: "Basic colors")
-        let _: Int = UserDefaults.standard.integer(forKey: "Basic words")
-        let _: Int = UserDefaults.standard.integer(forKey: "Farm animals")
-        
-        let _: Int = UserDefaults.standard.integer(forKey: "Basic alphabet")
-        let _: Int = UserDefaults.standard.integer(forKey: "Body parts")
-        
-        let _: Int = UserDefaults.standard.integer(forKey: "Basic English grammar")
-        let _: Int = UserDefaults.standard.integer(forKey: "Maths")
-        
-        let _: Int = UserDefaults.standard.integer(forKey: "Advanced English grammar")
-        let _: Int = UserDefaults.standard.integer(forKey: "Biology")
-        let _: Int = UserDefaults.standard.integer(forKey: "Geography")
-        
-        let _: Int = UserDefaults.standard.integer(forKey: "Entertainment and media")
-        let _: Int = UserDefaults.standard.integer(forKey: "Shopping")
-        let _: Int = UserDefaults.standard.integer(forKey: "Sports")
-        
-        let _: Int = UserDefaults.standard.integer(forKey: "Computer")
-        let _: Int = UserDefaults.standard.integer(forKey: "Swift")
-        
-        let _: Int = UserDefaults.standard.integer(forKey: "Construction materials")
-        let _: Int = UserDefaults.standard.integer(forKey: "Construction participants")
-        
-        let _: Int = UserDefaults.standard.integer(forKey: "Courier")
-        let _: Int = UserDefaults.standard.integer(forKey: "Taxi driver")
-        let _: Int = UserDefaults.standard.integer(forKey: "Waiter")
-        
-        let _: Int = UserDefaults.standard.integer(forKey: "Newborn exam")
-        let _: Int = UserDefaults.standard.integer(forKey: "Preschool exam")
-        let _: Int = UserDefaults.standard.integer(forKey: "Early school exam")
-        let _: Int = UserDefaults.standard.integer(forKey: "High school exam")
-        let _: Int = UserDefaults.standard.integer(forKey: "Final exam")
-        
-        let _: Int = UserDefaults.standard.integer(forKey: "Completed exams count")
-        let _: Int = UserDefaults.standard.integer(forKey: "Completed tests count")
-        let _: Int = UserDefaults.standard.integer(forKey: "Correct answers count")
-        let _: Int = UserDefaults.standard.integer(forKey: "Total questions count")
+    //MARK: - Property Wrapper
+    @propertyWrapper
+    private struct Storage<T> {
+        let key: String
+        let defaultValue: T
 
-        let _: String = UserDefaults.standard.string(forKey: "0") ?? "Uncompleted"
-        let _: String = UserDefaults.standard.string(forKey: "1") ?? "Uncompleted"
-        let _: String = UserDefaults.standard.string(forKey: "2") ?? "Uncompleted"
-        let _: String = UserDefaults.standard.string(forKey: "3") ?? "Uncompleted"
-        let _: String = UserDefaults.standard.string(forKey: "4") ?? "Uncompleted"
-        
-        let _: String = UserDefaults.standard.string(forKey: "5") ?? "Unselected"
-        let _: String = UserDefaults.standard.string(forKey: "6") ?? "Unselected"
-        let _: String = UserDefaults.standard.string(forKey: "7") ?? "Unselected"
-        
-        let _: Bool = UserDefaults.standard.bool(forKey: "Programming university selection")
-        let _: Bool = UserDefaults.standard.bool(forKey: "Construction university selection")
-        let _: Bool = UserDefaults.standard.bool(forKey: "Side jobs selection")
-                
-        let _: String = UserDefaults.standard.string(forKey: "UserName") ?? "Userame"
-        let _: String = UserDefaults.standard.string(forKey: "UserAvatar") ?? "Cat_emoji"
+        var wrappedValue: T {
+            get {
+                return UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
+            }
+            set {
+                UserDefaults.standard.set(newValue, forKey: key)
+            }
+        }
     }
+    
+    //MARK: - Basic User Data
+    @Storage(key: "Basic colors", defaultValue: 0)
+    private var basicColors: Int
+    @Storage(key: "Basic words", defaultValue: 0)
+    private var basicWords: Int
+    @Storage(key: "Farm animals", defaultValue: 0)
+    private var farmAnimals: Int
+    @Storage(key: "Basic alphabet", defaultValue: 0)
+    private var basicAlphabet: Int
+    @Storage(key: "Body parts", defaultValue: 0)
+    private var bodyParts: Int
+    @Storage(key: "Basic English grammar", defaultValue: 0)
+    private var basicEnglishGrammar: Int
+    @Storage(key: "Maths", defaultValue: 0)
+    private var maths: Int
+    @Storage(key: "Advanced English grammar", defaultValue: 0)
+    private var advancedEnglishGrammar: Int
+    @Storage(key: "Biology", defaultValue: 0)
+    private var biology: Int
+    @Storage(key: "Geography", defaultValue: 0)
+    private var geography: Int
+    @Storage(key: "Entertainment and media", defaultValue: 0)
+    private var entertainmentAndMedia: Int
+    @Storage(key: "Shopping", defaultValue: 0)
+    private var shopping: Int
+    @Storage(key: "Sports", defaultValue: 0)
+    private var sports: Int
+    @Storage(key: "Computer", defaultValue: 0)
+    private var computer: Int
+    @Storage(key: "Swift", defaultValue: 0)
+    private var swift: Int
+    @Storage(key: "Construction materials", defaultValue: 0)
+    private var constructionMaterials: Int
+    @Storage(key: "Construction participants", defaultValue: 0)
+    private var constructionParticipants: Int
+    @Storage(key: "Courier", defaultValue: 0)
+    private var courier: Int
+    @Storage(key: "Taxi driver", defaultValue: 0)
+    private var taxiDriver: Int
+    @Storage(key: "Waiter", defaultValue: 0)
+    private var waiter: Int
+    
+    @Storage(key: "Newborn exam", defaultValue: 0)
+    private var newbornExamResult: Int
+    @Storage(key: "Preschool exam", defaultValue: 0)
+    private var preschoolExamResult: Int
+    @Storage(key: "Early school exam", defaultValue: 0)
+    private var earlySchoolExamResult: Int
+    @Storage(key: "High school exam", defaultValue: 0)
+    private var highSchoolExamResult: Int
+    @Storage(key: "Final exam", defaultValue: 0)
+    private var finalExamResult: Int
+    
+    @Storage(key: "Completed exams count", defaultValue: 0)
+    private var completedExamsCount: Int
+    @Storage(key: "Completed tests count", defaultValue: 0)
+    private var completedTestsCount: Int
+    @Storage(key: "Correct answers count", defaultValue: 0)
+    private var correctAnswersCount: Int
+    @Storage(key: "Total questions count", defaultValue: 0)
+    private var totalQuestionsCount: Int
+    
+    @Storage(key: "0", defaultValue: "Uncompleted")
+    private var newbornExamCompletion: String
+    @Storage(key: "1", defaultValue: "Uncompleted")
+    private var preschoolExamCompletion: String
+    @Storage(key: "2", defaultValue: "Uncompleted")
+    private var earlySchoolExamCompletion: String
+    @Storage(key: "3", defaultValue: "Uncompleted")
+    private var highSchoolExamCompletion: String
+    @Storage(key: "4", defaultValue: "Uncompleted")
+    private var finalExamCompletion: String
+    @Storage(key: "5", defaultValue: "Unselected")
+    private var programmingUniversitySelectionIdentifier: String
+    @Storage(key: "6", defaultValue: "Unselected")
+    private var constructionUniversitySelectionIdentifier: String
+    @Storage(key: "7", defaultValue: "Unselected")
+    private var sideJobsSelectionIdentifier: String
+    @Storage(key: "Programming university selection", defaultValue: false)
+    private var programmingUniversitySelection: Bool
+    @Storage(key: "Construction university selection", defaultValue: false)
+    private var constructionUniversitySelection: Bool
+    @Storage(key: "Side jobs selection", defaultValue: false)
+    private var sideJobsSelection: Bool
+    
+    @Storage(key: "UserName", defaultValue: "Username")
+    private var userName: String
+    @Storage(key: "UserAvatar", defaultValue: "Cat_emoji")
+    private var userAvatar: String
     
     //MARK: - User's Results and Achievements
     func createNewUserData(for newKitName: String) {
@@ -77,29 +125,29 @@ final class UserDataManager {
         KitsManager.shared.getAllKitsNames().forEach { name in
             UserDefaults.standard.removeObject(forKey: name)
         }
-        UserDefaults.standard.removeObject(forKey: "Newborn exam")
-        UserDefaults.standard.removeObject(forKey: "Preschool exam")
-        UserDefaults.standard.removeObject(forKey: "Early school exam")
-        UserDefaults.standard.removeObject(forKey: "High school exam")
-        UserDefaults.standard.removeObject(forKey: "Final exam")
         
-        UserDefaults.standard.removeObject(forKey: "Completed exams count")
-        UserDefaults.standard.removeObject(forKey: "Completed tests count")
-        UserDefaults.standard.removeObject(forKey: "Correct answers count")
-        UserDefaults.standard.removeObject(forKey: "Total questions count")
+        newbornExamResult = 0
+        preschoolExamResult = 0
+        earlySchoolExamResult = 0
+        highSchoolExamResult = 0
+        finalExamResult = 0
+        completedExamsCount = 0
+        completedTestsCount = 0
+        correctAnswersCount = 0
+        totalQuestionsCount = 0
         
-        UserDefaults.standard.set("Uncompleted", forKey: "0")
-        UserDefaults.standard.set("Uncompleted", forKey: "1")
-        UserDefaults.standard.set("Uncompleted", forKey: "2")
-        UserDefaults.standard.set("Uncompleted", forKey: "3")
-        UserDefaults.standard.set("Uncompleted", forKey: "4")
-        UserDefaults.standard.set("Unselected", forKey: "5")
-        UserDefaults.standard.set("Unselected", forKey: "6")
-        UserDefaults.standard.set("Unselected", forKey: "7")
+        newbornExamCompletion = "Uncompleted"
+        preschoolExamCompletion = "Uncompleted"
+        earlySchoolExamCompletion = "Uncompleted"
+        highSchoolExamCompletion = "Uncompleted"
+        finalExamCompletion = "Uncompleted"
+        programmingUniversitySelectionIdentifier = "Unselected"
+        constructionUniversitySelectionIdentifier = "Unselected"
+        sideJobsSelectionIdentifier = "Unselected"
         
-        UserDefaults.standard.set(false, forKey: "Programming university selection")
-        UserDefaults.standard.set(false, forKey: "Construction university selection")
-        UserDefaults.standard.set(false, forKey: "Side jobs selection")
+        programmingUniversitySelection = false
+        constructionUniversitySelection = false
+        sideJobsSelection = false
     }
     
     func saveUserResult(newResult: Int, kitName: String, completedTests: Int, completedExams: Int, correctAnswers: Int, totalQuestions: Int) {
@@ -108,36 +156,20 @@ final class UserDataManager {
             UserDefaults.standard.set(newResult, forKey: kitName)
         }
         
-        var completedTestsCount = UserDefaults.standard.integer(forKey: "Completed tests count")
         completedTestsCount += completedTests
-        UserDefaults.standard.set(completedTestsCount, forKey: "Completed tests count")
-        
-        var completedExamsCount = UserDefaults.standard.integer(forKey: "Completed exams count")
         completedExamsCount += completedExams
-        UserDefaults.standard.set(completedExamsCount, forKey: "Completed exams count")
-        
-        var correctAnswersCount = UserDefaults.standard.integer(forKey: "Correct answers count")
         correctAnswersCount += correctAnswers
-        UserDefaults.standard.set(correctAnswersCount, forKey: "Correct answers count")
-        
-        var totalQuestionsCount = UserDefaults.standard.integer(forKey: "Total questions count")
         totalQuestionsCount += totalQuestions
-        UserDefaults.standard.set(totalQuestionsCount, forKey: "Total questions count")
     }
     
     func getUserStatistics() -> (tests: Int, exams: Int, correct: Int, percentage: Double) {
-        let tests = UserDefaults.standard.integer(forKey: "Completed tests count")
-        let exams = UserDefaults.standard.integer(forKey: "Completed exams count")
-        let correctAnswers = UserDefaults.standard.integer(forKey: "Correct answers count")
-        let totalQuestions = UserDefaults.standard.integer(forKey: "Total questions count")
-
         var percentage: Double = 0
-        if totalQuestions != 0 {
-            percentage = Double(correctAnswers) / Double(totalQuestions) * 100
+        if totalQuestionsCount != 0 {
+            percentage = Double(correctAnswersCount) / Double(totalQuestionsCount) * 100
             percentage = round(100 * percentage) / 100
         }
                 
-        return (tests, exams, correctAnswers, percentage)
+        return (completedTestsCount, completedExamsCount, correctAnswersCount, percentage)
     }
     
     
@@ -147,19 +179,19 @@ final class UserDataManager {
     
     //MARK: - User's Name and User's Avatar
     func saveUserName(for newName: String) {
-        UserDefaults.standard.set(newName, forKey: "UserName")
+        userName = newName
     }
     
     func saveUserAvatar(for newAvatar: String) {
-        UserDefaults.standard.set(newAvatar, forKey: "UserAvatar")
+        userAvatar = newAvatar
     }
     
     func getUserName() -> String {
-        return UserDefaults.standard.string(forKey: "UserName") ?? "Username"
+        return userName
     }
     
     func getUserAvatar() -> String {
-        return UserDefaults.standard.string(forKey: "UserAvatar") ?? "Cat_emoji"
+        return userAvatar
     }
     
     //MARK: - Exam Completion
@@ -175,11 +207,11 @@ final class UserDataManager {
     func saveStageSelection(for buttonTag: Int) {
         switch buttonTag {
         case 5:
-            UserDefaults.standard.set(true, forKey: "Programming university selection")
+            programmingUniversitySelection = true
         case 6:
-            UserDefaults.standard.set(true, forKey: "Construction university selection")
+            constructionUniversitySelection = true
         default:
-            UserDefaults.standard.set(true, forKey: "Side jobs selection")
+            sideJobsSelection = true
         }
     }
     
@@ -194,21 +226,16 @@ final class UserDataManager {
     func getSelectedStages() -> [Int] {
         var output: [Int] = []
         
-        if UserDefaults.standard.bool(forKey: "Programming university selection") {
+        if programmingUniversitySelection {
             output.append(5)
         }
-        if UserDefaults.standard.bool(forKey: "Construction university selection") {
+        if constructionUniversitySelection {
             output.append(6)
         }
-        if UserDefaults.standard.bool(forKey: "Side jobs selection") {
+        if sideJobsSelection {
             output.append(7)
         }
         
         return output
-    }
-
-    //MARK: - Initialization
-    private init() {
-        createBasicUserData()
     }
 }

@@ -10,7 +10,22 @@ import UIKit
 
 final class SettingsAndStatisticsViewModel {
     //MARK: - Private Variables
-    private var defaultAvatars: [UIImage] = []
+    private var defaultAvatars: [UIImage] = {
+        var tempArr = [UIImage]()
+        
+        let cat = UIImage(named: "Cat_emoji")
+        let dog = UIImage(named: "Dog_emoji")
+        let man = UIImage(named: "Man_emoji")
+        let woman = UIImage(named: "Woman_emoji")
+        
+        tempArr.append(cat!)
+        tempArr.append(dog!)
+        tempArr.append(man!)
+        tempArr.append(woman!)
+        
+        return tempArr
+    }()
+    
     private var userStatistics: [String: String] = [
         "Пройдено тестов": "\(UserDataManager.shared.getUserStatistics().tests)",
         "Сдано экзаменов": "\(UserDataManager.shared.getUserStatistics().exams)",
@@ -56,22 +71,6 @@ final class SettingsAndStatisticsViewModel {
     var resetAchievements: Bool = false
     
     //MARK: - Private Method
-    private func createAvatars() -> [UIImage] {
-        var tempArr = [UIImage]()
-        
-        let cat = UIImage(named: "Cat_emoji")
-        let dog = UIImage(named: "Dog_emoji")
-        let man = UIImage(named: "Man_emoji")
-        let woman = UIImage(named: "Woman_emoji")
-        
-        tempArr.append(cat!)
-        tempArr.append(dog!)
-        tempArr.append(man!)
-        tempArr.append(woman!)
-        
-        return tempArr
-    }
-    
     private func removingSpaces(for text: String) -> String {
         var outputText = text
         
@@ -142,10 +141,5 @@ final class SettingsAndStatisticsViewModel {
             rightAvatarIndex -= 1
         }
         return (defaultAvatars[leftAvatarIndex], defaultAvatars[middleAvatarIndex], defaultAvatars[rightAvatarIndex])
-    }
-    
-    //MARK: - Initialization
-    init() {
-        defaultAvatars = createAvatars()
     }
 }
