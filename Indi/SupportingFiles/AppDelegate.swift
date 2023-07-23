@@ -8,7 +8,7 @@
 import UIKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {   
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let userNotificationCenter = LocalNotificationsManager()
         userNotificationCenter.sendNotification()
@@ -20,19 +20,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
-}
-
-extension AppDelegate: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        if viewController is NewKitSelectionViewController {
-            if let newKitSelectionVC = tabBarController.storyboard?.instantiateViewController(withIdentifier: "NewKitSelectionVC") {
-                newKitSelectionVC.modalPresentationStyle = .overCurrentContext
-                tabBarController.present(newKitSelectionVC, animated: true)
-                return false
-            }
-        }
-
-        return true
-    }
 }
 

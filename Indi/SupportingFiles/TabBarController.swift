@@ -23,5 +23,22 @@ class TabBarController: UITabBarController {
         tabBar.isTranslucent = true
         tabBar.layer.cornerRadius = 30
         tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        
+        self.delegate = self
     }
 }
+
+extension TabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if viewController is NewKitSelectionViewController {
+            if let newKitSelectionVC = tabBarController.storyboard?.instantiateViewController(withIdentifier: "NewKitSelectionVC") {
+                newKitSelectionVC.modalPresentationStyle = .overCurrentContext
+                tabBarController.present(newKitSelectionVC, animated: true)
+                return false
+            }
+        }
+
+        return true
+    }
+}
+
