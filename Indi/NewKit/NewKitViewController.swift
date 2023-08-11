@@ -27,7 +27,7 @@ class NewKitViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.post(name: Notification.Name(rawValue: trainingModeReloadTableViewNotificationKey), object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.reloadTableView.notificationKey"), object: nil)
     }
     
     //MARK: - Public Methods

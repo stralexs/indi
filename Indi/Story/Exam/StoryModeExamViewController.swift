@@ -30,7 +30,7 @@ final class StoryModeExamViewController: UIViewController {
         viewModel.testStart()
         viewModel.test(questionLabel: questionLabel, buttons: nil, countLabel: questionsCountLabel)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(presentResult(_:)), name: Notification.Name(rawValue: examResultNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(presentResult(_:)), name: Notification.Name(rawValue: "com.indi.examResult.notificationKey"), object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

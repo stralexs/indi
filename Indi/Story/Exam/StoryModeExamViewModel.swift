@@ -30,7 +30,7 @@ final class StoryModeExamViewModel: StoryModeExamViewModelProtocol {
     
     //MARK: - Private Methods
     private func createNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(createKitsForExam(_:)), name: Notification.Name(rawValue: chosenExamNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(createKitsForExam(_:)), name: Notification.Name(rawValue: "com.indi.chosenExam.notificationKey"), object: nil)
     }
     
     @objc private func createKitsForExam(_ notification: NSNotification) {
@@ -102,7 +102,7 @@ final class StoryModeExamViewModel: StoryModeExamViewModelProtocol {
         examQuestions.removeFirst()
         if examQuestions.count < 1 {
             let testResult = Int(round(Double(correctAnswersCount) / Double(totalQuestionsCount) * 100))
-            NotificationCenter.default.post(name: Notification.Name(rawValue: examResultNotificationKey), object: testResult)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.examResult.notificationKey"), object: testResult)
             
             UserDataManager.shared.saveUserResult(newResult: testResult,
                                            kitName: examName,

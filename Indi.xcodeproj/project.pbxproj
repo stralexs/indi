@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4205016F2A4CA35D0071CE67 /* NotificationCenterKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4205016E2A4CA35D0071CE67 /* NotificationCenterKeys.swift */; };
 		42050C392A4EFFEA00DF9725 /* Training.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42050C382A4EFFEA00DF9725 /* Training.storyboard */; };
 		42050C3B2A4F002300DF9725 /* NewKit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42050C3A2A4F002300DF9725 /* NewKit.storyboard */; };
 		42050C3D2A4F005F00DF9725 /* Story.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42050C3C2A4F005F00DF9725 /* Story.storyboard */; };
@@ -65,7 +64,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4205016E2A4CA35D0071CE67 /* NotificationCenterKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterKeys.swift; sourceTree = "<group>"; };
 		42050C382A4EFFEA00DF9725 /* Training.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Training.storyboard; sourceTree = "<group>"; };
 		42050C3A2A4F002300DF9725 /* NewKit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewKit.storyboard; sourceTree = "<group>"; };
 		42050C3C2A4F005F00DF9725 /* Story.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Story.storyboard; sourceTree = "<group>"; };
@@ -266,7 +264,6 @@
 		42C1B4B42A3B45A600D79211 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				4205016E2A4CA35D0071CE67 /* NotificationCenterKeys.swift */,
 				42EF93CE2A3B6C0100C42646 /* ObservableObject.swift */,
 				428DC3622A3F41BA00708F37 /* TabBarController.swift */,
 				42EF93D02A3B6CB000C42646 /* StudyStageEnumeration.swift */,
@@ -458,7 +455,6 @@
 				4295362A2A1795C10028DBA4 /* Model.xcdatamodeld in Sources */,
 				42943A602A1B8A6200D5BF62 /* TrainingModeTestingViewModel.swift in Sources */,
 				42FF60452A1A0BC100375ACF /* TrainingModeViewController.swift in Sources */,
-				4205016F2A4CA35D0071CE67 /* NotificationCenterKeys.swift in Sources */,
 				42202CDD2A583BED00C34921 /* TrainingModeTableViewCellViewModel.swift in Sources */,
 				425B67D02A1FB392003AA954 /* NetworkNewKitViewController.swift in Sources */,
 				42943A5E2A1B840500D5BF62 /* TrainingModeTestingViewController.swift in Sources */,

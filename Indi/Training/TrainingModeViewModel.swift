@@ -26,7 +26,7 @@ final class TrainingModeViewModel: TrainingModeViewModelProtocol {
     
     var userSettingsForTraining: ([IndexPath], Int)? {
         didSet {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: chosenTrainingNotificationKey), object: userSettingsForTraining)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.chosenTraining.notificationKey"), object: userSettingsForTraining)
         }
     }
     

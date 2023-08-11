@@ -69,7 +69,7 @@ final class TrainingModeViewController: UIViewController {
     }
     
     private func addNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableViewData), name: Notification.Name(rawValue: trainingModeReloadTableViewNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableViewData), name: Notification.Name(rawValue: "com.indi.reloadTableView.notificationKey"), object: nil)
     }
     
     @objc private func reloadTableViewData() {

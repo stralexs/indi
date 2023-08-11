@@ -39,7 +39,7 @@ final class TrainingModeTestingViewModel: TrainingModeTestingViewModelProtocol {
     
     //MARK: - Private Methods
     private func createNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(createTraining(_:)), name: Notification.Name(rawValue: chosenTrainingNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(createTraining(_:)), name: Notification.Name(rawValue: "com.indi.chosenTraining.notificationKey"), object: nil)
     }
     
     @objc private func createTraining(_ notification: NSNotification) {
@@ -107,10 +107,10 @@ final class TrainingModeTestingViewModel: TrainingModeTestingViewModelProtocol {
         guard testingQuestions.isEmpty == false else { return }
         testingQuestions.removeFirst()
         if testingProgress == 1 {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: trainingIsDoneNotificationKey), object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.trainingIsDone.notificationKey"), object: nil)
         }
         if testingQuestions.count < 1 {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: trainingResultNotificationKey), object: [correctAnswersCount, totalQuestionsCount])
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.trainingResult.notificationKey"), object: [correctAnswersCount, totalQuestionsCount])
             correctAnswersCount = 0
         }
     }

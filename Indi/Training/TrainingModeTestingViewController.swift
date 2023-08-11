@@ -29,8 +29,8 @@ final class TrainingModeTestingViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(presentResult(_:)), name: Notification.Name(rawValue: trainingResultNotificationKey), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(trainingIsDone(_:)), name: Notification.Name(rawValue: trainingIsDoneNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(presentResult(_:)), name: Notification.Name(rawValue: "com.indi.trainingResult.notificationKey"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(trainingIsDone(_:)), name: Notification.Name(rawValue: "com.indi.trainingIsDone.notificationKey"), object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

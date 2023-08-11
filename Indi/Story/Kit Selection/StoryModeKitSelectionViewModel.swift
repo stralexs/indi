@@ -27,7 +27,7 @@ final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelProtoc
     
     //MARK: - Private Methods
     private func createNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(setStudyStage(_:)), name: Notification.Name(rawValue: chosenStudyStageNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setStudyStage(_:)), name: Notification.Name(rawValue: "com.indi.chosenStudyStage.notificationKey"), object: nil)
     }
     
     @objc private func setStudyStage(_ notification: NSNotification) {
@@ -44,7 +44,7 @@ final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelProtoc
     }
     
     func postChosenTestNotification(for indexPath: IndexPath) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: chosenTestNotificationKey), object: (indexPath, studyStageRawValue))
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.chosenTest.notificationKey"), object: (indexPath, studyStageRawValue))
     }
     
     func isBasicKitCheck(for indexPath: IndexPath) -> Bool {

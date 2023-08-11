@@ -30,7 +30,7 @@ final class StoryModeTestingViewModel: StoryModeTestingViewModelProtocol {
     
     //MARK: - Private Methods
     private func createNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(setSelectedKit(_:)), name: Notification.Name(rawValue: chosenTestNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setSelectedKit(_:)), name: Notification.Name(rawValue: "com.indi.chosenTest.notificationKey"), object: nil)
     }
     
     @objc private func setSelectedKit(_ notification: NSNotification) {
@@ -81,7 +81,7 @@ final class StoryModeTestingViewModel: StoryModeTestingViewModelProtocol {
         testingQuestions.removeFirst()
         if testingQuestions.count < 1 {
             let testResult = Int(round(Double(correctAnswersCount) / Double(totalQuestionsCount) * 100))
-            NotificationCenter.default.post(name: Notification.Name(rawValue: testNotificationKey), object: testResult)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.testResult.notificationKey"), object: testResult)
             
             UserDataManager.shared.saveUserResult(newResult: testResult,
                                            kitName: selectedKitName!,
