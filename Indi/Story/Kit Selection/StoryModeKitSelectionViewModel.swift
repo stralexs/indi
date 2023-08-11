@@ -7,7 +7,16 @@
 
 import Foundation
 
-final class StoryModeKitSelectionViewModel {
+protocol StoryModeKitSelectionViewModelProtocol {
+    var numberOfItemsInSection: Int { get }
+    func cellViewModel(for indexPath: IndexPath) -> StoryModeKitSelectionCollectionViewCellViewModelProtocol?
+    func postChosenTestNotification(for indexPath: IndexPath)
+    func isBasicKitCheck(for indexPath: IndexPath) -> Bool
+    func deleteUserKit(for indexPath: IndexPath)
+    func viewModelForTesting() -> StoryModeTestingViewModelProtocol?
+}
+
+final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelProtocol {
     //MARK: - Private Variable
     private var studyStageRawValue = 0
     
@@ -28,7 +37,7 @@ final class StoryModeKitSelectionViewModel {
     }
     
     //MARK: - Public Methods
-    func cellViewModel(for indexPath: IndexPath) -> StoryModeKitSelectionCollectionViewCellViewModel? {
+    func cellViewModel(for indexPath: IndexPath) -> StoryModeKitSelectionCollectionViewCellViewModelProtocol? {
         let kitName = KitsManager.shared.getKitName(for: studyStageRawValue, with: indexPath)
         let testResult = UserDataManager.shared.getUserResult(for: kitName)
         return StoryModeKitSelectionCollectionViewCellViewModel(kitName: kitName, testResult: testResult)
@@ -44,6 +53,10 @@ final class StoryModeKitSelectionViewModel {
     
     func deleteUserKit(for indexPath: IndexPath) {
         KitsManager.shared.deleteUserKit(for: indexPath, for: studyStageRawValue)
+    }
+    
+    func viewModelForTesting() -> StoryModeTestingViewModelProtocol? {
+        return StoryModeTestingViewModel()
     }
     
     //MARK: - Initialization

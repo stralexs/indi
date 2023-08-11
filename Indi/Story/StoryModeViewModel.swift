@@ -7,7 +7,24 @@
 
 import Foundation
 
-final class StoryModeViewModel {
+protocol StoryModeViewModelProtocol {
+    var examButtonsCompletion: ObservableObject<[String]> { get }
+    var userName: String { get }
+    var userAvatar: String { get }
+    var isFinalExamCompleted: Bool { get }
+    func setExamButtonAccess(for buttonTag: Int) -> Bool
+    func setExamButtonCompletion(for buttonTag: Int) -> String
+    func examName(for buttonTag: Int) -> String
+    func saveSelectedStage(for buttonTag: Int) -> String
+    func setFinalStudyStageButtonSelection(for buttonTag: Int) -> Bool
+    func setFinalStudyStageButtonSelection(for buttonTag: Int) -> String
+    func studyStageAccessControl(for senderTag: Int) -> Bool
+    func viewModelForSettingAndStatistics() -> SettingsAndStatisticsViewModelProtocol?
+    func viewModelForKitSelection() -> StoryModeKitSelectionViewModelProtocol?
+    func viewModelForExam() -> StoryModeExamViewModelProtocol?
+}
+
+final class StoryModeViewModel: StoryModeViewModelProtocol {
     //MARK: - Observable Objects
     var examButtonsCompletion: ObservableObject<[String]> = ObservableObject([])
     
@@ -133,6 +150,15 @@ final class StoryModeViewModel {
         return result
     }
     
-    //MARK: - Initialization
-    init() {}
+    func viewModelForSettingAndStatistics() -> SettingsAndStatisticsViewModelProtocol? {
+        return SettingsAndStatisticsViewModel()
+    }
+    
+    func viewModelForKitSelection() -> StoryModeKitSelectionViewModelProtocol? {
+        return StoryModeKitSelectionViewModel()
+    }
+    
+    func viewModelForExam() -> StoryModeExamViewModelProtocol? {
+        return StoryModeExamViewModel()
+    }
 }

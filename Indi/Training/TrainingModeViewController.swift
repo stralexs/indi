@@ -16,7 +16,7 @@ final class TrainingModeViewController: UIViewController {
     @IBOutlet var startButton: UIButton!
     @IBOutlet var sliderBackgroundView: UIView!
     
-    private var viewModel = TrainingModeViewModel()
+    var viewModel: TrainingModeViewModelProtocol!
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -121,6 +121,7 @@ final class TrainingModeViewController: UIViewController {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         if let trainingTestVC = sb.instantiateViewController(withIdentifier: "TrainingTestVC") as? TrainingModeTestingViewController,
            let indexPaths = tableView.indexPathsForSelectedRows {
+            trainingTestVC.viewModel = viewModel.viewModelForTrainingModeTesting()
             viewModel.userSettingsForTraining = (indexPaths, Int(slider.value))
             trainingTestVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(trainingTestVC, animated: true)

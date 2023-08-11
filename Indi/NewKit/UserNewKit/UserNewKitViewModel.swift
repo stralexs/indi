@@ -5,10 +5,13 @@
 //  Created by Alexander Sivko on 22.05.23.
 //
 
-import Foundation
 import UIKit
 
-final class UserNewKitViewModel: NewKitViewModel {
+protocol UserNewKitViewModelProtocol: NewKitViewModelProtocol {
+    func createNewQuestion(_ firstTextFieldText: String, _ secondTextFieldText: String, _ thirdTextFieldText: String) -> String
+}
+
+final class UserNewKitViewModel: NewKitViewModel, UserNewKitViewModelProtocol {
     func createNewQuestion(_ firstTextFieldText: String, _ secondTextFieldText: String, _ thirdTextFieldText: String) -> String {
         //First TextField
         var firstTextFieldTextVar = firstTextFieldText

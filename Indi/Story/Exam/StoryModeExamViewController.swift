@@ -19,7 +19,7 @@ final class StoryModeExamViewController: UIViewController {
     @IBOutlet var examResultLabel: UILabel!
     @IBOutlet var bottomBackgroundView: UIView!
     
-    private var viewModel = StoryModeExamViewModel()
+    var viewModel: StoryModeExamViewModelProtocol!
     
     //MARK: - Life Cycle
     override func viewDidLoad() {

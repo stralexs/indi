@@ -15,7 +15,7 @@ final class NewKitTableViewCell: UITableViewCell {
     @IBOutlet var secondIncorrectAnswer: UILabel!
     @IBOutlet var thirdIncorrectAnswer: UILabel!
     
-    var viewModel: NewKitTableViewCellViewModel! {
+    var viewModel: NewKitTableViewCellViewModelProtocol! {
         didSet {
             setupBinders()
         }

@@ -15,7 +15,7 @@ final class StoryModeKitSelectionCollectionViewCell: UICollectionViewCell {
     @IBOutlet var progressView: UIView!
     @IBOutlet var progressViewHeight: NSLayoutConstraint!
     
-    var viewModel: StoryModeKitSelectionCollectionViewCellViewModel! {
+    var viewModel: StoryModeKitSelectionCollectionViewCellViewModelProtocol! {
         didSet {
             viewModel.cellHeight = self.frame.height
             label.text = viewModel.kitName

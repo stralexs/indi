@@ -17,7 +17,7 @@ final class TrainingModeTestingViewController: UIViewController {
     @IBOutlet var answerResultImage: UIImageView!
     @IBOutlet var progressView: UIProgressView!
     
-    private var viewModel = TrainingModeTestingViewModel()
+    var viewModel: TrainingModeTestingViewModelProtocol!
     
     //MARK: - Life Cycle
     override func viewDidLoad() {

@@ -13,6 +13,8 @@ final class NewKitSelectionViewController: UIViewController {
     @IBOutlet var buttonsBackgroundView: UIView!
     @IBOutlet var newKitButtons: [UIButton]!
     
+    var viewModel: NewKitSelectionViewModelProtocol!
+    
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,9 +54,11 @@ final class NewKitSelectionViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let newKitVC = segue.destination as? UserNewKitViewController {
+            newKitVC.viewModel = viewModel.viewModelForUserNewKit()
             newKitVC.modalPresentationStyle = .fullScreen
         }
         if let networkVC = segue.destination as? NetworkNewKitViewController {
+            networkVC.viewModel = viewModel.viewModelForNetworkNewKit()
             networkVC.modalPresentationStyle = .fullScreen
         }
     }

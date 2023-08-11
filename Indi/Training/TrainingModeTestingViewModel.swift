@@ -5,10 +5,20 @@
 //  Created by Alexander Sivko on 22.05.23.
 //
 
-import Foundation
 import UIKit
 
-final class TrainingModeTestingViewModel: Testing {
+protocol TrainingModeTestingViewModelProtocol {
+    var testingProgress: Double { get }
+    var userAnswer: String? { get set }
+    func testStart()
+    func test(questionLabel UILabel: UILabel?, buttons UIButtons: [UIButton]?, countLabel UILabel: UILabel?)
+    func isRightAnswerCheck() -> Bool
+    func nextQuestion()
+    func resetResults()
+    func anotherTest()
+}
+
+final class TrainingModeTestingViewModel: TrainingModeTestingViewModelProtocol {
     //MARK: - Private Variables
     private var selectedKits: [IndexPath]?
     private var selectedQuestionsCount: Int?

@@ -20,8 +20,8 @@
 		42210DF129FD243300CE37D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42210DF029FD243300CE37D1 /* SceneDelegate.swift */; };
 		42210DF629FD243300CE37D1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42210DF429FD243300CE37D1 /* Main.storyboard */; };
 		42210DF829FD243400CE37D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42210DF729FD243400CE37D1 /* Assets.xcassets */; };
-		4222B49B2A25FB90003C4343 /* TestingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4222B49A2A25FB90003C4343 /* TestingProtocol.swift */; };
 		422AC1142A1F77EA00B0B941 /* StoryModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AC1132A1F77EA00B0B941 /* StoryModeViewModel.swift */; };
+		424185D32A8626FD009257B5 /* NewKitSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424185D22A8626FD009257B5 /* NewKitSelectionViewModel.swift */; };
 		424B53A929FFABC0002AE9D9 /* StoryModeTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424B53A829FFABC0002AE9D9 /* StoryModeTestingViewController.swift */; };
 		425A0EB92A1E0F05009154D0 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A0EB82A1E0F05009154D0 /* UserDataManager.swift */; };
 		425B67D02A1FB392003AA954 /* NetworkNewKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B67CF2A1FB392003AA954 /* NetworkNewKitViewController.swift */; };
@@ -80,8 +80,8 @@
 		42210DF529FD243300CE37D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		42210DF729FD243400CE37D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42210DFC29FD243400CE37D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4222B49A2A25FB90003C4343 /* TestingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingProtocol.swift; sourceTree = "<group>"; };
 		422AC1132A1F77EA00B0B941 /* StoryModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeViewModel.swift; sourceTree = "<group>"; };
+		424185D22A8626FD009257B5 /* NewKitSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitSelectionViewModel.swift; sourceTree = "<group>"; };
 		424B53A829FFABC0002AE9D9 /* StoryModeTestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeTestingViewController.swift; sourceTree = "<group>"; };
 		425A0EB82A1E0F05009154D0 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
 		425B67CF2A1FB392003AA954 /* NetworkNewKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNewKitViewController.swift; sourceTree = "<group>"; };
@@ -244,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				421801142A446A99004B9020 /* NewKitSelectionViewController.swift */,
+				424185D22A8626FD009257B5 /* NewKitSelectionViewModel.swift */,
 				42BCF6F32A5016710076837B /* NewKitViewController.swift */,
 				42BCF6F52A5016860076837B /* NewKitViewModel.swift */,
 				42C1B4AF2A3B403F00D79211 /* NewKitTableViewCell */,
@@ -265,7 +266,6 @@
 		42C1B4B42A3B45A600D79211 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				4222B49A2A25FB90003C4343 /* TestingProtocol.swift */,
 				4205016E2A4CA35D0071CE67 /* NotificationCenterKeys.swift */,
 				42EF93CE2A3B6C0100C42646 /* ObservableObject.swift */,
 				428DC3622A3F41BA00708F37 /* TabBarController.swift */,
@@ -440,6 +440,7 @@
 				42C1B4B32A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift in Sources */,
 				42C1B4AE2A3B3D2500D79211 /* NetworkNewKitViewModel.swift in Sources */,
 				42943A622A1BD04100D5BF62 /* UserNewKitViewModel.swift in Sources */,
+				424185D32A8626FD009257B5 /* NewKitSelectionViewModel.swift in Sources */,
 				42BCF6F62A5016860076837B /* NewKitViewModel.swift in Sources */,
 				42210DF129FD243300CE37D1 /* SceneDelegate.swift in Sources */,
 				428DC3612A3F394200708F37 /* UIColorExtension.swift in Sources */,
@@ -470,7 +471,6 @@
 				4295363A2A1797BB0028DBA4 /* Question+CoreDataProperties.swift in Sources */,
 				42DC4B2B2A1754D000028E29 /* StoryModeViewController.swift in Sources */,
 				42EF93CF2A3B6C0100C42646 /* ObservableObject.swift in Sources */,
-				4222B49B2A25FB90003C4343 /* TestingProtocol.swift in Sources */,
 				429536392A1797BB0028DBA4 /* Question+CoreDataClass.swift in Sources */,
 				42FF60472A1A0C1B00375ACF /* UserNewKitViewController.swift in Sources */,
 			);

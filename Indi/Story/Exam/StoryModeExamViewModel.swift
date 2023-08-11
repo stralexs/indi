@@ -5,10 +5,19 @@
 //  Created by Alexander Sivko on 20.05.23.
 //
 
-import Foundation
 import UIKit
 
-final class StoryModeExamViewModel: Testing {
+protocol StoryModeExamViewModelProtocol {
+    var userAnswer: String? { get set }
+    func userResultForExam() -> Int
+    func testStart()
+    func test(questionLabel UILabel: UILabel?, buttons UIButtons: [UIButton]?, countLabel UILabel: UILabel?)
+    func isRightAnswerCheck() -> Bool
+    func nextQuestion()
+    func resetResults()
+}
+
+final class StoryModeExamViewModel: StoryModeExamViewModelProtocol {
     //MARK: - Private Variables
     private var examName: String = ""
     private var kitsForExam: [Int] = []

@@ -7,7 +7,12 @@
 
 import Foundation
 
-final class NetworkNewKitViewModel: NewKitViewModel {
+protocol NetworkNewKitViewModelProtocol: NewKitViewModelProtocol {
+    var isConnectedToInternet: Bool { get set }
+    func retrieveQuestions(completion: @escaping () -> Void)
+}
+
+final class NetworkNewKitViewModel: NewKitViewModel, NetworkNewKitViewModelProtocol {
     private var networkingManager = NetworkManager()
     private func setupBinder() {
         networkingManager.isConnectedToInternet.bind {  [weak self] isConnected in

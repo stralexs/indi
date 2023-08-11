@@ -7,7 +7,15 @@
 
 import Foundation
 
-final class StoryModeKitSelectionCollectionViewCellViewModel {
+protocol StoryModeKitSelectionCollectionViewCellViewModelProtocol {
+    var kitName: String { get set }
+    var testResult: Int { get set }
+    var cellHeight: CGFloat? { get set }
+    var progressHeight: CGFloat { get }
+    init(kitName: String, testResult: Int)
+}
+
+final class StoryModeKitSelectionCollectionViewCellViewModel: StoryModeKitSelectionCollectionViewCellViewModelProtocol {
     var kitName: String
     var testResult: Int
     var cellHeight: CGFloat?
@@ -21,7 +29,7 @@ final class StoryModeKitSelectionCollectionViewCellViewModel {
         return CGFloat(Double(UserDataManager.shared.getUserResult(for: kitName)) * coefficient)
     }
     
-    init(kitName: String, testResult: Int) {
+    required init(kitName: String, testResult: Int) {
         self.kitName = kitName
         self.testResult = testResult
     }

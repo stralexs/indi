@@ -10,7 +10,7 @@ import UIKit
 final class StoryModeKitSelectionViewController: UIViewController {
     //MARK: - Variables
     @IBOutlet var collectionView: UICollectionView!
-    private var viewModel = StoryModeKitSelectionViewModel()
+    var viewModel: StoryModeKitSelectionViewModelProtocol!
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -88,6 +88,7 @@ extension StoryModeKitSelectionViewController: UICollectionViewDataSource, UICol
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         if let testVC = sb.instantiateViewController(withIdentifier: "TestVC") as? StoryModeTestingViewController {
+            testVC.viewModel = viewModel.viewModelForTesting()
             viewModel.postChosenTestNotification(for: indexPath)
             self.navigationController?.pushViewController(testVC, animated: true)
         }

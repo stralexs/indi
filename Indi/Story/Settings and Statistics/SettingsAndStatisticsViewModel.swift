@@ -5,10 +5,18 @@
 //  Created by Alexander Sivko on 21.05.23.
 //
 
-import Foundation
 import UIKit
 
-final class SettingsAndStatisticsViewModel {
+protocol SettingsAndStatisticsViewModelProtocol {
+    var userStatisticsCount: Int { get }
+    var isUserClickedToChangeAvatar: Bool { get set }
+    var resetAchievements: Bool { get set }
+    func applyChanges(for nameTexFieldText: String, and middleAvatarImageName: String) -> String
+    func getUserStatisticsInfo(for position: Int) -> (String, String)
+    func avatarSwipe(_ isLeftButton: Bool) -> (UIImage, UIImage, UIImage)
+}
+
+final class SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelProtocol {
     //MARK: - Private Variables
     private var defaultAvatars: [UIImage] = {
         var tempArr = [UIImage]()
@@ -67,7 +75,7 @@ final class SettingsAndStatisticsViewModel {
     var userStatisticsCount: Int {
         return userStatistics.count
     }
-    var userClickedToChangeAvatar: Bool = false
+    var isUserClickedToChangeAvatar: Bool = false
     var resetAchievements: Bool = false
     
     //MARK: - Private Method
@@ -106,7 +114,7 @@ final class SettingsAndStatisticsViewModel {
         }
         
         let currentUserAvatar = UserDataManager.shared.getUserAvatar()
-        if userClickedToChangeAvatar && middleAvatarImageName != currentUserAvatar {
+        if isUserClickedToChangeAvatar && middleAvatarImageName != currentUserAvatar {
             UserDataManager.shared.saveUserAvatar(for: middleAvatarImageName)
             countOfChanges += 1
         }

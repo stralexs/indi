@@ -32,10 +32,10 @@ final class StoryModeViewController: UIViewController {
     @IBOutlet var variationsToSideJobsLine: UIView!
     @IBOutlet var variationsToFinalExamLine: UIImageView!
     
-    private var viewModel = StoryModeViewModel()
+    var viewModel: StoryModeViewModelProtocol!
     
     //MARK: - Life Cycle
-    override func viewDidLoad() {
+    override func viewDidLoad() {        
         super.viewDidLoad()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
         
@@ -206,6 +206,7 @@ final class StoryModeViewController: UIViewController {
         } else {
             let sb = UIStoryboard(name: "Main", bundle: nil)
             if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
+                kitSelectionVC.viewModel = viewModel.viewModelForKitSelection()
                 NotificationCenter.default.post(name: Notification.Name(rawValue: chosenStudyStageNotificationKey), object: sender.tag)
                 kitSelectionVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(kitSelectionVC, animated: true)
@@ -222,6 +223,7 @@ final class StoryModeViewController: UIViewController {
         } else {
             let sb = UIStoryboard(name: "Main", bundle: nil)
             if let examVC = sb.instantiateViewController(withIdentifier: "ExamVC") as? StoryModeExamViewController {
+                examVC.viewModel = viewModel.viewModelForExam()
                 NotificationCenter.default.post(name: Notification.Name(rawValue: chosenExamNotificationKey), object: sender.tag)
                 examVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(examVC, animated: true)
@@ -239,13 +241,14 @@ final class StoryModeViewController: UIViewController {
             
         } else if sender.backgroundColor == UIColor.indiLightPink {
             let alert = UIAlertController(title: "Пора выбирать!", message: "На этом этапе вы можете выбирать, что хотите учить. Открыть эту стадию обучения? (Вопросы из этой стадии появятся на финальном экзамене)", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ок", style: .cancel) { _ in
-                sender.restorationIdentifier = self.viewModel.saveSelectedStage(for: sender.tag)
+            let okAction = UIAlertAction(title: "Ок", style: .cancel) { [weak self] _ in
+                sender.restorationIdentifier = self?.viewModel.saveSelectedStage(for: sender.tag)
                 let sb = UIStoryboard(name: "Main", bundle: nil)
                 if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
+                    kitSelectionVC.viewModel = self?.viewModel.viewModelForKitSelection()
                     NotificationCenter.default.post(name: Notification.Name(rawValue: chosenStudyStageNotificationKey), object: sender.tag)
                     kitSelectionVC.hidesBottomBarWhenPushed = true
-                    self.navigationController?.pushViewController(kitSelectionVC, animated: true)
+                    self?.navigationController?.pushViewController(kitSelectionVC, animated: true)
                 }
             }
             let cancelAction = UIAlertAction(title: "Отмена", style: .default)
@@ -256,6 +259,7 @@ final class StoryModeViewController: UIViewController {
         } else {
             let sb = UIStoryboard(name: "Main", bundle: nil)
             if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
+                kitSelectionVC.viewModel = viewModel.viewModelForKitSelection()
                 NotificationCenter.default.post(name: Notification.Name(rawValue: chosenStudyStageNotificationKey), object: sender.tag)
                 kitSelectionVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(kitSelectionVC, animated: true)
@@ -268,6 +272,7 @@ final class StoryModeViewController: UIViewController {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         if let settingsVC = sb.instantiateViewController(withIdentifier: "SettingsVC") as? SettingsAndStatisticsViewController {
             settingsVC.hidesBottomBarWhenPushed = true
+            settingsVC.viewModel = viewModel.viewModelForSettingAndStatistics()
             self.navigationController?.pushViewController(settingsVC, animated: true)
         }
     }

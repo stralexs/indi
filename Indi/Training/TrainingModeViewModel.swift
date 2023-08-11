@@ -7,7 +7,19 @@
 
 import Foundation
 
-final class TrainingModeViewModel {
+protocol TrainingModeViewModelProtocol {
+    var numberOfSections: Int { get }
+    var userSettingsForTraining: ([IndexPath], Int)? { get set }
+    func cellViewModel(for section: Int, and indexPath: IndexPath) -> TrainingModeTableViewCellViewModel?
+    func headerInSectionName(for tableViewSection: Int) -> String
+    func numberOfRowsInSection(for section: Int) -> Int
+    func sliderMaximumValue(for indexPaths: [IndexPath]) -> Float
+    func isBasicKitCheck(for indexPath: IndexPath, for indexPathSection: Int) -> Bool
+    func deleteUserKit(for indexPath: IndexPath, for indexPathSection: Int)
+    func viewModelForTrainingModeTesting() -> TrainingModeTestingViewModelProtocol?
+}
+
+final class TrainingModeViewModel: TrainingModeViewModelProtocol {
     var numberOfSections: Int {
         return StudyStage.countOfStudyStages
     }
@@ -45,5 +57,9 @@ final class TrainingModeViewModel {
     
     func deleteUserKit(for indexPath: IndexPath, for indexPathSection: Int) {
         KitsManager.shared.deleteUserKit(for: indexPath, for: indexPathSection)
+    }
+    
+    func viewModelForTrainingModeTesting() -> TrainingModeTestingViewModelProtocol? {
+        return TrainingModeTestingViewModel()
     }
 }

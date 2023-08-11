@@ -13,7 +13,6 @@ final class NetworkNewKitViewController: NewKitViewController {
     @IBOutlet var noInternetLabel: UILabel!
                     
     override func viewDidLoad() {
-        viewModel = NetworkNewKitViewModel()
         super.viewDidLoad()
         tuneUI()
         setupBinders()

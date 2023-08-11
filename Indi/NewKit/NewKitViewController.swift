@@ -16,7 +16,7 @@ class NewKitViewController: UIViewController {
     @IBOutlet var newKitStudyStageButton: UIButton!
     @IBOutlet var addNewKitButton: UIButton!
                 
-    var viewModel: NewKitViewModel!
+    var viewModel: NewKitViewModelProtocol!
     
     //MARK: - Life Cycle
     override func viewDidLoad() {

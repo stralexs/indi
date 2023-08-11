@@ -16,7 +16,7 @@ final class StoryModeTestingViewController: UIViewController {
     @IBOutlet var questionLabel: UILabel!
     @IBOutlet var answerResultImage: UIImageView!
     
-    private var viewModel = StoryModeTestingViewModel()
+    var viewModel: StoryModeTestingViewModelProtocol!
     
     //MARK: - Life Cycle
     override func viewDidLoad() {

@@ -11,7 +11,6 @@ final class UserNewKitViewController: NewKitViewController {
     @IBOutlet var addQuestionButton: UIButton!
             
     override func viewDidLoad() {
-        viewModel = UserNewKitViewModel()
         super.viewDidLoad()
         tuneUI()
     }

@@ -28,7 +28,7 @@ final class SettingsAndStatisticsViewController: UIViewController {
     @IBOutlet var statisticsPageControl: UIPageControl!
     
     private var statisticsScrollView = UIScrollView()
-    private var viewModel = SettingsAndStatisticsViewModel()
+    var viewModel: SettingsAndStatisticsViewModelProtocol!
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
@@ -122,7 +122,7 @@ final class SettingsAndStatisticsViewController: UIViewController {
     }
     
     @IBAction private func changeAvatar(_ sender: UIButton) {
-        viewModel.userClickedToChangeAvatar = true
+        viewModel.isUserClickedToChangeAvatar = true
         if sender == leftAvatarButton {
             UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut] , animations: {
                 self.rightAvatarImageLeading.constant -= 130

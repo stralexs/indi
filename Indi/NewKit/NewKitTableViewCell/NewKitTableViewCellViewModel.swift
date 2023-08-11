@@ -7,7 +7,17 @@
 
 import Foundation
 
-final class NewKitTableViewCellViewModel {
+protocol NewKitTableViewCellViewModelProtocol {
+    var question: ObservableObject<Question> { get set }
+    var questionText: String? { get }
+    var correctAnswerText: String? { get }
+    var firstIncorrectAnswerText: String? { get }
+    var secondIncorrectAnswerText: String? { get }
+    var thirdIncorrectAnswerText: String? { get }
+    init(question: ObservableObject<Question>)
+}
+
+final class NewKitTableViewCellViewModel: NewKitTableViewCellViewModelProtocol {
     var question: ObservableObject<Question>
 
     var questionText: String? {
@@ -26,7 +36,7 @@ final class NewKitTableViewCellViewModel {
         return question.value.incorrectAnswers?[2]
     }
     
-    init(question: ObservableObject<Question>) {
+    required init(question: ObservableObject<Question>) {
         self.question = question
     }
 }

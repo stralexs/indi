@@ -7,7 +7,19 @@
 
 import Foundation
 
-class NewKitViewModel {
+protocol NewKitViewModelProtocol {
+    var questions: ObservableObject<[Question]> { get set }
+    var newKitName: ObservableObject<String?> { get set }
+    var newKitStudyStageName: ObservableObject<String> { get set }
+    var numberOfRows: Int? { get }
+    var newKitStudyStage: Int? { get set }
+    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModelProtocol?
+    func newKitName(_ newName: String) -> String
+    func createNewKit() -> String
+    func studyStageTitleName(for studyStageRawValue: Int) -> String
+}
+
+class NewKitViewModel: NewKitViewModelProtocol {
     //MARK: - Observable Objects
     var questions: ObservableObject<[Question]> = ObservableObject([])
     var newKitName: ObservableObject<String?> = ObservableObject("Название набора")
@@ -29,7 +41,7 @@ class NewKitViewModel {
         }
     }
     
-    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModel? {
+    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModelProtocol? {
         let question = questions.value[indexPath.row]
         return NewKitTableViewCellViewModel(question: ObservableObject(question))
     }
