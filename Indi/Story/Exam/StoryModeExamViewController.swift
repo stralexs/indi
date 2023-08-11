@@ -104,7 +104,7 @@ extension StoryModeExamViewController: UITextFieldDelegate {
         viewModel.userAnswer = textField.text
         rootView.isUserInteractionEnabled = false
         if viewModel.isRightAnswerCheck() {
-            SoundManager.shared.playCorrectSound()
+            viewModel.playCorrectSound()
             answerResultImage.image = UIImage(named: "Right_png")
             questionLabel.isHidden = true
             answerResultImage.isHidden = false
@@ -116,7 +116,7 @@ extension StoryModeExamViewController: UITextFieldDelegate {
                 self?.rootView.isUserInteractionEnabled = true
             }
         } else {
-            SoundManager.shared.playWrongSound()
+            viewModel.playWrongSound()
             answerResultImage.image = UIImage(named: "Wrong_png")
             questionLabel.isHidden = true
             answerResultImage.isHidden = false

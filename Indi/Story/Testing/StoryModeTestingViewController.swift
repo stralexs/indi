@@ -76,7 +76,7 @@ final class StoryModeTestingViewController: UIViewController {
         viewModel.userAnswer = sender.titleLabel?.text
         rootView.isUserInteractionEnabled = false
         if viewModel.isRightAnswerCheck() {
-            SoundManager.shared.playCorrectSound()
+            viewModel.playCorrectSound()
             questionLabel.isHidden = true
             answerResultImage.image = UIImage(named: "Right_png")
             answerResultImage.isHidden = false
@@ -89,7 +89,7 @@ final class StoryModeTestingViewController: UIViewController {
                 self?.rootView.isUserInteractionEnabled = true
             }
         } else {
-            SoundManager.shared.playWrongSound()
+            viewModel.playWrongSound()
             answerResultImage.image = UIImage(named: "Wrong_png")
             questionLabel.isHidden = true
             answerResultImage.isHidden = false

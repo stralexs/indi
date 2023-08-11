@@ -93,7 +93,7 @@ final class TrainingModeTestingViewController: UIViewController {
         viewModel.userAnswer = sender.titleLabel?.text
         rootView.isUserInteractionEnabled = false
         if viewModel.isRightAnswerCheck() {
-            SoundManager.shared.playCorrectSound()
+            viewModel.playCorrectSound()
             progressView.progress = Float(viewModel.testingProgress)
             answerResultImage.image = UIImage(named: "Right_png")
             questionLabel.isHidden = true
@@ -107,7 +107,7 @@ final class TrainingModeTestingViewController: UIViewController {
                 self?.rootView.isUserInteractionEnabled = true
             }
         } else {
-            SoundManager.shared.playWrongSound()
+            viewModel.playWrongSound()
             answerResultImage.image = UIImage(named: "Wrong_png")
             questionLabel.isHidden = true
             answerResultImage.isHidden = false

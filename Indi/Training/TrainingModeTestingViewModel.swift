@@ -16,6 +16,8 @@ protocol TrainingModeTestingViewModelProtocol {
     func nextQuestion()
     func resetResults()
     func anotherTest()
+    func playCorrectSound()
+    func playWrongSound()
 }
 
 final class TrainingModeTestingViewModel: TrainingModeTestingViewModelProtocol {
@@ -28,6 +30,7 @@ final class TrainingModeTestingViewModel: TrainingModeTestingViewModelProtocol {
     private var totalQuestionsCount: Int = 0
     private var correctAnswersCount: Int = 0
     private var incorrectAnswers: [Question] = []
+    private var soundManager: SoundManagerProtocol
     
     //MARK: - Public Variables
     var testingProgress: Double {
@@ -128,8 +131,17 @@ final class TrainingModeTestingViewModel: TrainingModeTestingViewModelProtocol {
         incorrectAnswers = []
     }
     
+    func playCorrectSound() {
+        soundManager.playCorrectSound()
+    }
+    
+    func playWrongSound() {
+        soundManager.playWrongSound()
+    }
+    
     //MARK: - Initialization
-    init() {
+    init(soundManager: SoundManagerProtocol) {
+        self.soundManager = soundManager
         createNotificationCenterObserver()
     }
 }

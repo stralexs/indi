@@ -15,6 +15,8 @@ protocol StoryModeExamViewModelProtocol {
     func isRightAnswerCheck() -> Bool
     func nextQuestion()
     func resetResults()
+    func playCorrectSound()
+    func playWrongSound()
 }
 
 final class StoryModeExamViewModel: StoryModeExamViewModelProtocol {
@@ -24,6 +26,7 @@ final class StoryModeExamViewModel: StoryModeExamViewModelProtocol {
     private var examQuestions: [Question] = []
     private var totalQuestionsCount: Int = 0
     private var correctAnswersCount: Int = 0
+    private var soundManager: SoundManagerProtocol
     
     //MARK: - Public Variables
     var userAnswer: String?
@@ -120,8 +123,17 @@ final class StoryModeExamViewModel: StoryModeExamViewModelProtocol {
         examQuestions = []
     }
     
+    func playCorrectSound() {
+        soundManager.playCorrectSound()
+    }
+    
+    func playWrongSound() {
+        soundManager.playWrongSound()
+    }
+    
     //MARK: - Initialization
-    init() {
+    init(soundManager: SoundManagerProtocol) {
+        self.soundManager = soundManager
         createNotificationCenterObserver()
     }
 }

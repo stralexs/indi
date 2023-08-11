@@ -5,8 +5,6 @@
 //  Created by Alexander Sivko on 1.05.23.
 //
 
-import Foundation
-import UIKit
 import CoreData
 
 final class KitsManager {

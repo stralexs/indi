@@ -60,6 +60,6 @@ final class TrainingModeViewModel: TrainingModeViewModelProtocol {
     }
     
     func viewModelForTrainingModeTesting() -> TrainingModeTestingViewModelProtocol? {
-        return TrainingModeTestingViewModel()
+        return TrainingModeTestingViewModel(soundManager: SoundManager())
     }
 }

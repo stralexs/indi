@@ -5,11 +5,10 @@
 //  Created by Alexander Sivko on 28.05.23.
 //
 
-import Foundation
 import UserNotifications
 
 final class LocalNotificationsManager {
-    let notificationCenter = UNUserNotificationCenter.current()
+    private let notificationCenter = UNUserNotificationCenter.current()
     
     private func notificationSetup() {
         notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in

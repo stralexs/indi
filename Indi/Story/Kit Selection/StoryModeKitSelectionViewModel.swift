@@ -56,7 +56,7 @@ final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelProtoc
     }
     
     func viewModelForTesting() -> StoryModeTestingViewModelProtocol? {
-        return StoryModeTestingViewModel()
+        return StoryModeTestingViewModel(soundManager: SoundManager())
     }
     
     //MARK: - Initialization

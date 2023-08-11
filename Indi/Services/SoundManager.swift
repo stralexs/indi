@@ -5,15 +5,14 @@
 //  Created by Alexander Sivko on 29.06.23.
 //
 
-import Foundation
 import AVFoundation
 
-final class SoundManager {
-    static let shared = SoundManager()
-    private init() {
-        player.prepareToPlay()
-    }
-    
+protocol SoundManagerProtocol {
+    func playCorrectSound()
+    func playWrongSound()
+}
+
+final class SoundManager: SoundManagerProtocol {
     private var player = AVAudioPlayer()
 
     func playCorrectSound() {
@@ -43,4 +42,6 @@ final class SoundManager {
             print(error)
         }
     }
+    
+    init() { player.prepareToPlay() }
 }

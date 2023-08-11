@@ -159,6 +159,6 @@ final class StoryModeViewModel: StoryModeViewModelProtocol {
     }
     
     func viewModelForExam() -> StoryModeExamViewModelProtocol? {
-        return StoryModeExamViewModel()
+        return StoryModeExamViewModel(soundManager: SoundManager())
     }
 }
