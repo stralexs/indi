@@ -124,21 +124,15 @@ align="center">
 App's MVVM Architecture
 </p>
 Architecture of the application is MVVM: each View Controller has a View Model, that interacts with KitsManger and UserDataManager classes, that are responsible for processing of data.
-Some ViewModels also interact with other managers, for instance NetworkViewModel interacts with NetworkManager, when a request to the server is made, and TestingViewModel interacts with SoundManager, when a correct or incorrect answer sound should be played.
-The singleton pattern is used for Managers so that all classes have access to them.
-
-### Testing protocol
-All possible options for learning words: Testing, Exam and Training testing are conforming to Testing protocol, that describes a set of methods for Models of these ways of learning.
+Some ViewModels also interact with other managers, for instance NetworkViewModel interacts with NetworkManager, when a request to the server is made, and TestingViewModel interacts with SoundManager, when a correct or wrong answer sound should be played.
+Protocols are used all around the app to reduce coupling between modules. ViewModels inject dependency to ViewControllers through special functions that initialize an instance of a certain protocol, for example:
 ```
-protocol Testing {
-    var userAnswer: String? { get set }
-    func testStart()
-    func test(questionLabel UILabel: UILabel?, buttons UIButtons: [UIButton]?, countLabel UILabel: UILabel?)
-    func isRightAnswerCheck() -> Bool
-    func nextQuestion()
-    func resetResults()
+func viewModelForSettingAndStatistics() -> SettingsAndStatisticsViewModelProtocol? {
+    return SettingsAndStatisticsViewModel()
 }
 ```
+The singleton pattern is used for UserDataManager and KitsManager because almost all ViewModels need access to them. These classes themselves are quite large and constantly initializing them with dependency injection rather than doing it once with a start of an app will cost performance (confirmed).
+
 ### Study stage enumeration
 To determine which Study stage a words Kit belongs to, enumeration StudyStage is used:
 ```
@@ -161,7 +155,7 @@ Int64 is used due to requirements of Core Data.
 - Swift
 - UIKit
 - MVVM
-- Singleton, Inheritance
+- Dependency Injection, Inheritance, Singleton
 - Observable Objects
 - Notification Center
 - Storyboard, Autolayout
