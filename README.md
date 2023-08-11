@@ -126,11 +126,13 @@ App's MVVM Architecture
 Architecture of the application is MVVM: each View Controller has a View Model, that interacts with KitsManger and UserDataManager classes, that are responsible for processing of data.
 Some ViewModels also interact with other managers, for instance NetworkViewModel interacts with NetworkManager, when a request to the server is made, and TestingViewModel interacts with SoundManager, when a correct or wrong answer sound should be played.
 Protocols are used all around the app to reduce coupling between modules. ViewModels inject dependency to ViewControllers through special functions that initialize an instance of a certain protocol, for example:
+
 ```
 func viewModelForSettingAndStatistics() -> SettingsAndStatisticsViewModelProtocol? {
     return SettingsAndStatisticsViewModel()
 }
 ```
+
 The singleton pattern is used for UserDataManager and KitsManager because almost all ViewModels need access to them. These classes themselves are quite large and constantly initializing them with dependency injection rather than doing it once with a start of an app will cost performance (confirmed).
 
 ### Study stage enumeration
