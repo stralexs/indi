@@ -43,8 +43,6 @@
 		429536382A1797BB0028DBA4 /* Kit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429536342A1797BB0028DBA4 /* Kit+CoreDataProperties.swift */; };
 		429536392A1797BB0028DBA4 /* Question+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429536352A1797BB0028DBA4 /* Question+CoreDataClass.swift */; };
 		4295363A2A1797BB0028DBA4 /* Question+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429536362A1797BB0028DBA4 /* Question+CoreDataProperties.swift */; };
-		42BCF6F42A5016710076837B /* NewKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BCF6F32A5016710076837B /* NewKitViewController.swift */; };
-		42BCF6F62A5016860076837B /* NewKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BCF6F52A5016860076837B /* NewKitViewModel.swift */; };
 		42C1B4AE2A3B3D2500D79211 /* NetworkNewKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1B4AD2A3B3D2500D79211 /* NetworkNewKitViewModel.swift */; };
 		42C1B4B32A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1B4B22A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift */; };
 		42D057932A2603350001BF33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42D057922A2603350001BF33 /* LaunchScreen.storyboard */; };
@@ -102,8 +100,6 @@
 		429536342A1797BB0028DBA4 /* Kit+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		429536352A1797BB0028DBA4 /* Question+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Question+CoreDataClass.swift"; sourceTree = "<group>"; };
 		429536362A1797BB0028DBA4 /* Question+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Question+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		42BCF6F32A5016710076837B /* NewKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitViewController.swift; sourceTree = "<group>"; };
-		42BCF6F52A5016860076837B /* NewKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitViewModel.swift; sourceTree = "<group>"; };
 		42C1B4AD2A3B3D2500D79211 /* NetworkNewKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNewKitViewModel.swift; sourceTree = "<group>"; };
 		42C1B4B22A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		42D057922A2603350001BF33 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -243,8 +239,6 @@
 			children = (
 				421801142A446A99004B9020 /* NewKitSelectionViewController.swift */,
 				424185D22A8626FD009257B5 /* NewKitSelectionViewModel.swift */,
-				42BCF6F32A5016710076837B /* NewKitViewController.swift */,
-				42BCF6F52A5016860076837B /* NewKitViewModel.swift */,
 				42C1B4AF2A3B403F00D79211 /* NewKitTableViewCell */,
 				4205016D2A4CA0190071CE67 /* UserNewKit */,
 				425B67D32A1FB3A3003AA954 /* NetworkNewKit */,
@@ -438,14 +432,12 @@
 				42C1B4AE2A3B3D2500D79211 /* NetworkNewKitViewModel.swift in Sources */,
 				42943A622A1BD04100D5BF62 /* UserNewKitViewModel.swift in Sources */,
 				424185D32A8626FD009257B5 /* NewKitSelectionViewModel.swift in Sources */,
-				42BCF6F62A5016860076837B /* NewKitViewModel.swift in Sources */,
 				42210DF129FD243300CE37D1 /* SceneDelegate.swift in Sources */,
 				428DC3612A3F394200708F37 /* UIColorExtension.swift in Sources */,
 				42D57D162A0F8AED00991007 /* CoreDataManager.swift in Sources */,
 				429536382A1797BB0028DBA4 /* Kit+CoreDataProperties.swift in Sources */,
 				425B67D22A1FB39D003AA954 /* NetworkManager.swift in Sources */,
 				426B55112A2348DF004A87E0 /* LocalNotificationsManager.swift in Sources */,
-				42BCF6F42A5016710076837B /* NewKitViewController.swift in Sources */,
 				421801152A446A99004B9020 /* NewKitSelectionViewController.swift in Sources */,
 				422AC1142A1F77EA00B0B941 /* StoryModeViewModel.swift in Sources */,
 				42FF604B2A1A220F00375ACF /* SettingsAndStatisticsViewModel.swift in Sources */,
