@@ -77,13 +77,6 @@ In addition, there is also a Switch that resets all User's achievements. Before 
 In case User doesn't want to learn words in the Story Mode, and the walkthrough does not allow him to learn the Kits that he needs, he can select the Training Mode. Here, in the form of a TableView, all the same words Kits are presented, but access to them is already granted. Here User selects Kits with a check mark, and then with a Slider chooses the number of words from the selected Kits, where the maximum is the sum of the words of all selected Kits. In fact, Training Mode is similar to Testing, but with a significant difference: at the top of the screen there is a Progress View that fills in as User answers correctly. Upon completion, User will be asked to complete the incorrectly answered words. The Progress View will be completely filled when User answers correctly to all the initially selected words.
 
 ## New Kit
-When User presses the middle button on the Tab Bar, he is modally presented a screen with 2 options: create your own words Kit, or download it from the Internet.
-In fact, both options are almost identical both on the screen and under the hood, so it was decided to make the parent View Controller and View Model, and both options will inherit all the common functionality from the parents, supplementing with their own.
-<img width="1027" alt="3" src="https://github.com/stralexs/indi/assets/123239625/645d64b9-d935-439f-a831-295e4263faaa">
-<p align="center">
-New Kit Inheritance
-</p>
-
 ### User New Kit
 ![User New Kit](https://github.com/stralexs/indi/assets/123239625/fc1351c6-ca75-4b7a-9244-8e6bc95a2a56)
 
