@@ -5,112 +5,94 @@
 //  Created by Alexander Sivko on 15.06.23.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 
-protocol NetworkNewKitViewModelProtocol {
-    var questions: ObservableObject<[Question]> { get set }
-    var newKitName: ObservableObject<String?> { get set }
-    var newKitStudyStageName: ObservableObject<String> { get set }
-    var numberOfRows: Int? { get }
-    var newKitStudyStage: Int? { get set }
-    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModelData?
-    func newKitName(_ newName: String) -> String
-    func createNewKit() -> String
-    func studyStageTitleName(for studyStageRawValue: Int) -> String
-    var isConnectedToInternet: Bool { get set }
+protocol NetworkNewKitViewModelData {
+    var questions: BehaviorRelay<[Question]> { get set }
+    var newKitName: BehaviorRelay<String> { get set }
+    var newKitStudyStageName: BehaviorRelay<String> { get set }
+    var newKitStudyStage: BehaviorRelay<Int?> { get set }
+    var isConnectedToInternet: BehaviorRelay<Bool?> { get set }
+}
+
+protocol NetworkNewKitViewModelLogic {
+    func cellViewModel(for row: Int) -> NewKitTableViewCellViewModelData
+    func newKitName(_ newName: String) throws
+    func createNewKit() throws
     func retrieveQuestions(completion: @escaping () -> Void)
 }
 
-final class NetworkNewKitViewModel: NetworkNewKitViewModelProtocol {
-    //MARK: - Observable Objects
-    var questions: ObservableObject<[Question]> = ObservableObject([])
-    var newKitName: ObservableObject<String?> = ObservableObject("Название набора")
-    var newKitStudyStageName: ObservableObject<String> = ObservableObject("Стадия обучения")
+final class NetworkNewKitViewModel: NetworkNewKitViewModelData {
+    var questions: BehaviorRelay<[Question]> = BehaviorRelay(value: [])
+    var newKitName: BehaviorRelay<String> = BehaviorRelay(value: "Название набора")
+    var newKitStudyStageName: BehaviorRelay<String> = BehaviorRelay(value: "Стадия обучения")
+    var newKitStudyStage: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
+    var isConnectedToInternet: BehaviorRelay<Bool?> = BehaviorRelay(value: nil)
     
-    //MARK: - Private Property
-    private var namesOfKitsOfSelectedStudyStage: [String] = []
+    private let disposeBag = DisposeBag()
+    private let networkManager: NetworkManagerLogic
+    private var namesOfKitsOfSelectedStudyStage = [String]()
     
-    //MARK: - Public Properties and Methods
-    var numberOfRows: Int? {
-        return questions.value.count
+    init(networkManager: NetworkManagerLogic) {
+        self.networkManager = networkManager
+        setupBinder()
+        bindToNewKitStudyStage()
     }
-    var newKitStudyStage: Int? {
-        didSet {
-            if let newKitStudyStage = newKitStudyStage {
-                self.namesOfKitsOfSelectedStudyStage = KitsManager.shared.getKitNamesForStudyStage(with: [newKitStudyStage])
-                self.newKitStudyStageName.value = StudyStage[newKitStudyStage]
-            }
+}
+
+extension NetworkNewKitViewModel: NetworkNewKitViewModelLogic {
+    private func bindToNewKitStudyStage() {
+        newKitStudyStage.bind { name in
+            guard let name = name else { return }
+            self.namesOfKitsOfSelectedStudyStage = KitsManager.shared.getKitNamesForStudyStage(with: [name])
+            self.newKitStudyStageName.accept(StudyStage[name])
+        }
+        .disposed(by: disposeBag)
+    }
+    
+    private func setupBinder() {
+        networkManager.isConnectedToInternet.bind {  [weak self] isConnected in
+            self?.isConnectedToInternet.accept(isConnected)
         }
     }
     
-    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModelData? {
-        let question = questions.value[indexPath.row]
+    func cellViewModel(for row: Int) -> NewKitTableViewCellViewModelData {
+        let question = questions.value[row]
         return NewKitTableViewCellViewModel(question: BehaviorRelay(value: question))
     }
     
-    func newKitName(_ newName: String) -> String {
-        var newNameVar = newName
+    func newKitName(_ newName: String) throws {
+        let trimmedName = newName.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        while newNameVar.first == " " {
-            newNameVar.removeFirst()
-        }
-        while newNameVar.last == " " {
-            newNameVar.removeLast()
-        }
-        
-        var output = ""
-        if newNameVar == "" {
-            output = "Empty"
-        } else if newNameVar.count > 30 {
-            output = "Too long"
+        if trimmedName == "" {
+            throw KitNameError.empty
+        } else if trimmedName.count > 30 {
+            throw KitNameError.tooLong
         } else {
-            newKitName.value = newNameVar
+            newKitName.accept(trimmedName)
         }
-        
-        return output
     }
     
-    func createNewKit() -> String {
-        var output = ""
-        
+    func createNewKit() throws {
         if questions.value.count == 0 {
-            output = "No questions"
+            throw KitCreationError.noQuestions
         } else if newKitName.value == "Название набора" {
-            output = "No kit name"
-        } else if newKitStudyStage == nil {
-            output = "No study stage"
-        } else if namesOfKitsOfSelectedStudyStage.contains(newKitName.value ?? "") {
-            output = "Name already exists"
+            throw KitCreationError.noKitName
+        } else if newKitStudyStage.value == nil {
+            throw KitCreationError.noStudyStage
+        } else if namesOfKitsOfSelectedStudyStage.contains(newKitName.value) {
+            throw KitCreationError.nameAlreadyExists
         } else {
-            KitsManager.shared.createNewKit(newKitName.value ?? "", newKitStudyStage ?? 0, questions.value)
-            UserDataManager.shared.createNewUserData(for: newKitName.value ?? "")
-        }
-        
-        return output
-    }
-    
-    func studyStageTitleName(for studyStageRawValue: Int) -> String {
-        return StudyStage[studyStageRawValue]
-    }
-    
-    private var networkingManager = NetworkManager()
-    private func setupBinder() {
-        networkingManager.isConnectedToInternet.bind {  [weak self] isConnected in
-            self?.isConnectedToInternet = isConnected
+            KitsManager.shared.createNewKit(newKitName.value, newKitStudyStage.value ?? 0, questions.value)
+            UserDataManager.shared.createNewUserData(for: newKitName.value)
         }
     }
-    var isConnectedToInternet: Bool = true
     
     func retrieveQuestions(completion: @escaping () -> Void) {
-        networkingManager.retrieveQuestions { [weak self] questions in
-            self?.questions.value = questions
+        networkManager.retrieveQuestions { [weak self] questions in
+            self?.questions.accept(questions)
             completion()
         }
-    }
-    
-    init() {
-        setupBinder()
     }
 }

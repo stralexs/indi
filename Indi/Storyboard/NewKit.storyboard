@@ -268,22 +268,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0FF-U8-53T">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название набора" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0FF-U8-53T">
                                 <rect key="frame" x="94.666666666666686" y="63" width="204" height="24"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Название набора">
-                                        <attributes>
-                                            <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="25" name="GTWalsheimPro-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                                <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="25"/>
+                                <color key="textColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r4G-rz-4l7">
                                 <rect key="frame" x="306" y="58" width="49" height="34"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="pencil.line" catalog="system"/>
                                 <connections>
@@ -292,6 +285,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTO-6B-xSZ">
                                 <rect key="frame" x="96.666666666666686" y="102" width="200" height="70"/>
+                                <color key="backgroundColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="6yF-Z9-mjt"/>
                                     <constraint firstAttribute="width" constant="200" id="Hup-QK-BSP"/>
@@ -301,6 +295,11 @@
                                 <state key="normal" title="Cтадия обучения">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="studyStageButtonIsPressed:" destination="6Ob-5J-50G" eventType="touchUpInside" id="0dN-hi-dpa"/>
                                 </connections>
@@ -309,7 +308,7 @@
                                 <rect key="frame" x="10" y="187" width="373" height="625"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="90i-DJ-izi" customClass="NewKitTableViewCell" customModule="Indi" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewKitTableViewCell" id="90i-DJ-izi" customClass="NewKitTableViewCell" customModule="Indi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="373" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="90i-DJ-izi" id="yBd-EE-Nah">
@@ -399,6 +398,7 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.99704223869999997" green="0.78450757270000004" blue="0.78082448240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="UUM-EC-gna" firstAttribute="leading" secondItem="03b-eP-v3U" secondAttribute="trailing" constant="3" id="61j-VJ-45b"/>
                                                 <constraint firstItem="3cP-dC-FSo" firstAttribute="leading" secondItem="yBd-EE-Nah" secondAttribute="leading" id="HEe-e5-FIp"/>
@@ -417,7 +417,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="background" destination="yBd-EE-Nah" id="iRD-FI-aeX"/>
                                             <outlet property="correctAnswerLabel" destination="pyj-nF-X6B" id="rL8-uh-lFC"/>
                                             <outlet property="firstIncorrectAnswer" destination="tFI-sN-ys5" id="zhx-E9-hDg"/>
                                             <outlet property="questionLabel" destination="EMC-Tg-VmU" id="RM8-J9-gaU"/>
@@ -426,28 +425,34 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QAL-VS-Bgt">
                                 <rect key="frame" x="306" y="14" width="71" height="35"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="20"/>
+                                <color key="tintColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Готово"/>
                                 <connections>
                                     <action selector="addNewKit:" destination="6Ob-5J-50G" eventType="touchUpInside" id="UdE-oV-TKY"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jlp-Qo-Ivk">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jlp-Qo-Ivk">
                                 <rect key="frame" x="30" y="187" width="333" height="625"/>
                             </activityIndicatorView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Qa-dE-tid">
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Dino-no-internet" translatesAutoresizingMaskIntoConstraints="NO" id="8Qa-dE-tid">
                                 <rect key="frame" x="96.666666666666686" y="422.66666666666669" width="200" height="154.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="gwe-p0-bkx"/>
                                     <constraint firstAttribute="height" constant="154" id="v8U-oV-GW3"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet :(" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EEs-W7-p8i">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Internet :(" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EEs-W7-p8i">
                                 <rect key="frame" x="123.66666666666669" y="596.66666666666663" width="146" height="30"/>
                                 <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="25"/>
                                 <color key="textColor" red="0.32156863810000003" green="0.32156863810000003" blue="0.32156863810000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -467,7 +472,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mNL-Sr-W3W"/>
-                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                        <color key="backgroundColor" red="0.94117647410000005" green="0.73725497719999999" blue="0.27450981740000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="0FF-U8-53T" firstAttribute="top" secondItem="mNL-Sr-W3W" secondAttribute="top" constant="63" id="0ns-GA-3Mq"/>
                             <constraint firstItem="mNL-Sr-W3W" firstAttribute="bottom" secondItem="jlp-Qo-Ivk" secondAttribute="bottom" constant="30" id="53x-UD-Syg"/>
@@ -498,11 +503,8 @@
                     <navigationItem key="navigationItem" id="KUA-N4-Vb2"/>
                     <connections>
                         <outlet property="activityIndicator" destination="jlp-Qo-Ivk" id="4eI-Ik-93v"/>
-                        <outlet property="addNewKitButton" destination="QAL-VS-Bgt" id="sS0-cx-hgm"/>
-                        <outlet property="background" destination="mVQ-45-rzG" id="C0D-kV-4yJ"/>
-                        <outlet property="newKitEditButton" destination="r4G-rz-4l7" id="d0j-4T-G1z"/>
                         <outlet property="newKitLabel" destination="0FF-U8-53T" id="jLa-0V-TYa"/>
-                        <outlet property="newKitStudyStageButton" destination="QTO-6B-xSZ" id="4Q9-h0-DiM"/>
+                        <outlet property="newKitStudyStageButton" destination="QTO-6B-xSZ" id="Gc0-9R-K1D"/>
                         <outlet property="noInternetImage" destination="8Qa-dE-tid" id="cEg-nE-5NE"/>
                         <outlet property="noInternetLabel" destination="EEs-W7-p8i" id="zbA-wT-7gR"/>
                         <outlet property="tableView" destination="0ca-NO-r7C" id="Dme-gL-jKc"/>
@@ -564,7 +566,7 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="6Ob-5J-50G" kind="show" id="9R8-V2-1Nk"/>
+                                            <segue destination="6Ob-5J-50G" kind="show" destinationCreationSelector="presentNetworkNewKitViewController:sender:segueIdentifier:" id="9R8-V2-1Nk"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -605,6 +607,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Dino-no-internet" width="256" height="256"/>
         <image name="New-kit" width="25" height="25"/>
         <image name="Plus" width="25" height="25"/>
         <image name="Web" width="25" height="25"/>
@@ -615,9 +618,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemTealColor">
             <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

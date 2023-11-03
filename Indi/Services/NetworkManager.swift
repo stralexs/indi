@@ -8,7 +8,12 @@
 import Foundation
 import Network
 
-final class NetworkManager {
+protocol NetworkManagerLogic {
+    var isConnectedToInternet: ObservableObject<Bool> { get set }
+    func retrieveQuestions(completion: @escaping ([Question]) -> ())
+}
+
+final class NetworkManager: NetworkManagerLogic {
     //MARK: - Private Properties and Methods
     private struct Record: Codable {
         var record: [QuestionNetwork]

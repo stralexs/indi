@@ -5,99 +5,111 @@
 //  Created by Alexander Sivko on 25.05.23.
 //
 
-import UIKit
+import RxSwift
+import RxCocoa
 
 final class NetworkNewKitViewController: UIViewController {
-    @IBOutlet var background: UIView!
+    // MARK: - Properties
     @IBOutlet var tableView: UITableView!
     @IBOutlet var newKitLabel: UILabel!
-    @IBOutlet var newKitEditButton: UIButton!
     @IBOutlet var newKitStudyStageButton: UIButton!
-    @IBOutlet var addNewKitButton: UIButton!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     @IBOutlet var noInternetImage: UIImageView!
     @IBOutlet var noInternetLabel: UILabel!
     
-    var viewModel: NetworkNewKitViewModelProtocol!
+    private var viewModel: NetworkNewKitViewModelData & NetworkNewKitViewModelLogic
+    private let disposeBag = DisposeBag()
     
-    //MARK: - Life Cycle
+    //MARK: - ViewController lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tuneUI()
         setupBinders()
-        noInternetConnectionAlert()
+        setupTableView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.reloadTableView.notificationKey"), object: nil)
+        reloadTableViewOfTrainingMode()
     }
     
-    //MARK: - Public Methods
-    func tuneUI() {
-        background.backgroundColor = UIColor.indiMainYellow
-        
-        activityIndicator.startAnimating()
-        noInternetImage.image = UIImage(named: "Dino-no-internet")
-        noInternetImage.isHidden = true
-        noInternetLabel.isHidden = true
-        
-        newKitStudyStageButton.backgroundColor = UIColor.indiMainBlue
-        newKitStudyStageButton.layer.cornerRadius = 10
-        newKitStudyStageButton.tintColor = UIColor.white
-        
-        addNewKitButton.tintColor = UIColor.indiMainBlue
-        newKitLabel.textColor = UIColor.indiMainBlue
-        newKitEditButton.tintColor = UIColor.indiMainBlue
-        
-        tableView.layer.cornerRadius = 20
-        tableView.dataSource = self
+    // MARK: - Initialization
+    init?(coder: NSCoder, viewModel: NetworkNewKitViewModelData & NetworkNewKitViewModelLogic) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
     }
     
-    func setupBinders() {
-        viewModel.newKitName.bind { [weak self] newNetworkKitName in
-            self?.newKitLabel.text = newNetworkKitName
-        }
-        viewModel.newKitStudyStageName.bind { [weak self] name in
-            self?.newKitStudyStageButton.setTitle(name, for: .normal)
-        }
-        viewModel.questions.bind { [weak self] _ in
-            self?.viewModel.retrieveQuestions {
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+}
+
+// MARK: - Rx Setup
+extension NetworkNewKitViewController {
+    private func setupBinders() {
+        viewModel.newKitName.bind { self.newKitLabel.text = $0 }
+        .disposed(by: disposeBag)
+        
+        viewModel.newKitStudyStageName.bind { self.newKitStudyStageButton.setTitle($0, for: .normal) }
+        .disposed(by: disposeBag)
+        
+        viewModel.questions.bind { _ in
+            self.viewModel.retrieveQuestions {
                 DispatchQueue.main.async {
-                    self?.activityIndicator.stopAnimating()
-                    self?.activityIndicator.isHidden = true
-                    self?.tableView.reloadData()
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.tableView.reloadData()
                 }
             }
         }
+        .disposed(by: disposeBag)
+        
+        viewModel.isConnectedToInternet.bind { isConnected in
+            guard let isConnected = isConnected else { return }
+            if !isConnected {
+                self.presentNoInternetConnectionAlert()
+            }
+        }
+        .disposed(by: disposeBag)
     }
     
-    //MARK: - Alert Controllers
-    @IBAction func nameKitButtonIsPressed(_ sender: UIButton?) {
+    private func setupTableView() {
+        viewModel.questions
+            .bind(to: tableView
+                .rx
+                .items(cellIdentifier: NewKitTableViewCell.identifier,
+                       cellType: NewKitTableViewCell.self)) { row, question, cell in
+                cell.configure(with: self.viewModel.cellViewModel(for: row))
+            }
+        .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - Functionality
+extension NetworkNewKitViewController {
+    private func reloadTableViewOfTrainingMode() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: String.reloadTableView), object: nil)
+    }
+    
+    @IBAction private func nameKitButtonIsPressed(_ sender: UIButton?) {
         let newKitNameAlert = UIAlertController(title: "Введите название нового набора слов:", message: nil, preferredStyle: .alert)
-        newKitNameAlert.addTextField() { textField in
-            textField.clearButtonMode = .whileEditing
-        }
+        newKitNameAlert.addTextField() { $0.clearButtonMode = .whileEditing }
         
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
         let continueAction = UIAlertAction(title: "Готово", style: .default) { _ in
-            let newNameResult = self.viewModel.newKitName(newKitNameAlert.textFields?.first?.text ?? "")
-            
-            if newNameResult == "Empty" {
-                let emptyTextFieldAlert = UIAlertController(title: "Пожалуйста, введите корректное название набора", message: nil, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ок", style: .default) { _ in
-                    self.present(newKitNameAlert, animated: true)
+            do {
+                try self.viewModel.newKitName(newKitNameAlert.textFields?.first?.text ?? "")
+            }
+            catch let error {
+                switch error as! KitNameError {
+                case .empty:
+                    self.presentBasicAlert(title: "Пожалуйста, введите корректное название набора", message: nil, actions: [.okAction]) { _ in
+                        self.present(newKitNameAlert, animated: true)
+                    }
+                case .tooLong:
+                    self.presentBasicAlert(title: "Название набора не может быть длиннее 30 символов", message: nil, actions: [.okAction]) { _ in
+                        self.present(newKitNameAlert, animated: true)
+                    }
                 }
-                emptyTextFieldAlert.addAction(okAction)
-                self.present(emptyTextFieldAlert, animated: true)
-                
-            } else if newNameResult == "Too long" {
-                let extraLongNameAlert = UIAlertController(title: "Название набора не может быть длиннее 30 символов", message: nil, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ок", style: .default) { _ in
-                    self.present(newKitNameAlert, animated: true)
-                }
-                extraLongNameAlert.addAction(okAction)
-                self.present(extraLongNameAlert, animated: true)
             }
         }
         newKitNameAlert.addAction(cancelAction)
@@ -106,24 +118,24 @@ final class NetworkNewKitViewController: UIViewController {
         self.present(newKitNameAlert, animated: true)
     }
     
-    @IBAction func studyStageButtonIsPressed(_ sender: UIButton) {
+    @IBAction private func studyStageButtonIsPressed(_ sender: UIButton) {
         let newKitStudyStageAlert = UIAlertController(title: "Выберите стадию обучения, в которую нужно добавить набор", message: nil, preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
         
         let completionHandler = { (action: UIAlertAction) -> Void in
             if let index = newKitStudyStageAlert.actions.firstIndex(where: { $0 == action} ) {
-                self.viewModel.newKitStudyStage = index - 1
+                self.viewModel.newKitStudyStage.accept(index - 1)
             }
         }
         
-        let newbornAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 0), style: .default, handler: completionHandler)
-        let preschoolAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 1), style: .default, handler: completionHandler)
-        let earlySchoolAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 2), style: .default, handler: completionHandler)
-        let highSchoolAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 3), style: .default, handler: completionHandler)
-        let lifeActivitiesAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 4), style: .default, handler: completionHandler)
-        let programmingUniversityAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 5), style: .default, handler: completionHandler)
-        let constructionUniversityAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 6), style: .default, handler: completionHandler)
-        let sideJobAction = UIAlertAction(title: viewModel.studyStageTitleName(for: 7), style: .default, handler: completionHandler)
+        let newbornAction = UIAlertAction(title: "Newborn", style: .default, handler: completionHandler)
+        let preschoolAction = UIAlertAction(title: "Preschool", style: .default, handler: completionHandler)
+        let earlySchoolAction = UIAlertAction(title: "Early school", style: .default, handler: completionHandler)
+        let highSchoolAction = UIAlertAction(title: "High school", style: .default, handler: completionHandler)
+        let lifeActivitiesAction = UIAlertAction(title: "Life activities", style: .default, handler: completionHandler)
+        let programmingUniversityAction = UIAlertAction(title: "Programming university", style: .default, handler: completionHandler)
+        let constructionUniversityAction = UIAlertAction(title: "Construction university", style: .default, handler: completionHandler)
+        let sideJobAction = UIAlertAction(title: "Side jobs", style: .default, handler: completionHandler)
         
         newKitStudyStageAlert.addAction(cancelAction)
         newKitStudyStageAlert.addAction(newbornAction)
@@ -138,75 +150,41 @@ final class NetworkNewKitViewController: UIViewController {
         self.present(newKitStudyStageAlert, animated: true)
     }
     
-    @IBAction func addNewKit(_ sender: UIButton) {
-        let newKitResult = viewModel.createNewKit()
-        
-        if newKitResult == "No questions" {
-            let alert = UIAlertController(title: "В наборе должен быть хотя бы один вопрос", message: nil, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ок", style: .default)
-            alert.addAction(okAction)
-            self.present(alert, animated: true)
-        } else if newKitResult == "No kit name" {
-            let alert = UIAlertController(title: "Пожалуйста, введите название набора слов", message: nil, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ок", style: .default)
-            alert.addAction(okAction)
-            self.present(alert, animated: true)
-            
-        } else if newKitResult == "No study stage" {
-            let alert = UIAlertController(title: "Пожалуйста, выберите стадию обучения, в которую нужно добавить набор", message: nil, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ок", style: .default)
-            alert.addAction(okAction)
-            self.present(alert, animated: true)
-            
-        } else if newKitResult == "Name already exists" {
-            let nameAlreadyExistsAlert = UIAlertController(title: "В выбранной стадии обучения уже существует набор с таким названием", message: "Выберите другое название", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ок", style: .default) { [weak self] _ in
-                self?.nameKitButtonIsPressed(nil)
+    @IBAction private func addNewKit(_ sender: UIButton) {
+        do {
+            try viewModel.createNewKit()
+            presentBasicAlert(title: "Новый набор успешно создан!", message: "Удалить набор можно долгим нажатием", actions: [.okAction]) { _ in
+                self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
             }
-            nameAlreadyExistsAlert.addAction(okAction)
-            self.present(nameAlreadyExistsAlert, animated: true)
-            
-        } else {
-            let kitCreatedAlert = UIAlertController(title: "Новый набор успешно создан!", message: "Удалить набор можно долгим нажатием", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Ок", style: .default) { [weak self] _ in
-                self?.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
+        }
+        catch let error {
+            switch error as! KitCreationError {
+            case .noQuestions:
+                presentBasicAlert(title: "В наборе должен быть хотя бы один вопрос", message: nil, actions: [.okAction], completionHandler: nil)
+            case .noKitName:
+                presentBasicAlert(title: "Пожалуйста, введите название набора слов", message: nil, actions: [.okAction], completionHandler: nil)
+            case .noStudyStage:
+                presentBasicAlert(title: "Пожалуйста, выберите стадию обучения, в которую нужно добавить набор", message: nil, actions: [.okAction], completionHandler: nil)
+            case .nameAlreadyExists:
+                presentBasicAlert(title: "В выбранной стадии обучения уже существует набор с таким названием", message: "Выберите другое название", actions: [.okAction]) { _ in
+                    self.nameKitButtonIsPressed(nil)
+                }
             }
-            kitCreatedAlert.addAction(okAction)
-            self.present(kitCreatedAlert, animated: true)
         }
     }
     
-    @IBAction func cancelButtonIsPressed(_ sender: UIButton) {
+    @IBAction private func cancelButtonIsPressed(_ sender: UIButton) {
         self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
-    private func noInternetConnectionAlert() {
-        if viewModel.isConnectedToInternet == false {
-            DispatchQueue.main.async { [weak self] in
-                let alert = UIAlertController(title: "Нет соединения с интернетом", message: "Пожалуйста, проверьте ваше подключение и попробуйте ещё раз", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ок", style: .default)
-                alert.addAction(okAction)
-                self?.present(alert, animated: true)
-                
-                self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.isHidden = true
-                self?.noInternetImage.isHidden = false
-                self?.noInternetLabel.isHidden = false
-            }
+    private func presentNoInternetConnectionAlert() {
+        DispatchQueue.main.async {
+            self.presentBasicAlert(title: "Нет соединения с интернетом", message: "Пожалуйста, проверьте ваше подключение и попробуйте ещё раз", actions: [.okAction], completionHandler: nil)
+            
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+            self.noInternetImage.isHidden = false
+            self.noInternetLabel.isHidden = false
         }
-    }
-}
-
-//MARK: - TableView Data Source
-extension NetworkNewKitViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRows ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewKitTableViewCell
-        let cellViewModel = viewModel.cellViewModel(for: indexPath)
-        cell.configure(with: cellViewModel!)
-        return cell
     }
 }

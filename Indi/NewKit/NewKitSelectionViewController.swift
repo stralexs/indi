@@ -52,11 +52,10 @@ final class NewKitSelectionViewController: UIViewController {
         topBlurredView.effect = nil
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let networkVC = segue.destination as? NetworkNewKitViewController {
-            networkVC.viewModel = viewModel.viewModelForNetworkNewKit()
-            networkVC.modalPresentationStyle = .fullScreen
-        }
+    @IBSegueAction func presentNetworkNewKitViewController(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> NetworkNewKitViewController? {
+        let networkNewKitViewController = NetworkNewKitViewController(coder: coder, viewModel: viewModel.viewModelForNetworkNewKit())
+        networkNewKitViewController?.modalPresentationStyle = .fullScreen
+        return networkNewKitViewController
     }
     
     @IBSegueAction private func presentUserNewKitViewController(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> UserNewKitViewController? {
