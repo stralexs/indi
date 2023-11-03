@@ -149,11 +149,11 @@ Int64 is used due to requirements of Core Data.
 ## Stack
 - Swift
 - UIKit
+- RxSwift, RxCocoa
 - MVVM
-- Dependency Injection, Inheritance, Singleton
-- Observable Objects
+- Dependency Injection, Singleton
 - Notification Center
-- Storyboard, Autolayout
+- Storyboard
 - URLSession
 - GCD
 - Core Data, User Defaults
