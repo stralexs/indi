@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 protocol NetworkNewKitViewModelProtocol {
     var questions: ObservableObject<[Question]> { get set }
@@ -13,7 +15,7 @@ protocol NetworkNewKitViewModelProtocol {
     var newKitStudyStageName: ObservableObject<String> { get set }
     var numberOfRows: Int? { get }
     var newKitStudyStage: Int? { get set }
-    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModelProtocol?
+    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModelData?
     func newKitName(_ newName: String) -> String
     func createNewKit() -> String
     func studyStageTitleName(for studyStageRawValue: Int) -> String
@@ -43,9 +45,9 @@ final class NetworkNewKitViewModel: NetworkNewKitViewModelProtocol {
         }
     }
     
-    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModelProtocol? {
+    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModelData? {
         let question = questions.value[indexPath.row]
-        return NewKitTableViewCellViewModel(question: ObservableObject(question))
+        return NewKitTableViewCellViewModel(question: BehaviorRelay(value: question))
     }
     
     func newKitName(_ newName: String) -> String {

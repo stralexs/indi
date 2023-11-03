@@ -5,152 +5,107 @@
 //  Created by Alexander Sivko on 22.05.23.
 //
 
-import UIKit
+import RxSwift
+import RxCocoa
 
-protocol UserNewKitViewModelProtocol {
-    var questions: ObservableObject<[Question]> { get set }
-    var newKitName: ObservableObject<String?> { get set }
-    var newKitStudyStageName: ObservableObject<String> { get set }
-    var numberOfRows: Int? { get }
-    var newKitStudyStage: Int? { get set }
-    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModelProtocol?
-    func newKitName(_ newName: String) -> String
-    func createNewKit() -> String
-    func studyStageTitleName(for studyStageRawValue: Int) -> String
-    func createNewQuestion(_ firstTextFieldText: String, _ secondTextFieldText: String, _ thirdTextFieldText: String) -> String
+protocol UserNewKitViewModelData {
+    var questions: BehaviorRelay<[Question]> { get set }
+    var newKitName: BehaviorRelay<String> { get set }
+    var newKitStudyStageName: BehaviorRelay<String> { get set }
+    var newKitStudyStage: BehaviorRelay<Int?> { get set }
 }
 
-final class UserNewKitViewModel: UserNewKitViewModelProtocol {
-    //MARK: - Observable Objects
-    var questions: ObservableObject<[Question]> = ObservableObject([])
-    var newKitName: ObservableObject<String?> = ObservableObject("Название набора")
-    var newKitStudyStageName: ObservableObject<String> = ObservableObject("Стадия обучения")
+protocol UserNewKitViewModelLogic {
+    func cellViewModel(for row: Int) -> NewKitTableViewCellViewModelData
+    func newKitName(_ newName: String) throws
+    func createNewKit() throws
+    func createNewQuestion(_ firstTextFieldText: String, _ secondTextFieldText: String, _ thirdTextFieldText: String) throws
+}
+
+final class UserNewKitViewModel: UserNewKitViewModelData {
+    var questions: BehaviorRelay<[Question]> = BehaviorRelay(value: [])
+    var newKitName: BehaviorRelay<String> = BehaviorRelay(value: "Название набора")
+    var newKitStudyStageName: BehaviorRelay<String> = BehaviorRelay(value: "Стадия обучения")
+    var newKitStudyStage: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
     
-    //MARK: - Private Property
-    private var namesOfKitsOfSelectedStudyStage: [String] = []
+    private let disposeBag = DisposeBag()
+    private var namesOfKitsOfSelectedStudyStage = [String]()
     
-    //MARK: - Public Properties and Methods
-    var numberOfRows: Int? {
-        return questions.value.count
+    init() {
+        bindToNewKitStudyStage()
     }
-    var newKitStudyStage: Int? {
-        didSet {
-            if let newKitStudyStage = newKitStudyStage {
-                self.namesOfKitsOfSelectedStudyStage = KitsManager.shared.getKitNamesForStudyStage(with: [newKitStudyStage])
-                self.newKitStudyStageName.value = StudyStage[newKitStudyStage]
-            }
+}
+
+extension UserNewKitViewModel: UserNewKitViewModelLogic {
+    private func bindToNewKitStudyStage() {
+        newKitStudyStage.bind { name in
+            guard let name = name else { return }
+            self.namesOfKitsOfSelectedStudyStage = KitsManager.shared.getKitNamesForStudyStage(with: [name])
+            self.newKitStudyStageName.accept(StudyStage[name])
         }
+        .disposed(by: disposeBag)
     }
     
-    func cellViewModel(for indexPath: IndexPath) -> NewKitTableViewCellViewModelProtocol? {
-        let question = questions.value[indexPath.row]
-        return NewKitTableViewCellViewModel(question: ObservableObject(question))
+    func cellViewModel(for row: Int) -> NewKitTableViewCellViewModelData {
+        let question = questions.value[row]
+        return NewKitTableViewCellViewModel(question: BehaviorRelay(value: question))
     }
     
-    func newKitName(_ newName: String) -> String {
-        var newNameVar = newName
+    func newKitName(_ newName: String) throws {
+        let trimmedName = newName.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        while newNameVar.first == " " {
-            newNameVar.removeFirst()
-        }
-        while newNameVar.last == " " {
-            newNameVar.removeLast()
-        }
-        
-        var output = ""
-        if newNameVar == "" {
-            output = "Empty"
-        } else if newNameVar.count > 30 {
-            output = "Too long"
+        if trimmedName == "" {
+            throw KitNameError.empty
+        } else if trimmedName.count > 30 {
+            throw KitNameError.tooLong
         } else {
-            newKitName.value = newNameVar
+            newKitName.accept(trimmedName)
         }
-        
-        return output
     }
     
-    func createNewKit() -> String {
-        var output = ""
-        
+    func createNewKit() throws {
         if questions.value.count == 0 {
-            output = "No questions"
+            throw KitCreationError.noQuestions
         } else if newKitName.value == "Название набора" {
-            output = "No kit name"
-        } else if newKitStudyStage == nil {
-            output = "No study stage"
-        } else if namesOfKitsOfSelectedStudyStage.contains(newKitName.value ?? "") {
-            output = "Name already exists"
+            throw KitCreationError.noKitName
+        } else if newKitStudyStage.value == nil {
+            throw KitCreationError.noStudyStage
+        } else if namesOfKitsOfSelectedStudyStage.contains(newKitName.value) {
+            throw KitCreationError.nameAlreadyExists
         } else {
-            KitsManager.shared.createNewKit(newKitName.value ?? "", newKitStudyStage ?? 0, questions.value)
-            UserDataManager.shared.createNewUserData(for: newKitName.value ?? "")
+            KitsManager.shared.createNewKit(newKitName.value, newKitStudyStage.value ?? 0, questions.value)
+            UserDataManager.shared.createNewUserData(for: newKitName.value)
         }
-        
-        return output
     }
     
-    func studyStageTitleName(for studyStageRawValue: Int) -> String {
-        return StudyStage[studyStageRawValue]
-    }
-    
-    func createNewQuestion(_ firstTextFieldText: String, _ secondTextFieldText: String, _ thirdTextFieldText: String) -> String {
-        //First TextField
-        var firstTextFieldTextVar = firstTextFieldText
-        while firstTextFieldTextVar.first == " " {
-            firstTextFieldTextVar.removeFirst()
-        }
-        while firstTextFieldTextVar.last == " " {
-            firstTextFieldTextVar.removeLast()
-        }
+    func createNewQuestion(_ firstTextFieldText: String, _ secondTextFieldText: String, _ thirdTextFieldText: String) throws {
+        let trimmedFirstText = firstTextFieldText.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedSecondText = secondTextFieldText.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        //Second TextField
-        var secondTextFieldTextVar = secondTextFieldText
-        while secondTextFieldTextVar.first == " " {
-            secondTextFieldTextVar.removeFirst()
-        }
-        while secondTextFieldTextVar.last == " " {
-            secondTextFieldTextVar.removeLast()
-        }
-        
-        //Third TextField
         let splitText = thirdTextFieldText.split(separator: ",")
-        var splitTextVar = splitText
-        
-        var index = 0
-        splitText.forEach { _ in
-            while splitTextVar[index].first == " " {
-                splitTextVar[index].removeFirst()
-            }
-            while splitTextVar[index].last == " " {
-                splitTextVar[index].removeLast()
-            }
-            index += 1
+        var incorrectAnswers: [String] = splitText.map {
+            let trimmedText = $0.trimmingCharacters(in: .whitespacesAndNewlines)
+            return String(trimmedText)
         }
         
-        var incorrectAnswersArr: [String] = []
-        
-        splitTextVar.forEach { answer in
-            incorrectAnswersArr.append(String(answer))
-        }
-        
-        if incorrectAnswersArr.count == 1 {
-            incorrectAnswersArr.append("")
-            incorrectAnswersArr.append("")
-        } else if incorrectAnswersArr.count == 2 {
-            incorrectAnswersArr.append("")
+        if incorrectAnswers.count == 1 {
+            incorrectAnswers += ["", ""]
+        } else if incorrectAnswers.count == 2 {
+            incorrectAnswers += [""]
         }
                 
-        var output = ""
-        if firstTextFieldTextVar == "" || secondTextFieldTextVar == "" || thirdTextFieldText == "" || incorrectAnswersArr == ["", "", ""] || incorrectAnswersArr.isEmpty {
-            output = "Empty fields"
-        } else if incorrectAnswersArr.count > 3 {
-            output = "Too many incorrect"
-        } else if incorrectAnswersArr.contains(secondTextFieldTextVar) {
-            output = "Incorrect contain correct"
+        if trimmedFirstText == "" || trimmedSecondText == "" || thirdTextFieldText == "" || incorrectAnswers == ["", "", ""] || incorrectAnswers.isEmpty {
+            throw CreateQuestionError.emptyFields
+        } else if incorrectAnswers.count > 3 {
+            throw CreateQuestionError.tooManyIncorrect
+        } else if incorrectAnswers.contains(trimmedSecondText) {
+            throw CreateQuestionError.incorrectContainsCorrect
         } else {
-            let newQuestion = KitsManager.shared.createQuestionWithoutSaving(firstTextFieldTextVar, secondTextFieldTextVar, incorrectAnswersArr)
-            questions.value.append(newQuestion)
+            let newQuestion = KitsManager.shared.createQuestionWithoutSaving(trimmedFirstText,
+                                                                             trimmedSecondText,
+                                                                             incorrectAnswers)
+            let newValue = questions.value + [newQuestion]
+            questions.accept(newValue)
         }
-        
-        return output
     }
 }

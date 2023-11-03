@@ -53,13 +53,15 @@ final class NewKitSelectionViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let newKitVC = segue.destination as? UserNewKitViewController {
-            newKitVC.viewModel = viewModel.viewModelForUserNewKit()
-            newKitVC.modalPresentationStyle = .fullScreen
-        }
         if let networkVC = segue.destination as? NetworkNewKitViewController {
             networkVC.viewModel = viewModel.viewModelForNetworkNewKit()
             networkVC.modalPresentationStyle = .fullScreen
         }
+    }
+    
+    @IBSegueAction private func presentUserNewKitViewController(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> UserNewKitViewController? {
+        let userNewKitViewController = UserNewKitViewController(coder: coder, viewModel: viewModel.viewModelForUserNewKit())
+        userNewKitViewController?.modalPresentationStyle = .fullScreen
+        return userNewKitViewController
     }
 }

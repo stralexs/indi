@@ -206,7 +206,7 @@ extension NetworkNewKitViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewKitTableViewCell
         let cellViewModel = viewModel.cellViewModel(for: indexPath)
-        cell.viewModel = cellViewModel
+        cell.configure(with: cellViewModel!)
         return cell
     }
 }

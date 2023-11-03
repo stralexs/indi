@@ -22,7 +22,9 @@
 		422AC1142A1F77EA00B0B941 /* StoryModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422AC1132A1F77EA00B0B941 /* StoryModeViewModel.swift */; };
 		424185D32A8626FD009257B5 /* NewKitSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424185D22A8626FD009257B5 /* NewKitSelectionViewModel.swift */; };
 		424B53A929FFABC0002AE9D9 /* StoryModeTestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424B53A829FFABC0002AE9D9 /* StoryModeTestingViewController.swift */; };
+		424CDEAA2AF3B7DC00051196 /* NewKitErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424CDEA92AF3B7DC00051196 /* NewKitErrors.swift */; };
 		425A0EB92A1E0F05009154D0 /* UserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A0EB82A1E0F05009154D0 /* UserDataManager.swift */; };
+		425A1EB52AEF8E1D00B56675 /* UIViewCornerRadiusExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425A1EB42AEF8E1D00B56675 /* UIViewCornerRadiusExtension.swift */; };
 		425B67D02A1FB392003AA954 /* NetworkNewKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B67CF2A1FB392003AA954 /* NetworkNewKitViewController.swift */; };
 		425B67D22A1FB39D003AA954 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425B67D12A1FB39D003AA954 /* NetworkManager.swift */; };
 		4262506F29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4262506E29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf */; };
@@ -50,6 +52,7 @@
 		42DC4B2B2A1754D000028E29 /* StoryModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DC4B2A2A1754D000028E29 /* StoryModeViewController.swift */; };
 		42DE84652A18BEAE00E48956 /* StoryModeExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE84642A18BEAE00E48956 /* StoryModeExamViewController.swift */; };
 		42DE84672A18BEC500E48956 /* StoryModeExamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE84662A18BEC500E48956 /* StoryModeExamViewModel.swift */; };
+		42EAAC372AF24598008926B0 /* NotificationCenterStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EAAC362AF24598008926B0 /* NotificationCenterStringExtension.swift */; };
 		42EF1AAE29FFD67800D1CD77 /* KitsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF1AAD29FFD67800D1CD77 /* KitsManager.swift */; };
 		42EF93CF2A3B6C0100C42646 /* ObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF93CE2A3B6C0100C42646 /* ObservableObject.swift */; };
 		42EF93D12A3B6CB000C42646 /* StudyStageEnumeration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF93D02A3B6CB000C42646 /* StudyStageEnumeration.swift */; };
@@ -59,9 +62,11 @@
 		42FF60452A1A0BC100375ACF /* TrainingModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FF60442A1A0BC100375ACF /* TrainingModeViewController.swift */; };
 		42FF60472A1A0C1B00375ACF /* UserNewKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FF60462A1A0C1B00375ACF /* UserNewKitViewController.swift */; };
 		42FF604B2A1A220F00375ACF /* SettingsAndStatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FF604A2A1A220F00375ACF /* SettingsAndStatisticsViewModel.swift */; };
+		D7841183CAD309FB20DC703C /* libPods-Indi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D18535DAE06C3487DEFD419 /* libPods-Indi.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1D18535DAE06C3487DEFD419 /* libPods-Indi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Indi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		42050C382A4EFFEA00DF9725 /* Training.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Training.storyboard; sourceTree = "<group>"; };
 		42050C3A2A4F002300DF9725 /* NewKit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewKit.storyboard; sourceTree = "<group>"; };
 		42050C3C2A4F005F00DF9725 /* Story.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Story.storyboard; sourceTree = "<group>"; };
@@ -79,7 +84,9 @@
 		422AC1132A1F77EA00B0B941 /* StoryModeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeViewModel.swift; sourceTree = "<group>"; };
 		424185D22A8626FD009257B5 /* NewKitSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitSelectionViewModel.swift; sourceTree = "<group>"; };
 		424B53A829FFABC0002AE9D9 /* StoryModeTestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeTestingViewController.swift; sourceTree = "<group>"; };
+		424CDEA92AF3B7DC00051196 /* NewKitErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitErrors.swift; sourceTree = "<group>"; };
 		425A0EB82A1E0F05009154D0 /* UserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManager.swift; sourceTree = "<group>"; };
+		425A1EB42AEF8E1D00B56675 /* UIViewCornerRadiusExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewCornerRadiusExtension.swift; sourceTree = "<group>"; };
 		425B67CF2A1FB392003AA954 /* NetworkNewKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNewKitViewController.swift; sourceTree = "<group>"; };
 		425B67D12A1FB39D003AA954 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4262506E29FD2B4A00E4F149 /* GTWalsheimPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTWalsheimPro-Regular.ttf"; sourceTree = "<group>"; };
@@ -107,6 +114,7 @@
 		42DC4B2A2A1754D000028E29 /* StoryModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeViewController.swift; sourceTree = "<group>"; };
 		42DE84642A18BEAE00E48956 /* StoryModeExamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeExamViewController.swift; sourceTree = "<group>"; };
 		42DE84662A18BEC500E48956 /* StoryModeExamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeExamViewModel.swift; sourceTree = "<group>"; };
+		42EAAC362AF24598008926B0 /* NotificationCenterStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterStringExtension.swift; sourceTree = "<group>"; };
 		42EF1AAD29FFD67800D1CD77 /* KitsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitsManager.swift; sourceTree = "<group>"; };
 		42EF93CE2A3B6C0100C42646 /* ObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableObject.swift; sourceTree = "<group>"; };
 		42EF93D02A3B6CB000C42646 /* StudyStageEnumeration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyStageEnumeration.swift; sourceTree = "<group>"; };
@@ -116,6 +124,8 @@
 		42FF60442A1A0BC100375ACF /* TrainingModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingModeViewController.swift; sourceTree = "<group>"; };
 		42FF60462A1A0C1B00375ACF /* UserNewKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNewKitViewController.swift; sourceTree = "<group>"; };
 		42FF604A2A1A220F00375ACF /* SettingsAndStatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAndStatisticsViewModel.swift; sourceTree = "<group>"; };
+		ADB65C8D9D5F7A8E74CAABF3 /* Pods-Indi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Indi.debug.xcconfig"; path = "Target Support Files/Pods-Indi/Pods-Indi.debug.xcconfig"; sourceTree = "<group>"; };
+		DB8AC66DF9D52E29C7048AB1 /* Pods-Indi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Indi.release.xcconfig"; path = "Target Support Files/Pods-Indi/Pods-Indi.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,12 +133,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7841183CAD309FB20DC703C /* libPods-Indi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3849C433C25337F0D90C4C18 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ADB65C8D9D5F7A8E74CAABF3 /* Pods-Indi.debug.xcconfig */,
+				DB8AC66DF9D52E29C7048AB1 /* Pods-Indi.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		4205016D2A4CA0190071CE67 /* UserNewKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +184,8 @@
 			children = (
 				42210DED29FD243300CE37D1 /* Indi */,
 				42210DEC29FD243300CE37D1 /* Products */,
+				3849C433C25337F0D90C4C18 /* Pods */,
+				B02D59E703E31A17232186F6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -239,6 +261,7 @@
 			children = (
 				421801142A446A99004B9020 /* NewKitSelectionViewController.swift */,
 				424185D22A8626FD009257B5 /* NewKitSelectionViewModel.swift */,
+				424CDEA92AF3B7DC00051196 /* NewKitErrors.swift */,
 				42C1B4AF2A3B403F00D79211 /* NewKitTableViewCell */,
 				4205016D2A4CA0190071CE67 /* UserNewKit */,
 				425B67D32A1FB3A3003AA954 /* NetworkNewKit */,
@@ -259,7 +282,9 @@
 			isa = PBXGroup;
 			children = (
 				42EF93CE2A3B6C0100C42646 /* ObservableObject.swift */,
+				42EAAC362AF24598008926B0 /* NotificationCenterStringExtension.swift */,
 				428DC3622A3F41BA00708F37 /* TabBarController.swift */,
+				425A1EB42AEF8E1D00B56675 /* UIViewCornerRadiusExtension.swift */,
 				42EF93D02A3B6CB000C42646 /* StudyStageEnumeration.swift */,
 				428DC3602A3F394200708F37 /* UIColorExtension.swift */,
 				42210DEE29FD243300CE37D1 /* AppDelegate.swift */,
@@ -341,6 +366,14 @@
 			path = Training;
 			sourceTree = "<group>";
 		};
+		B02D59E703E31A17232186F6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1D18535DAE06C3487DEFD419 /* libPods-Indi.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -348,6 +381,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42210DFF29FD243400CE37D1 /* Build configuration list for PBXNativeTarget "Indi" */;
 			buildPhases = (
+				01B465F8ABD45337F570D903 /* [CP] Check Pods Manifest.lock */,
 				42210DE729FD243300CE37D1 /* Sources */,
 				42210DE829FD243300CE37D1 /* Frameworks */,
 				42210DE929FD243300CE37D1 /* Resources */,
@@ -413,6 +447,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		01B465F8ABD45337F570D903 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Indi-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		42210DE729FD243300CE37D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -426,6 +485,7 @@
 				42EF1AAE29FFD67800D1CD77 /* KitsManager.swift in Sources */,
 				42DE84652A18BEAE00E48956 /* StoryModeExamViewController.swift in Sources */,
 				42210DEF29FD243300CE37D1 /* AppDelegate.swift in Sources */,
+				424CDEAA2AF3B7DC00051196 /* NewKitErrors.swift in Sources */,
 				42FF60432A1A0B3D00375ACF /* SettingsAndStatisticsViewController.swift in Sources */,
 				42F4956F2A17867F006B92F2 /* StoryModeKitSelectionCollectionViewCell.swift in Sources */,
 				42C1B4B32A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift in Sources */,
@@ -455,9 +515,11 @@
 				42DE84672A18BEC500E48956 /* StoryModeExamViewModel.swift in Sources */,
 				426B89CD2A5975B500EF1361 /* StoryModeKitSelectionViewModel.swift in Sources */,
 				420EE8152A17BB8C00E55188 /* StoryModeTestingViewModel.swift in Sources */,
+				42EAAC372AF24598008926B0 /* NotificationCenterStringExtension.swift in Sources */,
 				428DC3632A3F41BA00708F37 /* TabBarController.swift in Sources */,
 				4295363A2A1797BB0028DBA4 /* Question+CoreDataProperties.swift in Sources */,
 				42DC4B2B2A1754D000028E29 /* StoryModeViewController.swift in Sources */,
+				425A1EB52AEF8E1D00B56675 /* UIViewCornerRadiusExtension.swift in Sources */,
 				42EF93CF2A3B6C0100C42646 /* ObservableObject.swift in Sources */,
 				429536392A1797BB0028DBA4 /* Question+CoreDataClass.swift in Sources */,
 				42FF60472A1A0C1B00375ACF /* UserNewKitViewController.swift in Sources */,
@@ -594,6 +656,7 @@
 		};
 		42210E0029FD243400CE37D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADB65C8D9D5F7A8E74CAABF3 /* Pods-Indi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -622,6 +685,7 @@
 		};
 		42210E0129FD243400CE37D1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB8AC66DF9D52E29C7048AB1 /* Pods-Indi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

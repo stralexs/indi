@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -20,6 +20,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="spi-D0-1W8">
                                 <rect key="frame" x="96.666666666666686" y="101" width="200" height="70"/>
+                                <color key="backgroundColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="gGK-JJ-5qw"/>
                                     <constraint firstAttribute="width" constant="200" id="niM-wC-dWK"/>
@@ -29,6 +30,11 @@
                                 <state key="normal" title="Cтадия обучения">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="studyStageButtonIsPressed:" destination="hnx-aL-OSR" eventType="touchUpInside" id="o3u-WK-lCH"/>
                                 </connections>
@@ -37,7 +43,7 @@
                                 <rect key="frame" x="10" y="201" width="373" height="531"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="zo3-0w-wHx" customClass="NewKitTableViewCell" customModule="Indi" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewKitTableViewCell" id="zo3-0w-wHx" customClass="NewKitTableViewCell" customModule="Indi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="373" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zo3-0w-wHx" id="qRZ-xO-k1o">
@@ -127,6 +133,7 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.99704223869999997" green="0.78450757270000004" blue="0.78082448240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="tud-tb-F2m" firstAttribute="top" secondItem="qRZ-xO-k1o" secondAttribute="top" id="1w5-vP-0KT"/>
                                                 <constraint firstItem="7A2-bw-GwX" firstAttribute="leading" secondItem="88n-y0-gH0" secondAttribute="trailing" constant="3" id="CFz-gt-mFn"/>
@@ -145,7 +152,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="background" destination="qRZ-xO-k1o" id="y9W-1h-H65"/>
                                             <outlet property="correctAnswerLabel" destination="2ck-ia-phf" id="DGl-Gm-fVP"/>
                                             <outlet property="firstIncorrectAnswer" destination="rAM-PW-dxy" id="Q8D-ZL-jXr"/>
                                             <outlet property="questionLabel" destination="jaB-VQ-0gR" id="Hdu-cV-QMm"/>
@@ -154,23 +160,22 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nzM-6w-wC5">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Название набора" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nzM-6w-wC5">
                                 <rect key="frame" x="94.666666666666686" y="63" width="204" height="30"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Название набора">
-                                        <attributes>
-                                            <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="25" name="GTWalsheimPro-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                                <color key="tintColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="25"/>
+                                <color key="textColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vn3-Jj-5IM">
                                 <rect key="frame" x="306" y="61" width="49" height="34"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="pencil.line" catalog="system"/>
                                 <connections>
@@ -180,7 +185,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jo6-yh-Ej3">
                                 <rect key="frame" x="293" y="0.0" width="90" height="37.666666666666664"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Готово">
                                     <fontDescription key="titleFontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="20"/>
@@ -203,6 +208,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxI-SR-04A">
                                 <rect key="frame" x="161.66666666666666" y="752" width="70" height="70"/>
+                                <color key="backgroundColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="oLF-II-hi5"/>
                                     <constraint firstAttribute="height" constant="70" id="zDt-YL-k7v"/>
@@ -212,13 +218,18 @@
                                 <buttonConfiguration key="configuration" style="plain">
                                     <imageReference key="image" image="plus" catalog="system" symbolScale="large"/>
                                 </buttonConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="addQuestion:" destination="hnx-aL-OSR" eventType="touchUpInside" id="lxi-Wo-Vbf"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MRq-a9-Clo"/>
-                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                        <color key="backgroundColor" red="0.94117647410000005" green="0.73725497719999999" blue="0.27450981740000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="spi-D0-1W8" firstAttribute="centerX" secondItem="f00-rO-c3b" secondAttribute="centerX" id="0hL-qM-AQz"/>
                             <constraint firstItem="mxI-SR-04A" firstAttribute="top" secondItem="K0G-Ie-cw6" secondAttribute="bottom" constant="20" id="9YW-rW-Ucw"/>
@@ -240,10 +251,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="NOW-vI-3oN"/>
                     <connections>
-                        <outlet property="addNewKitButton" destination="Jo6-yh-Ej3" id="TAi-Xj-bsD"/>
-                        <outlet property="addQuestionButton" destination="mxI-SR-04A" id="tyd-R8-N12"/>
-                        <outlet property="background" destination="f00-rO-c3b" id="yJn-PE-NKd"/>
-                        <outlet property="newKitEditButton" destination="Vn3-Jj-5IM" id="wQS-WV-q5d"/>
                         <outlet property="newKitLabel" destination="nzM-6w-wC5" id="3x2-Ro-a9t"/>
                         <outlet property="newKitStudyStageButton" destination="spi-D0-1W8" id="IKP-Yy-hPZ"/>
                         <outlet property="tableView" destination="K0G-Ie-cw6" id="rhk-e1-Vgu"/>
@@ -539,7 +546,7 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="hnx-aL-OSR" kind="show" id="ShG-Ac-LRN"/>
+                                            <segue destination="hnx-aL-OSR" kind="show" destinationCreationSelector="presentUserNewKitViewController:sender:segueIdentifier:" id="ShG-Ac-LRN"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i7r-tc-cuf">
@@ -601,19 +608,19 @@
         <image name="New-kit" width="25" height="25"/>
         <image name="Plus" width="25" height="25"/>
         <image name="Web" width="25" height="25"/>
-        <image name="pencil.line" catalog="system" width="128" height="98"/>
+        <image name="pencil.line" catalog="system" width="128" height="117"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemTealColor">
-            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

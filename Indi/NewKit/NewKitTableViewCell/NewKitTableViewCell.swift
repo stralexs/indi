@@ -5,38 +5,33 @@
 //  Created by Alexander Sivko on 25.05.23.
 //
 
-import UIKit
+import RxSwift
+import RxCocoa
 
 final class NewKitTableViewCell: UITableViewCell {
-    @IBOutlet var background: UIView!
     @IBOutlet var questionLabel: UILabel!
     @IBOutlet var correctAnswerLabel: UILabel!
     @IBOutlet var firstIncorrectAnswer: UILabel!
     @IBOutlet var secondIncorrectAnswer: UILabel!
     @IBOutlet var thirdIncorrectAnswer: UILabel!
     
-    var viewModel: NewKitTableViewCellViewModelProtocol! {
-        didSet {
-            setupBinders()
-        }
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        tuneUI()
-    }
+    static let identifier = "NewKitTableViewCell"
+    private let disposeBag = DisposeBag()
+    private var viewModel: NewKitTableViewCellViewModelData?
     
-    private func tuneUI() {
-        background.backgroundColor = UIColor.indiLightPink
+    func configure(with viewModel: NewKitTableViewCellViewModelData) {
+        self.viewModel = viewModel
+        setupBinders()
     }
     
     private func setupBinders() {
-        viewModel.question.bind { [weak self] _ in
-            self?.questionLabel.text = self?.viewModel.questionText
-            self?.correctAnswerLabel.text = self?.viewModel.correctAnswerText
-            self?.firstIncorrectAnswer.text = self?.viewModel.firstIncorrectAnswerText
-            self?.secondIncorrectAnswer.text = self?.viewModel.secondIncorrectAnswerText
-            self?.thirdIncorrectAnswer.text = self?.viewModel.thirdIncorrectAnswerText
+        viewModel?.question.bind { _ in
+            self.questionLabel.text = self.viewModel?.question.value.question
+            self.correctAnswerLabel.text = self.viewModel?.question.value.correctAnswer
+            self.firstIncorrectAnswer.text = self.viewModel?.question.value.incorrectAnswers?[0]
+            self.secondIncorrectAnswer.text = self.viewModel?.question.value.incorrectAnswers?[1]
+            self.thirdIncorrectAnswer.text = self.viewModel?.question.value.incorrectAnswers?[2]
         }
+        .disposed(by: disposeBag)
     }
 }

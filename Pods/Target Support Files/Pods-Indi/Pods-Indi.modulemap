@@ -1,0 +1,6 @@
+module Pods_Indi {
+  umbrella header "Pods-Indi-umbrella.h"
+
+  export *
+  module * { export * }
+}

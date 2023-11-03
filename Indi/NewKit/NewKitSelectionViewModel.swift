@@ -9,14 +9,14 @@ import Foundation
 
 protocol NewKitSelectionViewModelProtocol {
     func viewModelForNetworkNewKit() -> NetworkNewKitViewModelProtocol?
-    func viewModelForUserNewKit() -> UserNewKitViewModelProtocol?
+    func viewModelForUserNewKit() -> UserNewKitViewModelData & UserNewKitViewModelLogic
 }
 
 class NewKitSelectionViewModel: NewKitSelectionViewModelProtocol {
     func viewModelForNetworkNewKit() -> NetworkNewKitViewModelProtocol? {
         return NetworkNewKitViewModel()
     }
-    func viewModelForUserNewKit() -> UserNewKitViewModelProtocol? {
+    func viewModelForUserNewKit() -> UserNewKitViewModelData & UserNewKitViewModelLogic {
         return UserNewKitViewModel()
     }
 }
