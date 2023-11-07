@@ -25,6 +25,7 @@ final class NetworkNewKitViewController: UIViewController {
         super.viewDidLoad()
         setupBinders()
         setupTableView()
+        performNetworkCall()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -43,24 +44,13 @@ final class NetworkNewKitViewController: UIViewController {
     }
 }
 
-// MARK: - Rx Setup
+    // MARK: - Rx Setup
 extension NetworkNewKitViewController {
     private func setupBinders() {
         viewModel.newKitName.bind { self.newKitLabel.text = $0 }
         .disposed(by: disposeBag)
         
         viewModel.newKitStudyStageName.bind { self.newKitStudyStageButton.setTitle($0, for: .normal) }
-        .disposed(by: disposeBag)
-        
-        viewModel.questions.bind { _ in
-            self.viewModel.retrieveQuestions {
-                DispatchQueue.main.async {
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
-                    self.tableView.reloadData()
-                }
-            }
-        }
         .disposed(by: disposeBag)
         
         viewModel.isConnectedToInternet.bind { isConnected in
@@ -79,13 +69,24 @@ extension NetworkNewKitViewController {
                 .items(cellIdentifier: NewKitTableViewCell.identifier,
                        cellType: NewKitTableViewCell.self)) { row, question, cell in
                 cell.configure(with: self.viewModel.cellViewModel(for: row))
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
             }
         .disposed(by: disposeBag)
     }
 }
 
-// MARK: - Functionality
+    // MARK: - Functionality
 extension NetworkNewKitViewController {
+    private func performNetworkCall() {
+        do {
+            try viewModel.retrieveQuestions()
+        }
+        catch {
+            presentBasicAlert(title: "Не удалось загрузить вопросы", message: "Попробуйте позже", actions: [.okAction], completionHandler: nil)
+        }
+    }
+    
     private func reloadTableViewOfTrainingMode() {
         NotificationCenter.default.post(name: Notification.Name(rawValue: String.reloadTableView), object: nil)
     }
@@ -123,7 +124,7 @@ extension NetworkNewKitViewController {
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
         
         let completionHandler = { (action: UIAlertAction) -> Void in
-            if let index = newKitStudyStageAlert.actions.firstIndex(where: { $0 == action} ) {
+            if let index = newKitStudyStageAlert.actions.firstIndex(where: { $0 == action } ) {
                 self.viewModel.newKitStudyStage.accept(index - 1)
             }
         }

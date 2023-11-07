@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import OSLog
 
 protocol NetworkNewKitViewModelData {
     var questions: BehaviorRelay<[Question]> { get set }
@@ -20,7 +21,7 @@ protocol NetworkNewKitViewModelLogic {
     func cellViewModel(for row: Int) -> NewKitTableViewCellViewModelData
     func newKitName(_ newName: String) throws
     func createNewKit() throws
-    func retrieveQuestions(completion: @escaping () -> Void)
+    func retrieveQuestions() throws
 }
 
 final class NetworkNewKitViewModel: NetworkNewKitViewModelData {
@@ -30,11 +31,14 @@ final class NetworkNewKitViewModel: NetworkNewKitViewModelData {
     var newKitStudyStage: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
     var isConnectedToInternet: BehaviorRelay<Bool?> = BehaviorRelay(value: nil)
     
-    private let disposeBag = DisposeBag()
-    private let networkManager: NetworkManagerLogic
-    private var namesOfKitsOfSelectedStudyStage = [String]()
+    var sss: BehaviorRelay<[Question]> = BehaviorRelay(value: [])
     
-    init(networkManager: NetworkManagerLogic) {
+    private let disposeBag = DisposeBag()
+    private let networkManager: NetworkManagerDataAndLogic
+    private var namesOfKitsOfSelectedStudyStage = [String]()
+    private let logger = Logger()
+    
+    init(networkManager: NetworkManagerDataAndLogic) {
         self.networkManager = networkManager
         setupBinder()
         bindToNewKitStudyStage()
@@ -52,9 +56,10 @@ extension NetworkNewKitViewModel: NetworkNewKitViewModelLogic {
     }
     
     private func setupBinder() {
-        networkManager.isConnectedToInternet.bind {  [weak self] isConnected in
+        networkManager.isConnectedToInternet.bind { [weak self] isConnected in
             self?.isConnectedToInternet.accept(isConnected)
         }
+        .disposed(by: disposeBag)
     }
     
     func cellViewModel(for row: Int) -> NewKitTableViewCellViewModelData {
@@ -89,10 +94,15 @@ extension NetworkNewKitViewModel: NetworkNewKitViewModelLogic {
         }
     }
     
-    func retrieveQuestions(completion: @escaping () -> Void) {
-        networkManager.retrieveQuestions { [weak self] questions in
-            self?.questions.accept(questions)
-            completion()
-        }
+    func retrieveQuestions() throws {
+        networkManager.retrieveQuestions().subscribe(
+            onNext: { questions in
+                self.questions.accept(questions)
+            },
+            onError: { error in
+                self.logger.error("\(error.localizedDescription)")
+            }
+        )
+        .disposed(by: disposeBag)
     }
 }

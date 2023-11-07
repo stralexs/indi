@@ -5,41 +5,37 @@
 //  Created by Alexander Sivko on 25.05.23.
 //
 
-import Foundation
 import Network
+import RxSwift
+import RxCocoa
 
-protocol NetworkManagerLogic {
-    var isConnectedToInternet: ObservableObject<Bool> { get set }
-    func retrieveQuestions(completion: @escaping ([Question]) -> ())
+protocol NetworkManagerDataAndLogic {
+    var isConnectedToInternet: PublishRelay<Bool> { get set }
+    func retrieveQuestions() -> Observable<[Question]>
 }
 
-final class NetworkManager: NetworkManagerLogic {
-    //MARK: - Private Properties and Methods
-    private struct Record: Codable {
-        var record: [QuestionNetwork]
-    }
-    
-    private struct QuestionNetwork: Codable {
+fileprivate extension String {
+    static let qustionsStringUrl = "https://api.npoint.io/83158e0ff5e7f7127d53"
+}
+
+final class NetworkManager: NetworkManagerDataAndLogic {
+    // MARK: - Private
+    private struct QuestionNetwork: Decodable {
         var question: String?
         var correctAnswer: String?
         var incorrectAnswers: [String]?
-        
-        enum CodingKeys: String, CodingKey {
-            case question = "question"
-            case correctAnswer = "correct_Answer"
-            case incorrectAnswers = "incorrect_Answers"
-        }
     }
     
-    private var dataFromServer: Record?
-    
+    private lazy var jsonDecoder = JSONDecoder()
+    private let urlSession = URLSession(configuration: .default)
+        
     private func internetConnectionMonitoring() {
         let monitor = NWPathMonitor()
-        monitor.pathUpdateHandler = { [weak self] path in
+        monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
-                self?.isConnectedToInternet.value = true
+                self.isConnectedToInternet.accept(true)
             } else {
-                self?.isConnectedToInternet.value = false
+                self.isConnectedToInternet.accept(false)
             }
         }
 
@@ -48,54 +44,48 @@ final class NetworkManager: NetworkManagerLogic {
     }
     
     private func questionsTransformation(for networkQuestions: [QuestionNetwork]) -> [Question] {
-        guard networkQuestions.isEmpty == false else { return [] }
-        
-        var outputQuestions: [Question] = []
-        
-        networkQuestions.forEach { question in
-            let questionString = question.question
-            let correctAnswerString = question.correctAnswer
-            let incorrectAnswersString = question.incorrectAnswers
-            
-            let newQuestion = KitsManager.shared.createQuestionWithoutSaving(questionString!, correctAnswerString!, incorrectAnswersString!)
-            
-            outputQuestions.append(newQuestion)
+        let transformedQuestions: [Question] = networkQuestions.map { question in
+            let newQuestion = KitsManager.shared.createQuestionWithoutSaving(question.question ?? "",
+                                                                             question.correctAnswer ?? "",
+                                                                             question.incorrectAnswers ?? [])
+            return newQuestion
         }
-        
-        return outputQuestions
+                
+        return transformedQuestions
     }
     
-    //MARK: - Public Properties and Methods
-    var isConnectedToInternet: ObservableObject<Bool> = ObservableObject(true)
+    //MARK: - Public
+    var isConnectedToInternet = PublishRelay<Bool>()
+    
+    func retrieveQuestions() -> Observable<[Question]> {
+        guard let url = URL(string: String.qustionsStringUrl) else { return Observable.empty() }
         
-    func retrieveQuestions(completion: @escaping ([Question]) -> ()) {
-        guard let url = URL(string: "https://api.jsonbin.io/v3/b/64aac27a8e4aa6225ebb89bb") else { return completion([]) }
-
-        let params: [String: Any] = [
-            "userName": UserDataManager.shared.getUserName(),
-            "userAvatar": UserDataManager.shared.getUserAvatar()
-        ]
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
-
-        URLSession.shared.dataTask(with: url) { [self]
-            data, response, error in
-
-            guard let data = data else { return }
-            
-            do {
-                self.dataFromServer = try JSONDecoder().decode(Record.self, from: data)
-                let result = self.questionsTransformation(for: dataFromServer?.record ?? [])
-                completion(result)
+        return Observable.create { observer -> Disposable in
+            self.urlSession.dataTask(with: url) { [weak self] data, response, error in
+                guard let self = self else { return }
+                if let httpResponse = response as? HTTPURLResponse {
+                    let statusCode = httpResponse.statusCode
+                    
+                    do {
+                        guard let data = data else { return }
+                        if (200...399).contains(statusCode) {
+                            let questions = try self.jsonDecoder.decode([QuestionNetwork].self, from: data)
+                            let result = self.questionsTransformation(for: questions)
+                            observer.onNext(result)
+                        } else {
+                            guard let error = error else { return }
+                            observer.onError(error)
+                        }
+                    }
+                    catch {
+                        observer.onError(error)
+                    }
+                }
+                observer.onCompleted()
             }
-            catch {
-                print(error)
-            }
-        }.resume()
+            .resume()
+            return Disposables.create()
+        }
     }
     
     //MARK: - Initialization
