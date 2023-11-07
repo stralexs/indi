@@ -5,11 +5,11 @@
 //  Created by Alexander Sivko on 21.05.23.
 //
 
-import UIKit
+import RxSwift
+import RxCocoa
 
 final class TrainingModeViewController: UIViewController {
-    //MARK: - Variables
-    @IBOutlet var background: UIView!
+    // MARK: - Properties
     @IBOutlet var tableView: UITableView!
     @IBOutlet var slider: UISlider!
     @IBOutlet var countOfQuestionsLabel: UILabel!
@@ -17,13 +17,16 @@ final class TrainingModeViewController: UIViewController {
     @IBOutlet var sliderBackgroundView: UIView!
     
     var viewModel: TrainingModeViewModelProtocol!
+    private let disposeBag = DisposeBag()
     
-    //MARK: - Life Cycle
+    // MARK: - ViewController lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tuneUI()
         addNotificationCenterObserver()
         addLongGesture()
+        setupTableView()
+        setupSlider()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,22 +34,46 @@ final class TrainingModeViewController: UIViewController {
         tableView.reloadData()
     }
     
-    //MARK: - Private Methods
+    // MARK: - Rx setup
+    private func setupTableView() {
+        tableView.rx.itemSelected
+            .subscribe(onNext: { _ in
+                guard let indexPaths = self.tableView.indexPathsForSelectedRows else { return }
+                self.viewModel.sliderMaximumValue(for: indexPaths)
+            })
+            .disposed(by: disposeBag)
+        
+        tableView.rx.itemDeselected
+            .subscribe(onNext: { _ in
+                guard let indexPaths = self.tableView.indexPathsForSelectedRows else { return }
+                self.viewModel.sliderMaximumValue(for: indexPaths)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func setupSlider() {
+        viewModel.sliderMaximumValue
+            .bind(to: slider.rx.maximumValue)
+            .disposed(by: disposeBag)
+        
+        let sliderValueObservable = slider.rx.value.asObservable()
+        
+        sliderValueObservable
+            .map { "\(Int($0))" }
+            .bind(to: countOfQuestionsLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Private Methods
     private func tuneUI() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem?.tintColor = UIColor.indiMainBlue
+        navigationItem.backBarButtonItem?.tintColor = .indiMainBlue
+        
         let standardAppearance = UINavigationBarAppearance()
-        standardAppearance.configureWithOpaqueBackground()
         standardAppearance.shadowColor = UIColor.white
         standardAppearance.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.standardAppearance = standardAppearance
-        
-        background.backgroundColor = UIColor.white
-        
-        startButton.tintColor = UIColor.indiMainBlue
-        
-        sliderBackgroundView.backgroundColor = UIColor.indiMainBlue
-        sliderBackgroundView.layer.cornerRadius = 30
+                        
         sliderBackgroundView.layer.borderWidth = 5
         sliderBackgroundView.layer.borderColor = UIColor.indiMainYellow.cgColor
         
@@ -57,15 +84,6 @@ final class TrainingModeViewController: UIViewController {
         tableView.allowsMultipleSelection = true
         tableView.layer.borderWidth = 5
         tableView.layer.borderColor = UIColor.indiMainYellow.cgColor
-        
-        slider.maximumTrackTintColor = UIColor.indiLightPink
-        slider.minimumTrackTintColor = UIColor.indiSaturatedPink
-        slider.minimumValue = 1
-        slider.maximumValue = 10
-        slider.value = slider.minimumValue
-        
-        countOfQuestionsLabel.text = "1"
-        countOfQuestionsLabel.textColor = UIColor.white
     }
     
     private func addNotificationCenterObserver() {
@@ -73,7 +91,7 @@ final class TrainingModeViewController: UIViewController {
     }
     
     @objc private func reloadTableViewData() {
-        self.tableView.reloadData()
+        self.tableView.reloadData() // скорее всего можно будет убрать, когда добавится реактивное добавление таблицы
     }
     
     private func addLongGesture() {
@@ -88,10 +106,7 @@ final class TrainingModeViewController: UIViewController {
         let location = gesture.location(in: tableView)
         if let indexPath = tableView.indexPathForRow(at: location) {
             if viewModel.isBasicKitCheck(for: indexPath, for: indexPath.section) {
-                let alert = UIAlertController(title: "Базовые наборы слов удалять нельзя", message: nil, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ок", style: .default)
-                alert.addAction(okAction)
-                self.present(alert, animated: true)
+                presentBasicAlert(title: "Базовые наборы слов удалять нельзя", message: nil, actions: [.okAction], completionHandler: nil)
             } else {
                 let alert = UIAlertController(title: "Вы действительно хотите удалить этот набор слов?", message: nil, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ок", style: .destructive) { [weak self] _ in
@@ -106,16 +121,9 @@ final class TrainingModeViewController: UIViewController {
         }
     }
     
-    @IBAction private func sliderAction(_ sender: UISlider) {
-        countOfQuestionsLabel.text = "\(Int(sender.value))"
-    }
-    
     @IBAction private func startButtonIsPressed(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Пожалуйста, выберите хотя бы один набор слов", message: nil, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ок", style: .default)
-        alert.addAction(okAction)
         if tableView.indexPathsForSelectedRows == nil {
-            self.present(alert, animated: true)
+            presentBasicAlert(title: "Пожалуйста, выберите хотя бы один набор слов", message: nil, actions: [.okAction], completionHandler: nil)
         }
         
         let sb = UIStoryboard(name: "Main", bundle: nil)
@@ -129,7 +137,7 @@ final class TrainingModeViewController: UIViewController {
     }
 }
 
-//MARK: - TableView Data Source and Delegate
+    // MARK: - TableView Data Source and Delegate
 extension TrainingModeViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections
@@ -137,16 +145,6 @@ extension TrainingModeViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRowsInSection(for: section)
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let indexPaths = tableView.indexPathsForSelectedRows else { return }
-        slider.maximumValue = viewModel.sliderMaximumValue(for: indexPaths)
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        guard let indexPaths = tableView.indexPathsForSelectedRows else { return }
-        slider.maximumValue = viewModel.sliderMaximumValue(for: indexPaths)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

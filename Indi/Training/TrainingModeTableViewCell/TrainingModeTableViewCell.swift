@@ -19,6 +19,6 @@ final class TrainingModeTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         self.accessoryType = selected ? .checkmark : .none
-        self.backgroundColor = selected ? UIColor.indiLightPink : .white
+        self.backgroundColor = selected ? .indiLightPink : .white
     }
 }
