@@ -8,38 +8,31 @@
 import UIKit
 
 final class NewKitSelectionViewController: UIViewController {
-    //MARK: - Variables
+    //MARK: - Properties
     @IBOutlet var topBlurredView: UIVisualEffectView!
-    @IBOutlet var buttonsBackgroundView: UIView!
-    @IBOutlet var newKitButtons: [UIButton]!
+    var viewModel: NewKitSelectionViewModelLogic?
     
-    var viewModel: NewKitSelectionViewModelProtocol!
-    
-    //MARK: - Life Cycle
+    //MARK: - ViewController lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        tuneUI()
+        tuneBlurredViewEffect()
         addTapGesture()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.3) {
-            self.topBlurredView.effect = UIBlurEffect(style: UIBlurEffect.Style.systemUltraThinMaterialDark)
-        }
+        animateBlurredView()
     }
     
     //MARK: - Methods
-    private func tuneUI() {
-        buttonsBackgroundView.layer.cornerRadius = 15
-        buttonsBackgroundView.backgroundColor = UIColor.indiMainYellow
-        
-        newKitButtons.forEach { button in
-            button.layer.cornerRadius = 10
-            button.backgroundColor = UIColor.white
-        }
-        
+    private func tuneBlurredViewEffect() {
         topBlurredView.effect = nil
+    }
+    
+    private func animateBlurredView() {
+        UIView.animate(withDuration: 0.3) {
+            self.topBlurredView.effect = UIBlurEffect(style: UIBlurEffect.Style.systemUltraThinMaterialDark)
+        }
     }
 
     private func addTapGesture() {
@@ -52,13 +45,15 @@ final class NewKitSelectionViewController: UIViewController {
         topBlurredView.effect = nil
     }
     
-    @IBSegueAction func presentNetworkNewKitViewController(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> NetworkNewKitViewController? {
+    @IBSegueAction private func presentNetworkNewKitViewController(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> NetworkNewKitViewController? {
+        guard let viewModel = viewModel else { return nil }
         let networkNewKitViewController = NetworkNewKitViewController(coder: coder, viewModel: viewModel.viewModelForNetworkNewKit())
         networkNewKitViewController?.modalPresentationStyle = .fullScreen
         return networkNewKitViewController
     }
     
     @IBSegueAction private func presentUserNewKitViewController(_ coder: NSCoder, sender: Any?, segueIdentifier: String?) -> UserNewKitViewController? {
+        guard let viewModel = viewModel else { return nil }
         let userNewKitViewController = UserNewKitViewController(coder: coder, viewModel: viewModel.viewModelForUserNewKit())
         userNewKitViewController?.modalPresentationStyle = .fullScreen
         return userNewKitViewController

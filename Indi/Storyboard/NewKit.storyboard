@@ -535,7 +535,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78j-QQ-ioa">
                                         <rect key="frame" x="51.666666666666657" y="35" width="290" height="50"/>
-                                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="I0K-PJ-hBH"/>
                                             <constraint firstAttribute="width" constant="290" id="jlj-gW-mSS"/>
@@ -547,13 +547,18 @@
                                         <state key="normal" title="Создать свой набор слов" image="New-kit">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="hnx-aL-OSR" kind="show" destinationCreationSelector="presentUserNewKitViewController:sender:segueIdentifier:" id="ShG-Ac-LRN"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i7r-tc-cuf">
                                         <rect key="frame" x="51.666666666666657" y="110" width="290" height="50"/>
-                                        <color key="backgroundColor" systemColor="systemTealColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="8Cs-lR-NV6"/>
                                             <constraint firstAttribute="width" constant="290" id="E48-tz-DEL"/>
@@ -565,12 +570,17 @@
                                         <state key="normal" title="Скачать набор из Интернета" image="Web">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <segue destination="6Ob-5J-50G" kind="show" destinationCreationSelector="presentNetworkNewKitViewController:sender:segueIdentifier:" id="9R8-V2-1Nk"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <color key="backgroundColor" red="0.94117647410000005" green="0.73725497719999999" blue="0.27450981740000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="78j-QQ-ioa" firstAttribute="top" secondItem="cJ3-Qk-3Xj" secondAttribute="top" constant="35" id="RJJ-ef-dBt"/>
                                     <constraint firstItem="i7r-tc-cuf" firstAttribute="centerX" secondItem="cJ3-Qk-3Xj" secondAttribute="centerX" id="U6c-GH-vOQ"/>
@@ -578,6 +588,11 @@
                                     <constraint firstAttribute="height" constant="230" id="ZLE-Uy-gAc"/>
                                     <constraint firstItem="i7r-tc-cuf" firstAttribute="top" secondItem="78j-QQ-ioa" secondAttribute="bottom" constant="25" id="eld-b5-nnV"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NVk-sE-gmU"/>
@@ -595,10 +610,7 @@
                     <tabBarItem key="tabBarItem" title="" image="Plus" id="H3f-Th-TBf"/>
                     <navigationItem key="navigationItem" id="Hll-69-tVa"/>
                     <connections>
-                        <outlet property="buttonsBackgroundView" destination="cJ3-Qk-3Xj" id="edJ-wg-Miu"/>
                         <outlet property="topBlurredView" destination="6F1-o6-JVs" id="ica-cN-eQn"/>
-                        <outletCollection property="newKitButtons" destination="78j-QQ-ioa" collectionClass="NSMutableArray" id="K3L-3p-UMI"/>
-                        <outletCollection property="newKitButtons" destination="i7r-tc-cuf" collectionClass="NSMutableArray" id="HZw-rC-DZd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dNc-MG-btQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -613,14 +625,8 @@
         <image name="Web" width="25" height="25"/>
         <image name="pencil.line" catalog="system" width="128" height="117"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemTealColor">
-            <color red="0.18823529410000001" green="0.69019607839999997" blue="0.78039215689999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

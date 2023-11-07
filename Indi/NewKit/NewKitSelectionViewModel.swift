@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol NewKitSelectionViewModelProtocol {
+protocol NewKitSelectionViewModelLogic {
     func viewModelForNetworkNewKit() -> NetworkNewKitViewModelData & NetworkNewKitViewModelLogic
     func viewModelForUserNewKit() -> UserNewKitViewModelData & UserNewKitViewModelLogic
 }
 
-class NewKitSelectionViewModel: NewKitSelectionViewModelProtocol {
+class NewKitSelectionViewModel: NewKitSelectionViewModelLogic {
     func viewModelForNetworkNewKit() -> NetworkNewKitViewModelData & NetworkNewKitViewModelLogic {
         return NetworkNewKitViewModel(networkManager: NetworkManager())
     }
