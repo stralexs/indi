@@ -18,12 +18,13 @@ protocol TrainingModeTestingViewModelProtocol {
     func anotherTest()
     func playCorrectSound()
     func playWrongSound()
+    init(soundManager: SoundManagerProtocol, selectedKits: [IndexPath], selectedQuestionsCount: Int)
 }
 
 final class TrainingModeTestingViewModel: TrainingModeTestingViewModelProtocol {
     //MARK: - Private Variables
-    private var selectedKits: [IndexPath]?
-    private var selectedQuestionsCount: Int?
+    private let selectedKits: [IndexPath]
+    private let selectedQuestionsCount: Int
     private var totalQuestionsCountForProgress: Int = 0
     private var totalCorrectAnswersCountForProgress: Int = 0
     private var testingQuestions: [Question] = []
@@ -40,23 +41,8 @@ final class TrainingModeTestingViewModel: TrainingModeTestingViewModelProtocol {
     }
     var userAnswer: String?
     
-    //MARK: - Private Methods
-    private func createNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(createTraining(_:)), name: Notification.Name(rawValue: "com.indi.chosenTraining.notificationKey"), object: nil)
-    }
-    
-    @objc private func createTraining(_ notification: NSNotification) {
-        if let selectedKitsAndQuestions = notification.object as? (kits: [IndexPath], questions: Int) {
-            selectedKits = selectedKitsAndQuestions.kits
-            selectedQuestionsCount = selectedKitsAndQuestions.questions
-        }
-    }
-    
     //MARK: - Public Methods
     func testStart() {
-        guard let selectedKits = selectedKits,
-              let selectedQuestionsCount = selectedQuestionsCount else { return }
-        
         totalQuestionsCountForProgress = 0
         totalCorrectAnswersCountForProgress = 0
         
@@ -140,8 +126,9 @@ final class TrainingModeTestingViewModel: TrainingModeTestingViewModelProtocol {
     }
     
     //MARK: - Initialization
-    init(soundManager: SoundManagerProtocol) {
+    required init(soundManager: SoundManagerProtocol, selectedKits: [IndexPath], selectedQuestionsCount: Int) {
         self.soundManager = soundManager
-        createNotificationCenterObserver()
+        self.selectedKits = selectedKits
+        self.selectedQuestionsCount = selectedQuestionsCount
     }
 }

@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 final class TrainingModeViewController: UIViewController {
     // MARK: - Properties
@@ -16,8 +17,9 @@ final class TrainingModeViewController: UIViewController {
     @IBOutlet var startButton: UIButton!
     @IBOutlet var sliderBackgroundView: UIView!
     
-    var viewModel: TrainingModeViewModelProtocol!
+    var viewModel: (TrainingModeViewModelData & TrainingModeViewModelLogic)!
     private let disposeBag = DisposeBag()
+    private var dataSource: RxTableViewSectionedReloadDataSource<SectionModel<String, String>>!
     
     // MARK: - ViewController lifecycle
     override func viewDidLoad() {
@@ -27,26 +29,42 @@ final class TrainingModeViewController: UIViewController {
         addLongGesture()
         setupTableView()
         setupSlider()
+        setupStartButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        reloadTableViewData()
     }
-    
+}
+
     // MARK: - Rx setup
+extension TrainingModeViewController {
     private func setupTableView() {
+        dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, String>>(
+            configureCell: { dataSource, tableView, indexPath, item in
+                let cell = tableView.dequeueReusableCell(withIdentifier: TrainingModeTableViewCell.identifier, for: indexPath) as! TrainingModeTableViewCell
+                cell.configure(with: self.viewModel.cellViewModel(with: item))
+                cell.selectionStyle = .none
+                return cell
+            }
+        )
+        
+        viewModel.sectionsRelay
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
         tableView.rx.itemSelected
             .subscribe(onNext: { _ in
                 guard let indexPaths = self.tableView.indexPathsForSelectedRows else { return }
-                self.viewModel.sliderMaximumValue(for: indexPaths)
+                self.viewModel.setSliderMaximumValue(for: indexPaths)
             })
             .disposed(by: disposeBag)
         
         tableView.rx.itemDeselected
             .subscribe(onNext: { _ in
                 guard let indexPaths = self.tableView.indexPathsForSelectedRows else { return }
-                self.viewModel.sliderMaximumValue(for: indexPaths)
+                self.viewModel.setSliderMaximumValue(for: indexPaths)
             })
             .disposed(by: disposeBag)
     }
@@ -64,7 +82,54 @@ final class TrainingModeViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Private Methods
+    private func setupStartButton() {
+        startButton.rx.tap.bind(onNext: {
+            if self.tableView.indexPathsForSelectedRows == nil {
+                self.presentBasicAlert(title: "Пожалуйста, выберите хотя бы один набор слов", message: nil, actions: [.okAction], completionHandler: nil)
+            }
+            
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            if let trainingTestVC = sb.instantiateViewController(withIdentifier: "TrainingTestVC") as? TrainingModeTestingViewController,
+               let indexPaths = self.tableView.indexPathsForSelectedRows {
+                trainingTestVC.viewModel = self.viewModel.viewModelForTrainingModeTesting(kits: indexPaths, questions: Int(self.slider.value))
+                trainingTestVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(trainingTestVC, animated: true)
+            }
+        })
+        .disposed(by: disposeBag)
+    }
+    
+    private func addLongGesture() {
+        let longPressGesture = UILongPressGestureRecognizer()
+        tableView.addGestureRecognizer(longPressGesture)
+        
+        longPressGesture.rx.event.bind(onNext: { gesture in
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
+            
+            let location = gesture.location(in: self.tableView)
+            if let indexPath = self.tableView.indexPathForRow(at: location) {
+                if self.viewModel.isBasicKitCheck(for: indexPath, for: indexPath.section) {
+                    self.presentBasicAlert(title: "Базовые наборы слов удалять нельзя", message: nil, actions: [.okAction], completionHandler: nil)
+                } else {
+                    let alert = UIAlertController(title: "Вы действительно хотите удалить этот набор слов?", message: nil, preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "Ок", style: .destructive) { [weak self] _ in
+                        self?.viewModel.deleteUserKit(for: indexPath, for: indexPath.section)
+                        self?.viewModel.fetchKitsNamesAndSections()
+                    }
+                    let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+                    alert.addAction(okAction)
+                    alert.addAction(cancelAction)
+                    self.present(alert, animated: true)
+                }
+            }
+        })
+        .disposed(by: disposeBag)
+    }
+}
+
+    // MARK: - Functionality
+extension TrainingModeViewController {
     private func tuneUI() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = .indiMainBlue
@@ -78,10 +143,7 @@ final class TrainingModeViewController: UIViewController {
         sliderBackgroundView.layer.borderColor = UIColor.indiMainYellow.cgColor
         
         tableView.delegate = self
-        tableView.dataSource = self
-        tableView.layer.cornerRadius = 30
         tableView.sectionHeaderTopPadding = 0
-        tableView.allowsMultipleSelection = true
         tableView.layer.borderWidth = 5
         tableView.layer.borderColor = UIColor.indiMainYellow.cgColor
     }
@@ -91,78 +153,20 @@ final class TrainingModeViewController: UIViewController {
     }
     
     @objc private func reloadTableViewData() {
-        self.tableView.reloadData() // скорее всего можно будет убрать, когда добавится реактивное добавление таблицы
-    }
-    
-    private func addLongGesture() {
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longGestureAction(_:)))
-        tableView.addGestureRecognizer(longPressGesture)
-    }
-    
-    @objc private func longGestureAction(_ gesture: UITapGestureRecognizer) {
-        let generator = UIImpactFeedbackGenerator(style: .heavy)
-        generator.impactOccurred()
-        
-        let location = gesture.location(in: tableView)
-        if let indexPath = tableView.indexPathForRow(at: location) {
-            if viewModel.isBasicKitCheck(for: indexPath, for: indexPath.section) {
-                presentBasicAlert(title: "Базовые наборы слов удалять нельзя", message: nil, actions: [.okAction], completionHandler: nil)
-            } else {
-                let alert = UIAlertController(title: "Вы действительно хотите удалить этот набор слов?", message: nil, preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Ок", style: .destructive) { [weak self] _ in
-                    self?.viewModel.deleteUserKit(for: indexPath, for: indexPath.section)
-                    self?.tableView.reloadData()
-                }
-                let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
-                alert.addAction(okAction)
-                alert.addAction(cancelAction)
-                self.present(alert, animated: true)
-            }
-        }
-    }
-    
-    @IBAction private func startButtonIsPressed(_ sender: UIButton) {
-        if tableView.indexPathsForSelectedRows == nil {
-            presentBasicAlert(title: "Пожалуйста, выберите хотя бы один набор слов", message: nil, actions: [.okAction], completionHandler: nil)
-        }
-        
-        let sb = UIStoryboard(name: "Main", bundle: nil)
-        if let trainingTestVC = sb.instantiateViewController(withIdentifier: "TrainingTestVC") as? TrainingModeTestingViewController,
-           let indexPaths = tableView.indexPathsForSelectedRows {
-            trainingTestVC.viewModel = viewModel.viewModelForTrainingModeTesting()
-            viewModel.userSettingsForTraining = (indexPaths, Int(slider.value))
-            trainingTestVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(trainingTestVC, animated: true)
-        }
+        viewModel.fetchKitsNamesAndSections()
     }
 }
 
-    // MARK: - TableView Data Source and Delegate
-extension TrainingModeViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.numberOfSections
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRowsInSection(for: section)
-    }
-    
+    // MARK: - UITableViewDelegate
+extension TrainingModeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 30))
         view.backgroundColor = UIColor.indiSaturatedPink
         let titleLabel = UILabel(frame: CGRect(x: 20, y: 0, width: view.frame.width, height: 50))
         titleLabel.textColor = .black
         titleLabel.font = UIFont(name: "GTWalsheimPro-Regular", size: 20)
-        titleLabel.text = viewModel.headerInSectionName(for: section)
+        titleLabel.text = dataSource[section].model
         view.addSubview(titleLabel)
         return view
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TrainingModeTableViewCell
-        let cellViewModel = viewModel.cellViewModel(for: indexPath.section, and: indexPath)
-        cell.viewModel = cellViewModel
-        cell.selectionStyle = .none
-        return cell
     }
 }

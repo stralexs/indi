@@ -25,12 +25,12 @@ final class NewKitTableViewCell: UITableViewCell {
     }
     
     private func setupBinders() {
-        viewModel?.question.bind { _ in
-            self.questionLabel.text = self.viewModel?.question.value.question
-            self.correctAnswerLabel.text = self.viewModel?.question.value.correctAnswer
-            self.firstIncorrectAnswer.text = self.viewModel?.question.value.incorrectAnswers?[0]
-            self.secondIncorrectAnswer.text = self.viewModel?.question.value.incorrectAnswers?[1]
-            self.thirdIncorrectAnswer.text = self.viewModel?.question.value.incorrectAnswers?[2]
+        viewModel?.question.bind {
+            self.questionLabel.text = $0.question
+            self.correctAnswerLabel.text = $0.correctAnswer
+            self.firstIncorrectAnswer.text = $0.incorrectAnswers?[0]
+            self.secondIncorrectAnswer.text = $0.incorrectAnswers?[1]
+            self.thirdIncorrectAnswer.text = $0.incorrectAnswers?[2]
         }
         .disposed(by: disposeBag)
     }

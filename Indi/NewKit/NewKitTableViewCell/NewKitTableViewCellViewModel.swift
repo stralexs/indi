@@ -9,14 +9,14 @@ import RxSwift
 import RxCocoa
 
 protocol NewKitTableViewCellViewModelData {
-    var question: BehaviorRelay<Question> { get set }
-    init(question: BehaviorRelay<Question>)
+    var question: Observable<Question> { get set }
+    init(question: Observable<Question>)
 }
 
 final class NewKitTableViewCellViewModel: NewKitTableViewCellViewModelData {
-    var question: BehaviorRelay<Question>
+    var question: Observable<Question>
     
-    required init(question: BehaviorRelay<Question>) {
+    required init(question: Observable<Question>) {
         self.question = question
     }
 }

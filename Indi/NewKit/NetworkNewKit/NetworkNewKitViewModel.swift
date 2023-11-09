@@ -64,7 +64,7 @@ extension NetworkNewKitViewModel: NetworkNewKitViewModelLogic {
     
     func cellViewModel(for row: Int) -> NewKitTableViewCellViewModelData {
         let question = questions.value[row]
-        return NewKitTableViewCellViewModel(question: BehaviorRelay(value: question))
+        return NewKitTableViewCellViewModel(question: Observable.just(question))
     }
     
     func newKitName(_ newName: String) throws {

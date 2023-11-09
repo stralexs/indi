@@ -20,11 +20,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8yJ-Dt-V01">
                                 <rect key="frame" x="0.0" y="103" width="393" height="535"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" estimatedRowHeight="40" sectionHeaderHeight="50" estimatedSectionHeaderHeight="50" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="VsB-rh-fWQ">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="40" estimatedRowHeight="40" sectionHeaderHeight="50" estimatedSectionHeaderHeight="50" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="VsB-rh-fWQ">
                                         <rect key="frame" x="10" y="30" width="373" height="495"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="xyr-fe-I0G" customClass="TrainingModeTableViewCell" customModule="Indi" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TrainingModeTableViewCell" id="xyr-fe-I0G" customClass="TrainingModeTableViewCell" customModule="Indi" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="50" width="373" height="40"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xyr-fe-I0G" id="c2z-db-ULx">
@@ -50,6 +50,11 @@
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="30"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </tableView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Выберите наборы для изучения" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bH3-LL-cL2">
                                         <rect key="frame" x="68.666666666666686" y="5" width="256" height="20"/>
@@ -144,9 +149,6 @@
                                 <buttonConfiguration key="configuration" style="plain" title="Начать">
                                     <fontDescription key="titleFontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="20"/>
                                 </buttonConfiguration>
-                                <connections>
-                                    <action selector="startButtonIsPressed:" destination="w8I-Fv-g9b" eventType="touchUpInside" id="aRP-6e-Nec"/>
-                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
