@@ -14,6 +14,7 @@ struct CustomAlertAction: Equatable {
     static let okAction: CustomAlertAction = .init(title: "Oк")
     static let cancelAction: CustomAlertAction = .init(title: "Отмена", style: .cancel)
     static let doneAction: CustomAlertAction = .init(title: "Готово")
+    static let backToMenu: CustomAlertAction = .init(title: "В главное меню", style: .cancel)
     
     init(title: String, style: UIAlertAction.Style = .default) {
         self.title = title

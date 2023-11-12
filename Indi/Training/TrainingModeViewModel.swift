@@ -10,8 +10,8 @@ import RxCocoa
 import RxDataSources
 
 protocol TrainingModeViewModelData {
-    var sliderMaximumValue: PublishRelay<Float> { get set }
-    var sectionsRelay: PublishRelay<[SectionModel<String, String>]> { get set }
+    var sliderMaximumValue: PublishRelay<Float> { get }
+    var sectionsRelay: PublishRelay<[SectionModel<String, String>]> { get }
 }
 
 protocol TrainingModeViewModelLogic {
@@ -20,13 +20,13 @@ protocol TrainingModeViewModelLogic {
     func cellViewModel(with item: SectionModel<String, String>.Item) -> TrainingModeTableViewCellViewModelLogic
     func isBasicKitCheck(for indexPath: IndexPath, for indexPathSection: Int) -> Bool
     func deleteUserKit(for indexPath: IndexPath, for indexPathSection: Int)
-    func viewModelForTrainingModeTesting(kits: [IndexPath], questions: Int) -> TrainingModeTestingViewModelProtocol?
+    func viewModelForTrainingModeTesting(kits: [IndexPath], questions: Int) -> TrainingModeTestingViewModelData & TrainingModeTestingViewModelLogic
 }
 
 final class TrainingModeViewModel: TrainingModeViewModelData {
     private let disposeBag = DisposeBag()
-    var sectionsRelay = PublishRelay<[SectionModel<String, String>]>()
-    var sliderMaximumValue = PublishRelay<Float>()
+    let sectionsRelay = PublishRelay<[SectionModel<String, String>]>()
+    let sliderMaximumValue = PublishRelay<Float>()
 }
 
 extension TrainingModeViewModel: TrainingModeViewModelLogic {
@@ -60,7 +60,7 @@ extension TrainingModeViewModel: TrainingModeViewModelLogic {
         KitsManager.shared.deleteUserKit(for: indexPath, for: indexPathSection)
     }
     
-    func viewModelForTrainingModeTesting(kits: [IndexPath], questions: Int) -> TrainingModeTestingViewModelProtocol? {
+    func viewModelForTrainingModeTesting(kits: [IndexPath], questions: Int) -> TrainingModeTestingViewModelData & TrainingModeTestingViewModelLogic {
         return TrainingModeTestingViewModel(soundManager: SoundManager(),
                                             selectedKits: kits,
                                             selectedQuestionsCount: questions)

@@ -9,12 +9,12 @@ import RxSwift
 import RxCocoa
 
 protocol TrainingModeTableViewCellViewModelLogic {
-    var kitName: Observable<String> { get set }
+    var kitName: Observable<String> { get }
     init(kitName: Observable<String>)
 }
 
 final class TrainingModeTableViewCellViewModel: TrainingModeTableViewCellViewModelLogic {
-    var kitName: Observable<String>
+    let kitName: Observable<String>
         
     required init(kitName: Observable<String>) {
         self.kitName = kitName

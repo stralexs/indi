@@ -5,130 +5,119 @@
 //  Created by Alexander Sivko on 22.05.23.
 //
 
-import UIKit
+import RxSwift
+import RxCocoa
 
-protocol TrainingModeTestingViewModelProtocol {
-    var testingProgress: Double { get }
-    var userAnswer: String? { get set }
-    func testStart()
-    func test(questionLabel UILabel: UILabel?, buttons UIButtons: [UIButton]?, countLabel UILabel: UILabel?)
-    func isRightAnswerCheck() -> Bool
-    func nextQuestion()
-    func resetResults()
-    func anotherTest()
-    func playCorrectSound()
-    func playWrongSound()
-    init(soundManager: SoundManagerProtocol, selectedKits: [IndexPath], selectedQuestionsCount: Int)
+protocol TrainingModeTestingViewModelData {
+    var questions: BehaviorSubject<[RandomAnswersQuestion]> { get }
+    var testingProgress: BehaviorRelay<Float> { get }
+    var answerResult: PublishRelay<Bool> { get }
+    var trainingResult: PublishRelay<(Int, Int)> { get }
+    var questionsCount: BehaviorRelay<String> { get }
+    init(soundManager: SoundManagerLogic, selectedKits: [IndexPath], selectedQuestionsCount: Int)
 }
 
-final class TrainingModeTestingViewModel: TrainingModeTestingViewModelProtocol {
-    //MARK: - Private Variables
-    private let selectedKits: [IndexPath]
-    private let selectedQuestionsCount: Int
-    private var totalQuestionsCountForProgress: Int = 0
-    private var totalCorrectAnswersCountForProgress: Int = 0
-    private var testingQuestions: [Question] = []
-    private var totalQuestionsCount: Int = 0
-    private var correctAnswersCount: Int = 0
-    private var incorrectAnswers: [Question] = []
-    private var soundManager: SoundManagerProtocol
+protocol TrainingModeTestingViewModelLogic {
+    func test(titleLabel text: String?)
+    func nextQuestion()
+    func anotherTest()
+    func playSound(_ isAnswerCorrect: Bool)
+}
+
+    // MARK: - TrainingModeTestingViewModelData
+final class TrainingModeTestingViewModel: TrainingModeTestingViewModelData {
+    private var totalQuestionsCountForProgress: Int
+    private var totalCorrectAnswersCountForProgress = 0
+    private var totalQuestionsCount = 0
+    private var correctAnswersCount = 0
+    private var incorrectAnswers = [RandomAnswersQuestion]()
+    private let soundManager: SoundManagerLogic
     
-    //MARK: - Public Variables
-    var testingProgress: Double {
-        var testResult: Double = 0
-        testResult = Double(totalCorrectAnswersCountForProgress) / Double(totalQuestionsCountForProgress)
-        return testResult
+    let questions: BehaviorSubject<[RandomAnswersQuestion]> = BehaviorSubject(value: [])
+    let answerResult = PublishRelay<Bool>()
+    let trainingResult = PublishRelay<(Int, Int)>()
+    let testingProgress: BehaviorRelay<Float> = BehaviorRelay(value: 0)
+    let questionsCount: BehaviorRelay<String>  = BehaviorRelay(value: "")
+
+    required init(soundManager: SoundManagerLogic, selectedKits: [IndexPath], selectedQuestionsCount: Int) {
+        self.soundManager = soundManager
+        self.totalQuestionsCountForProgress = selectedQuestionsCount
+        self.testStart(selectedKits: selectedKits, selectedQuestionsCount: selectedQuestionsCount)
+        self.countQuestions()
     }
-    var userAnswer: String?
+}
+
+    // MARK: - TrainingModeTestingViewModelLogic
+extension TrainingModeTestingViewModel: TrainingModeTestingViewModelLogic {
+    private func testStart(selectedKits: [IndexPath], selectedQuestionsCount: Int) {
+        let questionsSequence = selectedKits.map { KitsManager.shared.getKitForTesting(for: $0[0], and: $0[1]) }
+            .flatMap { $0 }
+            .shuffled()
+            .prefix(selectedQuestionsCount)
+        
+        let questionsWithRandomAnswers: [RandomAnswersQuestion] = questionsSequence.map {
+            var incorrectAnswers = $0.incorrectAnswers ?? []
+            incorrectAnswers.append($0.correctAnswer ?? "")
+            return RandomAnswersQuestion(question: $0.question ?? "",
+                                         correctAnswer: $0.correctAnswer ?? "",
+                                         randomAnswers: incorrectAnswers.shuffled())
+        }
+        
+        questions.onNext(questionsWithRandomAnswers)
+        totalQuestionsCount = questionsWithRandomAnswers.count
+    }
     
-    //MARK: - Public Methods
-    func testStart() {
-        totalQuestionsCountForProgress = 0
-        totalCorrectAnswersCountForProgress = 0
-        
-        var mediumQuestions: [Question] = []
-        var secondMeduimQuestions: [Question] = []
-        
-        selectedKits.forEach { kit in
-            mediumQuestions.append(contentsOf: KitsManager.shared.getKitForTesting(for: kit[0], and: kit[1]))
-        }
-        mediumQuestions = mediumQuestions.shuffled()
-        (1...selectedQuestionsCount).forEach { _ in
-            secondMeduimQuestions.append(mediumQuestions.first!)
-            mediumQuestions.remove(at: 0)
-        }
-        testingQuestions = secondMeduimQuestions
-        totalQuestionsCount = testingQuestions.count
-        
-        totalQuestionsCountForProgress = testingQuestions.count
+    private func countProgress() {
+        totalCorrectAnswersCountForProgress += 1
+        let progress = Float(totalCorrectAnswersCountForProgress) / Float(totalQuestionsCountForProgress)
+        testingProgress.accept(progress)
     }
     
-    func test(questionLabel: UILabel?, buttons: [UIButton]?, countLabel: UILabel?) {
-        guard testingQuestions.isEmpty == false,
-              let question = testingQuestions[0].question,
-              let correctAnswer = testingQuestions[0].correctAnswer,
-              let incorrectAnswers = testingQuestions[0].incorrectAnswers else { return }
-        
-        questionLabel?.text = question
-        var answersArr = incorrectAnswers
-        answersArr.append(correctAnswer)
-        for button in buttons! {
-            let randomElement = answersArr.randomElement()
-            button.setTitle(randomElement!, for: .normal)
-            answersArr.remove(at: answersArr.firstIndex(of: randomElement!)!)
-        }
-        countLabel?.text = "\(totalQuestionsCount - testingQuestions.count + 1)/\(totalQuestionsCount)"
+    private func countQuestions() {
+        guard let questionsCount = try? questions.value().count else { return }
+        let questionsCountText = "\(totalQuestionsCount - questionsCount + 1)/\(totalQuestionsCount)"
+        self.questionsCount.accept(questionsCountText)
     }
+    
+    func test(titleLabel text: String?) {
+        guard let text = text,
+              let correctAnswer = try? questions.value().first?.correctAnswer else { return }
         
-    func isRightAnswerCheck() -> Bool {
-        guard testingQuestions.isEmpty == false else { return false }
-        let result: Bool = userAnswer == testingQuestions[0].correctAnswer
-        if result {
+        if text == correctAnswer {
+            answerResult.accept(true)
             correctAnswersCount += 1
-            totalCorrectAnswersCountForProgress += 1
+            countProgress()
         } else {
-            incorrectAnswers.append(testingQuestions[0])
+            answerResult.accept(false)
+            if let incorrectAnswer = try? questions.value().first {
+                incorrectAnswers.append(incorrectAnswer)
+            }
         }
-        return result
     }
     
     func nextQuestion() {
-        guard testingQuestions.isEmpty == false else { return }
-        testingQuestions.removeFirst()
-        if testingProgress == 1 {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.trainingIsDone.notificationKey"), object: nil)
+        guard var questions = try? questions.value() else { return }
+        questions.removeFirst()
+        
+        if testingProgress.value == 1 {
+            self.questions.onCompleted()
+        } else if questions.isEmpty {
+            trainingResult.accept((correctAnswersCount, totalQuestionsCount))
+        } else {
+            self.questions.onNext(questions)
+            countQuestions()
         }
-        if testingQuestions.count < 1 {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.trainingResult.notificationKey"), object: [correctAnswersCount, totalQuestionsCount])
-            correctAnswersCount = 0
-        }
-    }
-    
-    func resetResults() {
-        correctAnswersCount = 0
-        totalQuestionsCount = 0
-        testingQuestions = []
-        incorrectAnswers = []
     }
     
     func anotherTest() {
-        testingQuestions = incorrectAnswers
-        totalQuestionsCount = testingQuestions.count
+        questions.onNext(incorrectAnswers)
+        totalQuestionsCount = incorrectAnswers.count
+        correctAnswersCount = 0
         incorrectAnswers = []
+        countQuestions()
     }
     
-    func playCorrectSound() {
-        soundManager.playCorrectSound()
-    }
-    
-    func playWrongSound() {
-        soundManager.playWrongSound()
-    }
-    
-    //MARK: - Initialization
-    required init(soundManager: SoundManagerProtocol, selectedKits: [IndexPath], selectedQuestionsCount: Int) {
-        self.soundManager = soundManager
-        self.selectedKits = selectedKits
-        self.selectedQuestionsCount = selectedQuestionsCount
+    func playSound(_ isAnswerCorrect: Bool) {
+        isAnswerCorrect ? soundManager.playCorrectSound() : soundManager.playWrongSound()
     }
 }

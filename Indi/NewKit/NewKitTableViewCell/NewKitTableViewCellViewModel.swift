@@ -9,12 +9,12 @@ import RxSwift
 import RxCocoa
 
 protocol NewKitTableViewCellViewModelData {
-    var question: Observable<Question> { get set }
+    var question: Observable<Question> { get }
     init(question: Observable<Question>)
 }
 
 final class NewKitTableViewCellViewModel: NewKitTableViewCellViewModelData {
-    var question: Observable<Question>
+    let question: Observable<Question>
     
     required init(question: Observable<Question>) {
         self.question = question

@@ -10,11 +10,11 @@ import RxCocoa
 import OSLog
 
 protocol NetworkNewKitViewModelData {
-    var questions: BehaviorRelay<[Question]> { get set }
-    var newKitName: BehaviorRelay<String> { get set }
-    var newKitStudyStageName: BehaviorRelay<String> { get set }
-    var newKitStudyStage: BehaviorRelay<Int?> { get set }
-    var isConnectedToInternet: BehaviorRelay<Bool?> { get set }
+    var questions: BehaviorRelay<[Question]> { get }
+    var newKitName: BehaviorRelay<String> { get }
+    var newKitStudyStageName: BehaviorRelay<String> { get }
+    var newKitStudyStage: BehaviorRelay<Int?> { get }
+    var isConnectedToInternet: BehaviorRelay<Bool?> { get }
 }
 
 protocol NetworkNewKitViewModelLogic {
@@ -25,14 +25,12 @@ protocol NetworkNewKitViewModelLogic {
 }
 
 final class NetworkNewKitViewModel: NetworkNewKitViewModelData {
-    var questions: BehaviorRelay<[Question]> = BehaviorRelay(value: [])
-    var newKitName: BehaviorRelay<String> = BehaviorRelay(value: "Название набора")
-    var newKitStudyStageName: BehaviorRelay<String> = BehaviorRelay(value: "Стадия обучения")
-    var newKitStudyStage: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
-    var isConnectedToInternet: BehaviorRelay<Bool?> = BehaviorRelay(value: nil)
-    
-    var sss: BehaviorRelay<[Question]> = BehaviorRelay(value: [])
-    
+    let questions: BehaviorRelay<[Question]> = BehaviorRelay(value: [])
+    let newKitName: BehaviorRelay<String> = BehaviorRelay(value: "Название набора")
+    let newKitStudyStageName: BehaviorRelay<String> = BehaviorRelay(value: "Стадия обучения")
+    let newKitStudyStage: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
+    let isConnectedToInternet: BehaviorRelay<Bool?> = BehaviorRelay(value: nil)
+        
     private let disposeBag = DisposeBag()
     private let networkManager: NetworkManagerDataAndLogic
     private var namesOfKitsOfSelectedStudyStage = [String]()

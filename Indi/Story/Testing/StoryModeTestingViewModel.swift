@@ -26,7 +26,7 @@ final class StoryModeTestingViewModel: StoryModeTestingViewModelProtocol {
     private var testingQuestions: [Question] = []
     private var totalQuestionsCount: Int = 0
     private var correctAnswersCount: Int = 0
-    private var soundManager: SoundManagerProtocol
+    private var soundManager: SoundManagerLogic
     
     //MARK: - Public Variables
     var userAnswer: String?
@@ -111,7 +111,7 @@ final class StoryModeTestingViewModel: StoryModeTestingViewModelProtocol {
     }
     
     //MARK: - Initialization
-    init(soundManager: SoundManagerProtocol) {
+    init(soundManager: SoundManagerLogic) {
         self.soundManager = soundManager
         createNotificationCenterObserver()
     }

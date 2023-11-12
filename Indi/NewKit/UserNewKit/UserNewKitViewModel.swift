@@ -9,10 +9,10 @@ import RxSwift
 import RxCocoa
 
 protocol UserNewKitViewModelData {
-    var questions: BehaviorRelay<[Question]> { get set }
-    var newKitName: BehaviorRelay<String> { get set }
-    var newKitStudyStageName: BehaviorRelay<String> { get set }
-    var newKitStudyStage: BehaviorRelay<Int?> { get set }
+    var questions: BehaviorRelay<[Question]> { get }
+    var newKitName: BehaviorRelay<String> { get }
+    var newKitStudyStageName: BehaviorRelay<String> { get }
+    var newKitStudyStage: BehaviorRelay<Int?> { get }
 }
 
 protocol UserNewKitViewModelLogic {
@@ -23,10 +23,10 @@ protocol UserNewKitViewModelLogic {
 }
 
 final class UserNewKitViewModel: UserNewKitViewModelData {
-    var questions: BehaviorRelay<[Question]> = BehaviorRelay(value: [])
-    var newKitName: BehaviorRelay<String> = BehaviorRelay(value: "Название набора")
-    var newKitStudyStageName: BehaviorRelay<String> = BehaviorRelay(value: "Стадия обучения")
-    var newKitStudyStage: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
+    let questions: BehaviorRelay<[Question]> = BehaviorRelay(value: [])
+    let newKitName: BehaviorRelay<String> = BehaviorRelay(value: "Название набора")
+    let newKitStudyStageName: BehaviorRelay<String> = BehaviorRelay(value: "Стадия обучения")
+    let newKitStudyStage: BehaviorRelay<Int?> = BehaviorRelay(value: nil)
     
     private let disposeBag = DisposeBag()
     private var namesOfKitsOfSelectedStudyStage = [String]()

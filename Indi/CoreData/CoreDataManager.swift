@@ -1,8 +1,8 @@
 //
 //  CoreDataManager.swift
-//  Diploma Sivko Alexander
+//  Indi
 //
-//  Created by Alexander Strelnikov on 9.05.23.
+//  Created by Alexander Sivko on 9.05.23.
 //
 
 import Foundation

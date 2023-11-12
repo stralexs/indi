@@ -7,12 +7,12 @@
 
 import AVFoundation
 
-protocol SoundManagerProtocol {
+protocol SoundManagerLogic {
     func playCorrectSound()
     func playWrongSound()
 }
 
-final class SoundManager: SoundManagerProtocol {
+final class SoundManager: SoundManagerLogic {
     private var player = AVAudioPlayer()
 
     func playCorrectSound() {
