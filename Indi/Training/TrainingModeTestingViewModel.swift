@@ -37,7 +37,7 @@ final class TrainingModeTestingViewModel: TrainingModeTestingViewModelData {
     let answerResult = PublishRelay<Bool>()
     let trainingResult = PublishRelay<(Int, Int)>()
     let testingProgress: BehaviorRelay<Float> = BehaviorRelay(value: 0)
-    let questionsCount: BehaviorRelay<String>  = BehaviorRelay(value: "")
+    let questionsCount: BehaviorRelay<String> = BehaviorRelay(value: "")
 
     required init(soundManager: SoundManagerLogic, selectedKits: [IndexPath], selectedQuestionsCount: Int) {
         self.soundManager = soundManager

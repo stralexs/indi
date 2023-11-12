@@ -13,7 +13,7 @@ protocol StoryModeKitSelectionViewModelProtocol {
     func postChosenTestNotification(for indexPath: IndexPath)
     func isBasicKitCheck(for indexPath: IndexPath) -> Bool
     func deleteUserKit(for indexPath: IndexPath)
-    func viewModelForTesting() -> StoryModeTestingViewModelProtocol?
+    func viewModelForTesting(_ indexPath: IndexPath) -> StoryModeTestingViewModelData & StoryModeTestingViewModelLogic
 }
 
 final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelProtocol {
@@ -55,8 +55,8 @@ final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelProtoc
         KitsManager.shared.deleteUserKit(for: indexPath, for: studyStageRawValue)
     }
     
-    func viewModelForTesting() -> StoryModeTestingViewModelProtocol? {
-        return StoryModeTestingViewModel(soundManager: SoundManager())
+    func viewModelForTesting(_ indexPath: IndexPath) -> StoryModeTestingViewModelData & StoryModeTestingViewModelLogic {
+        return StoryModeTestingViewModel(soundManager: SoundManager(), selectedKit: indexPath, studyStage: studyStageRawValue)
     }
     
     //MARK: - Initialization

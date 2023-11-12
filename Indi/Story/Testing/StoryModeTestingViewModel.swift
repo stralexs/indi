@@ -5,114 +5,106 @@
 //  Created by Alexander Sivko on 19.05.23.
 //
 
-import UIKit
+import RxSwift
+import RxCocoa
 
-protocol StoryModeTestingViewModelProtocol {
-    var userAnswer: String? { get set }
-    func testStart()
-    func test(questionLabel UILabel: UILabel?, buttons UIButtons: [UIButton]?, countLabel UILabel: UILabel?)
-    func isRightAnswerCheck() -> Bool
-    func nextQuestion()
-    func resetResults()
-    func playCorrectSound()
-    func playWrongSound()
+protocol StoryModeTestingViewModelData {
+    var questions: BehaviorRelay<[RandomAnswersQuestion]> { get }
+    var answerResult: PublishRelay<Bool> { get }
+    var testingResult: PublishRelay<Int> { get }
+    var questionsCount: BehaviorRelay<String> { get }
+    init(soundManager: SoundManagerLogic, selectedKit: IndexPath, studyStage: Int)
 }
 
-final class StoryModeTestingViewModel: StoryModeTestingViewModelProtocol {
-    //MARK: - Private Variables
-    private var selectedStudyStage: Int?
-    private var selectedKit: Int?
-    private var selectedKitName: String?
-    private var testingQuestions: [Question] = []
-    private var totalQuestionsCount: Int = 0
+protocol StoryModeTestingViewModelLogic {
+    func testStart()
+    func test(titleLabel text: String?)
+    func nextQuestion()
+    func playSound(_ isAnswerCorrect: Bool)
+}
+
+    // MARK: - StoryModeTestingViewModelData
+final class StoryModeTestingViewModel: StoryModeTestingViewModelData {
+    private let selectedStudyStage: Int
+    private let selectedKit: Int
+    private let selectedKitName: String
+    private let totalQuestionsCount: Int
     private var correctAnswersCount: Int = 0
     private var soundManager: SoundManagerLogic
     
-    //MARK: - Public Variables
-    var userAnswer: String?
+    let questions: BehaviorRelay<[RandomAnswersQuestion]> = BehaviorRelay(value: [])
+    let answerResult = PublishRelay<Bool>()
+    let testingResult = PublishRelay<Int>()
+    let questionsCount: BehaviorRelay<String> = BehaviorRelay(value: "")
     
-    //MARK: - Private Methods
-    private func createNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(setSelectedKit(_:)), name: Notification.Name(rawValue: "com.indi.chosenTest.notificationKey"), object: nil)
+    required init(soundManager: SoundManagerLogic, selectedKit: IndexPath, studyStage: Int) {
+        self.soundManager = soundManager
+        self.selectedStudyStage = studyStage
+        self.selectedKit = selectedKit.row
+        self.selectedKitName = KitsManager.shared.getKitName(for: studyStage, with: selectedKit)
+        self.totalQuestionsCount = KitsManager.shared.getKitForTesting(for: selectedStudyStage, and: self.selectedKit).count
+        testStart()
+        countQuestions()
+    }
+}
+
+    // MARK: - StoryModeTestingViewModelLogic
+extension StoryModeTestingViewModel: StoryModeTestingViewModelLogic {
+    private func countQuestions() {
+        let questionsCount = questions.value.count
+        let questionsCountText = "\(totalQuestionsCount - questionsCount + 1)/\(totalQuestionsCount)"
+        self.questionsCount.accept(questionsCountText)
     }
     
-    @objc private func setSelectedKit(_ notification: NSNotification) {
-        if let selectedKitInfo = notification.object as? (indexPath: IndexPath, studyStageRawValue: Int) {
-            selectedStudyStage = selectedKitInfo.studyStageRawValue
-            selectedKit = selectedKitInfo.indexPath.row
-            selectedKitName = KitsManager.shared.getKitName(for: selectedKitInfo.studyStageRawValue, with: selectedKitInfo.indexPath)
-        }
-    }
-    
-    //MARK: - Public Methods
     func testStart() {
-        guard let selectedStudyStage = selectedStudyStage,
-              let selectedKit = selectedKit else { return }
-        testingQuestions = KitsManager.shared.getKitForTesting(for: selectedStudyStage, and: selectedKit)
-        testingQuestions = testingQuestions.shuffled()
-        totalQuestionsCount = testingQuestions.count
+        let questions = KitsManager.shared.getKitForTesting(for: selectedStudyStage, and: selectedKit).shuffled()
+        
+        let questionsWithRandomAnswers: [RandomAnswersQuestion] = questions.map {
+            var incorrectAnswers = $0.incorrectAnswers ?? []
+            incorrectAnswers.append($0.correctAnswer ?? "")
+            return RandomAnswersQuestion(question: $0.question ?? "",
+                                         correctAnswer: $0.correctAnswer ?? "",
+                                         randomAnswers: incorrectAnswers.shuffled())
+        }
+        
+        self.questions.accept(questionsWithRandomAnswers)
     }
     
-    func test(questionLabel: UILabel?, buttons: [UIButton]?, countLabel: UILabel?) {
-        guard testingQuestions.isEmpty == false,
-              let question = testingQuestions[0].question,
-              let correctAnswer = testingQuestions[0].correctAnswer,
-              let incorrectAnswers = testingQuestions[0].incorrectAnswers else { return }
+    func test(titleLabel text: String?) {
+        guard let text = text,
+              let correctAnswer = questions.value.first?.correctAnswer else { return }
         
-        questionLabel?.text = question
-        var answersArr = incorrectAnswers
-        answersArr.append(correctAnswer)
-        for button in buttons! {
-            let randomElement = answersArr.randomElement()
-            button.setTitle(randomElement!, for: .normal)
-            answersArr.remove(at: answersArr.firstIndex(of: randomElement!)!)
-        }
-        countLabel?.text = "\(totalQuestionsCount - testingQuestions.count + 1)/\(totalQuestionsCount)"
-    }
-        
-    func isRightAnswerCheck() -> Bool {
-        guard testingQuestions.isEmpty == false else { return false }
-        let result: Bool = userAnswer == testingQuestions[0].correctAnswer
-        if result {
+        if text == correctAnswer {
+            answerResult.accept(true)
             correctAnswersCount += 1
+        } else {
+            answerResult.accept(false)
         }
-        return result
     }
     
     func nextQuestion() {
-        guard testingQuestions.isEmpty == false else { return }
-        testingQuestions.removeFirst()
-        if testingQuestions.count < 1 {
+        var questions = questions.value
+        questions.removeFirst()
+        
+        if questions.isEmpty {
             let testResult = Int(round(Double(correctAnswersCount) / Double(totalQuestionsCount) * 100))
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.testResult.notificationKey"), object: testResult)
+            testingResult.accept(testResult)
             
             UserDataManager.shared.saveUserResult(newResult: testResult,
-                                           kitName: selectedKitName!,
+                                           kitName: selectedKitName,
                                            completedTests: 1,
                                            completedExams: 0,
                                            correctAnswers: correctAnswersCount,
                                            totalQuestions: totalQuestionsCount)
-            resetResults()
+            
+            correctAnswersCount = 0
+        } else {
+            self.questions.accept(questions)
+            countQuestions()
         }
     }
     
-    func resetResults() {
-        correctAnswersCount = 0
-        totalQuestionsCount = 0
-        testingQuestions = []
-    }
-    
-    func playCorrectSound() {
-        soundManager.playCorrectSound()
-    }
-    
-    func playWrongSound() {
-        soundManager.playWrongSound()
-    }
-    
-    //MARK: - Initialization
-    init(soundManager: SoundManagerLogic) {
-        self.soundManager = soundManager
-        createNotificationCenterObserver()
+    func playSound(_ isAnswerCorrect: Bool) {
+        isAnswerCorrect ? soundManager.playCorrectSound() : soundManager.playWrongSound()
     }
 }
