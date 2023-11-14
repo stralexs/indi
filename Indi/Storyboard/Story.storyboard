@@ -584,13 +584,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DdZ-ST-I0j">
                                         <rect key="frame" x="50" y="60" width="293" height="272.33333333333331"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jF7-LY-u17">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jF7-LY-u17">
                                                 <rect key="frame" x="10" y="10.000000000000014" width="273" height="252.33333333333337"/>
                                                 <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="30"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ebu-5g-qyf">
+                                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ebu-5g-qyf">
                                                 <rect key="frame" x="56.666666666666686" y="46.333333333333343" width="180" height="180"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="180" id="OfW-qh-hw8"/>
@@ -607,6 +607,11 @@
                                             <constraint firstItem="Ebu-5g-qyf" firstAttribute="centerX" secondItem="DdZ-ST-I0j" secondAttribute="centerX" id="PEf-XS-dYj"/>
                                             <constraint firstItem="Ebu-5g-qyf" firstAttribute="centerY" secondItem="DdZ-ST-I0j" secondAttribute="centerY" id="zDa-GN-2KM"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20/20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qnR-1Q-m9w">
                                         <rect key="frame" x="170.66666666666666" y="16" width="52" height="24"/>
@@ -634,7 +639,7 @@
                                             <constraint firstAttribute="height" constant="50" id="cUR-iS-kGZ"/>
                                         </constraints>
                                         <attributedString key="attributedText"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0x8-yw-mCs">
                                         <rect key="frame" x="71.666666666666686" y="155.33333333333331" width="250" height="130"/>
@@ -645,13 +650,13 @@
                                                     <constraint firstAttribute="height" constant="51.329999999999998" id="Ife-K5-n5b"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="25"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lgz-yX-OTA">
                                                 <rect key="frame" x="5" y="66.333333333333371" width="240" height="58.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="64"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -669,12 +674,18 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="8zA-P7-cMy" firstAttribute="top" secondItem="3EC-P3-jNa" secondAttribute="top" constant="40" id="0mR-B4-ir6"/>
                                     <constraint firstItem="8zA-P7-cMy" firstAttribute="centerX" secondItem="3EC-P3-jNa" secondAttribute="centerX" id="8PX-tf-6Nf"/>
                                     <constraint firstItem="0x8-yw-mCs" firstAttribute="centerY" secondItem="3EC-P3-jNa" secondAttribute="centerY" id="UYV-Lb-eoo"/>
                                     <constraint firstItem="0x8-yw-mCs" firstAttribute="centerX" secondItem="3EC-P3-jNa" secondAttribute="centerX" id="X0r-n8-L5R"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="30"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fft-qB-Ztw"/>
@@ -696,13 +707,11 @@
                     </view>
                     <connections>
                         <outlet property="answerResultImage" destination="Ebu-5g-qyf" id="yvB-yi-0ld"/>
-                        <outlet property="bottomBackgroundView" destination="3EC-P3-jNa" id="iYW-vZ-32j"/>
                         <outlet property="descriptionLabel" destination="lUV-cd-0ry" id="NZI-z1-krk"/>
                         <outlet property="examResultLabel" destination="Lgz-yX-OTA" id="OZF-jq-VHe"/>
                         <outlet property="questionBackground" destination="DdZ-ST-I0j" id="VWc-X3-uyP"/>
                         <outlet property="questionLabel" destination="jF7-LY-u17" id="FcX-rr-jmh"/>
                         <outlet property="questionsCountLabel" destination="qnR-1Q-m9w" id="ngQ-gu-W6i"/>
-                        <outlet property="rootView" destination="8yG-ri-DcH" id="LBO-dB-nJR"/>
                         <outlet property="textField" destination="8zA-P7-cMy" id="Plj-9W-1tp"/>
                     </connections>
                 </viewController>
@@ -1248,13 +1257,13 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -5,107 +5,109 @@
 //  Created by Alexander Sivko on 20.05.23.
 //
 
-import UIKit
+import RxSwift
+import RxCocoa
 
-protocol StoryModeExamViewModelProtocol {
-    var userAnswer: String? { get set }
-    func userResultForExam() -> Int
-    func testStart()
-    func test(questionLabel UILabel: UILabel?, buttons UIButtons: [UIButton]?, countLabel UILabel: UILabel?)
-    func isRightAnswerCheck() -> Bool
-    func nextQuestion()
-    func resetResults()
-    func playCorrectSound()
-    func playWrongSound()
+protocol StoryModeExamViewModelData {
+    var questions: BehaviorRelay<[Question]> { get }
+    var answerResult: PublishRelay<Bool> { get }
+    var examResult: PublishRelay<Int> { get }
+    var questionsCount: BehaviorRelay<String> { get }
+    var userExamResults: BehaviorRelay<Int> { get }
+    init(soundManager: SoundManagerLogic, chosenExam: Int)
 }
 
-final class StoryModeExamViewModel: StoryModeExamViewModelProtocol {
-    //MARK: - Private Variables
-    private var examName: String = ""
-    private var kitsForExam: [Int] = []
-    private var examQuestions: [Question] = []
-    private var totalQuestionsCount: Int = 0
+protocol StoryModeExamViewModelLogic {
+    func examStart()
+    func exam(textField text: String?)
+    func nextQuestion()
+    func playSound(_ isAnswerCorrect: Bool)
+}
+
+final class StoryModeExamViewModel: StoryModeExamViewModelData {
+    private let chosenExam: Int
+    private var examName = String()
+    private var examQuestions = [Question]()
+    private var totalQuestionsCount: Int = 10
     private var correctAnswersCount: Int = 0
     private var soundManager: SoundManagerLogic
     
-    //MARK: - Public Variables
-    var userAnswer: String?
-    
-    //MARK: - Private Methods
-    private func createNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(createKitsForExam(_:)), name: Notification.Name(rawValue: "com.indi.chosenExam.notificationKey"), object: nil)
-    }
-    
-    @objc private func createKitsForExam(_ notification: NSNotification) {
-        if let chosenExam = notification.object as? Int {
-            switch chosenExam {
-            case 0:
-                kitsForExam = [0]
-                examName = "Newborn exam"
-            case 1:
-                kitsForExam = [1]
-                examName = "Preschool exam"
-            case 2:
-                kitsForExam = [2]
-                examName = "Early school exam"
-            case 3:
-                kitsForExam = [3,4]
-                examName = "High school exam"
-            default:
-                kitsForExam = UserDataManager.shared.getSelectedStages()
-                examName = "Final exam"
-            }
-        }
-    }
+    let questions: BehaviorRelay<[Question]> = BehaviorRelay(value: [])
+    let answerResult = PublishRelay<Bool>()
+    let examResult = PublishRelay<Int>()
+    let questionsCount: BehaviorRelay<String> = BehaviorRelay(value: "")
+    let userExamResults: BehaviorRelay<Int> = BehaviorRelay(value: 0)
         
-    //MARK: - Public Methods
-    func userResultForExam() -> Int {
-        return UserDataManager.shared.getUserResult(for: examName)
+    required init(soundManager: SoundManagerLogic, chosenExam: Int) {
+        self.chosenExam = chosenExam
+        self.soundManager = soundManager
+        examStart()
+        countQuestions()
+        getUserExamResults()
+    }
+}
+
+extension StoryModeExamViewModel: StoryModeExamViewModelLogic {
+    private func countQuestions() {
+        let questionsCount = questions.value.count
+        let questionsCountText = "\(totalQuestionsCount - questionsCount + 1)/\(totalQuestionsCount)"
+        self.questionsCount.accept(questionsCountText)
     }
     
-    func testStart() {
-        var allExamQuestions = KitsManager.shared.getKitsForExam(with: kitsForExam).shuffled()
-        var mediumArr: [Question] = []
-        (1...10).forEach { _ in
-            mediumArr.append(allExamQuestions.first!)
-            allExamQuestions.remove(at: 0)
-        }
-        examQuestions = mediumArr
-        totalQuestionsCount = examQuestions.count
+    private func getUserExamResults() {
+        let result = UserDataManager.shared.getUserResult(for: examName)
+        userExamResults.accept(result)
     }
     
-    func test(questionLabel: UILabel?, buttons: [UIButton]?, countLabel: UILabel?) {
-        guard examQuestions.isEmpty == false,
-              let question = examQuestions[0].question else { return }
+    func examStart() {
+        var kitsForExam = [Int]()
         
-        questionLabel?.text = question
-        
-        countLabel?.text = "\(totalQuestionsCount - examQuestions.count + 1)/\(totalQuestionsCount)"
-    }
-    
-    func isRightAnswerCheck() -> Bool {
-        guard examQuestions.isEmpty == false else { return false }
-        var enteredText = userAnswer
-        while enteredText?.first == " " {
-            enteredText?.removeFirst()
-        }
-        while enteredText?.last == " " {
-            enteredText?.removeLast()
+        switch chosenExam {
+        case 0:
+            kitsForExam = [0]
+            examName = "Newborn exam"
+        case 1:
+            kitsForExam = [1]
+            examName = "Preschool exam"
+        case 2:
+            kitsForExam = [2]
+            examName = "Early school exam"
+        case 3:
+            kitsForExam = [3,4]
+            examName = "High school exam"
+        default:
+            kitsForExam = UserDataManager.shared.getSelectedStages()
+            examName = "Final exam"
         }
         
-        let result: Bool = enteredText?.capitalized == examQuestions[0].correctAnswer?.capitalized
-        if result {
+        let questionsSequence = KitsManager.shared.getKitsForExam(with: kitsForExam)
+            .shuffled()
+            .prefix(10)
+        
+        questions.accept(Array(questionsSequence))
+    }
+    
+    func exam(textField text: String?) {
+        guard let text = text,
+              let correctAnswer = questions.value.first?.correctAnswer else { return }
+        
+        let trimmedAnswer = correctAnswer.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if trimmedAnswer.capitalized == text.capitalized {
             correctAnswersCount += 1
+            answerResult.accept(true)
+        } else {
+            answerResult.accept(false)
         }
-        return result
     }
     
     func nextQuestion() {
-        guard examQuestions.isEmpty == false else { return }
-        examQuestions.removeFirst()
-        if examQuestions.count < 1 {
+        var questions = questions.value
+        questions.removeFirst()
+        
+        if questions.isEmpty {
             let testResult = Int(round(Double(correctAnswersCount) / Double(totalQuestionsCount) * 100))
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.examResult.notificationKey"), object: testResult)
+            examResult.accept(testResult)
             
             UserDataManager.shared.saveUserResult(newResult: testResult,
                                            kitName: examName,
@@ -113,27 +115,15 @@ final class StoryModeExamViewModel: StoryModeExamViewModelProtocol {
                                            completedExams: 1,
                                            correctAnswers: correctAnswersCount,
                                            totalQuestions: totalQuestionsCount)
-            resetResults()
+            
+            correctAnswersCount = 0
+        } else {
+            self.questions.accept(questions)
+            countQuestions()
         }
     }
     
-    func resetResults() {
-        correctAnswersCount = 0
-        totalQuestionsCount = 0
-        examQuestions = []
-    }
-    
-    func playCorrectSound() {
-        soundManager.playCorrectSound()
-    }
-    
-    func playWrongSound() {
-        soundManager.playWrongSound()
-    }
-    
-    //MARK: - Initialization
-    init(soundManager: SoundManagerLogic) {
-        self.soundManager = soundManager
-        createNotificationCenterObserver()
+    func playSound(_ isAnswerCorrect: Bool) {
+        isAnswerCorrect ? soundManager.playCorrectSound() : soundManager.playWrongSound()
     }
 }

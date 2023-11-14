@@ -223,8 +223,7 @@ final class StoryModeViewController: UIViewController {
         } else {
             let sb = UIStoryboard(name: "Main", bundle: nil)
             if let examVC = sb.instantiateViewController(withIdentifier: "ExamVC") as? StoryModeExamViewController {
-                examVC.viewModel = viewModel.viewModelForExam()
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.chosenExam.notificationKey"), object: sender.tag)
+                examVC.viewModel = viewModel.viewModelForExam(sender.tag)
                 examVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(examVC, animated: true)
             }

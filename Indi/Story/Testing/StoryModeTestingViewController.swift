@@ -29,7 +29,7 @@ final class StoryModeTestingViewController: UIViewController {
     }
 }
 
-// MARK: - Rx setup
+    // MARK: - Rx setup
 extension StoryModeTestingViewController {
     private func setupTesting() {
         viewModel.questions

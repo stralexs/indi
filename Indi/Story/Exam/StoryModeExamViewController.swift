@@ -5,86 +5,116 @@
 //  Created by Alexander Sivko on 20.05.23.
 //
 
-import UIKit
+import RxSwift
+import RxCocoa
 
 final class StoryModeExamViewController: UIViewController {
-    //MARK: - Variables
+    //MARK: - Properties
     @IBOutlet var questionBackground: UIView!
     @IBOutlet var questionsCountLabel: UILabel!
     @IBOutlet var questionLabel: UILabel!
     @IBOutlet var textField: UITextField!
     @IBOutlet var answerResultImage: UIImageView!
-    @IBOutlet var rootView: UIView!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var examResultLabel: UILabel!
-    @IBOutlet var bottomBackgroundView: UIView!
     
-    var viewModel: StoryModeExamViewModelProtocol!
+    var viewModel: (StoryModeExamViewModelData & StoryModeExamViewModelLogic)!
+    private let disposeBag = DisposeBag()
     
-    //MARK: - Life Cycle
+    //MARK: - ViewController lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tuneUI()
         addTapGesture()
-        showUserResultsInfo()
-        viewModel.testStart()
-        viewModel.test(questionLabel: questionLabel, buttons: nil, countLabel: questionsCountLabel)
+        setupExam()
+        setupExamResults()
+        setupQuestionsCounter()
+        setupExamResultsInfo()
+    }
+}
+
+    // MARK: - Rx setup
+extension StoryModeExamViewController {
+    private func setupExam() {
+        viewModel.questions
+            .map { $0.first }
+            .subscribe(onNext: { question in
+                self.questionLabel.text = question?.question
+            })
+            .disposed(by: disposeBag)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(presentResult(_:)), name: Notification.Name(rawValue: "com.indi.examResult.notificationKey"), object: nil)
+        viewModel.answerResult.bind(onNext: { result in
+            self.presentResult(isAnswerCorrect: result)
+        })
+        .disposed(by: disposeBag)
+        
+        textField.rx.controlEvent([.editingDidEndOnExit])
+            .asObservable()
+            .bind(onNext: {
+                self.view.isUserInteractionEnabled = false
+                self.viewModel.exam(textField: self.textField.text)
+                self.textField.text = ""
+            })
+            .disposed(by: disposeBag)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        viewModel.resetResults()
-    }
-    
-    //MARK: - Methods
-    @objc private func presentResult(_ notification: NSNotification) {
-        if let result = notification.object {
-            let alert = UIAlertController(title: "Ваш результат: \(result)%", message: nil, preferredStyle: .alert)
+    private func setupExamResults() {
+        viewModel.examResult.bind(onNext: { examResult in
+            let alert = UIAlertController(title: "Ваш результат: \(examResult)%", message: nil, preferredStyle: .alert)
             
             let backAction = UIAlertAction(title: "В главное меню", style: .default) { _ in
                 self.navigationController?.popToRootViewController(animated: true)
             }
-            let onceAgainAction = UIAlertAction(title: "Попробовать ещё раз", style: .cancel) {_ in
-                self.viewModel.testStart()
-                self.viewModel.test(questionLabel: self.questionLabel, buttons: nil, countLabel: self.questionsCountLabel)
+            let onceAgainAction = UIAlertAction(title: "Попробовать ещё раз", style: .cancel) { _ in
+                self.viewModel.examStart()
             }
             alert.addAction(backAction)
             alert.addAction(onceAgainAction)
             
             self.present(alert, animated: true)
-        }
+        })
+        .disposed(by: disposeBag)
     }
     
+    private func setupQuestionsCounter() {
+        viewModel.questionsCount.bind(onNext: {
+            self.questionsCountLabel.text = $0
+        })
+        .disposed(by: disposeBag)
+    }
+    
+    private func setupExamResultsInfo() {
+        viewModel.userExamResults.bind(onNext: { result in
+            if result == 0 {
+                self.descriptionLabel.isHidden = true
+                self.examResultLabel.isHidden = true
+            } else {
+                self.examResultLabel.text = "\(result)%"
+            }
+        })
+        .disposed(by: disposeBag)
+    }
+}
+
+    // MARK: - Functionality
+extension StoryModeExamViewController {
     private func tuneUI() {
-        questionBackground.layer.cornerRadius = 20
         questionBackground.layer.borderColor = UIColor.indiMainYellow.cgColor
         questionBackground.layer.borderWidth = 5
-        
-        questionLabel.textColor = UIColor.indiMainBlue
-        questionLabel.adjustsFontSizeToFitWidth = true
-        
-        answerResultImage.isHidden = true
-        
-        textField.delegate = self
-        textField.returnKeyType = .done
-        textField.autocorrectionType = .no
-        textField.spellCheckingType = .no
-        
-        bottomBackgroundView.backgroundColor = UIColor.indiMainBlue
-        bottomBackgroundView.layer.cornerRadius = 30
-                
-        examResultLabel.textColor = UIColor.white
-        descriptionLabel.textColor = UIColor.indiMainYellow
     }
     
-    private func showUserResultsInfo() {
-        if viewModel.userResultForExam() == 0 {
-            descriptionLabel.isHidden = true
-            examResultLabel.isHidden = true
-        } else {
-            examResultLabel.text = "\(viewModel.userResultForExam())%"
+    private func presentResult(isAnswerCorrect: Bool) {
+        let image = isAnswerCorrect ? UIImage(named: "Right_png") : UIImage(named: "Wrong_png")
+        
+        self.viewModel.playSound(isAnswerCorrect)
+        self.answerResultImage.image = image
+        self.questionLabel.isHidden = true
+        self.answerResultImage.isHidden = false
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+            self.viewModel.nextQuestion()
+            self.questionLabel.isHidden = false
+            self.answerResultImage.isHidden = true
+            self.view.isUserInteractionEnabled = true
         }
     }
     
@@ -95,40 +125,5 @@ final class StoryModeExamViewController: UIViewController {
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
-    }
-}
-
-    //MARK: - TextField Delegate
-extension StoryModeExamViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        viewModel.userAnswer = textField.text
-        rootView.isUserInteractionEnabled = false
-        if viewModel.isRightAnswerCheck() {
-            viewModel.playCorrectSound()
-            answerResultImage.image = UIImage(named: "Right_png")
-            questionLabel.isHidden = true
-            answerResultImage.isHidden = false
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
-                self?.viewModel.nextQuestion()
-                self?.viewModel.test(questionLabel: self?.questionLabel, buttons: nil, countLabel: self?.questionsCountLabel)
-                self?.answerResultImage.isHidden = true
-                self?.questionLabel.isHidden = false
-                self?.rootView.isUserInteractionEnabled = true
-            }
-        } else {
-            viewModel.playWrongSound()
-            answerResultImage.image = UIImage(named: "Wrong_png")
-            questionLabel.isHidden = true
-            answerResultImage.isHidden = false
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] _ in
-                self?.viewModel.nextQuestion()
-                self?.viewModel.test(questionLabel: self?.questionLabel, buttons: nil, countLabel: self?.questionsCountLabel)
-                self?.answerResultImage.isHidden = true
-                self?.questionLabel.isHidden = false
-                self?.rootView.isUserInteractionEnabled = true
-            }
-        }
-        textField.text = ""
-        return true
     }
 }
