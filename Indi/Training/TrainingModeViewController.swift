@@ -113,9 +113,9 @@ extension TrainingModeViewController {
                     self.presentBasicAlert(title: "Базовые наборы слов удалять нельзя", message: nil, actions: [.okAction], completionHandler: nil)
                 } else {
                     let alert = UIAlertController(title: "Вы действительно хотите удалить этот набор слов?", message: nil, preferredStyle: .alert)
-                    let okAction = UIAlertAction(title: "Ок", style: .destructive) { [weak self] _ in
-                        self?.viewModel.deleteUserKit(for: indexPath, for: indexPath.section)
-                        self?.viewModel.fetchKitsNamesAndSections()
+                    let okAction = UIAlertAction(title: "Ок", style: .destructive) { _ in
+                        self.viewModel.deleteUserKit(for: indexPath, for: indexPath.section)
+                        self.viewModel.fetchKitsNamesAndSections()
                     }
                     let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
                     alert.addAction(okAction)

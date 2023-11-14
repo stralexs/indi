@@ -1076,6 +1076,21 @@ final class KitsManager {
         return outputQuestions
     }
     
+    func getKits(for studySageRawValue: Int) -> [Kit] {
+        var fetchedKits = [Kit]()
+        
+        let fetchRequest = basicFetch(studyStage: studySageRawValue)
+        
+        do {
+            fetchedKits = try CoreDataManager.shared.context.fetch(fetchRequest)
+        }
+        catch {
+            print(error)
+        }
+        
+        return fetchedKits
+    }
+    
     // MARK: - Creating and Deleting User's Kits
     func createQuestionWithoutSaving(_ question: String, _ correctAnswer: String, _ incorrectAnswers: [String]) -> Question {
         let newQuestion = Question(context: CoreDataManager.shared.context)

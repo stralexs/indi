@@ -2,26 +2,26 @@
 //  StoryModeKitSelectionCollectionViewCellViewModel.swift
 //  Indi
 //
-//  Created by Alexander Strelnikov on 8.07.23.
+//  Created by Alexander Sivko on 8.07.23.
 //
 
-import Foundation
+import RxSwift
+import RxCocoa
 
-protocol StoryModeKitSelectionCollectionViewCellViewModelProtocol {
-    var kitName: String { get set }
-    var testResult: Int { get set }
-    var cellHeight: CGFloat? { get set }
-    var progressHeight: CGFloat { get }
-    init(kitName: String, testResult: Int)
+protocol StoryModeKitSelectionCollectionViewCellViewModelLogic {
+    var kit: Observable<Kit> { get }
+    var testResult: Observable<Int> { get }
+    func countProgressHeight(with cellHeight: CGFloat, kitName: String) -> CGFloat
+    init(kit: Observable<Kit>, testResult: Observable<Int>)
 }
 
-final class StoryModeKitSelectionCollectionViewCellViewModel: StoryModeKitSelectionCollectionViewCellViewModelProtocol {
-    var kitName: String
-    var testResult: Int
-    var cellHeight: CGFloat?
-    var progressHeight: CGFloat {
+final class StoryModeKitSelectionCollectionViewCellViewModel: StoryModeKitSelectionCollectionViewCellViewModelLogic {
+    let kit: Observable<Kit>
+    let testResult: Observable<Int>
+    
+    func countProgressHeight(with cellHeight: CGFloat, kitName: String) -> CGFloat {
         var totalHeight: Double {
-            Double(cellHeight!)
+            Double(cellHeight)
         }
         var coefficient: Double {
             totalHeight / 100
@@ -29,8 +29,8 @@ final class StoryModeKitSelectionCollectionViewCellViewModel: StoryModeKitSelect
         return CGFloat(Double(UserDataManager.shared.getUserResult(for: kitName)) * coefficient)
     }
     
-    required init(kitName: String, testResult: Int) {
-        self.kitName = kitName
+    required init(kit: Observable<Kit>, testResult: Observable<Int>) {
+        self.kit = kit
         self.testResult = testResult
     }
 }

@@ -20,7 +20,7 @@ protocol StoryModeViewModelProtocol {
     func setFinalStudyStageButtonSelection(for buttonTag: Int) -> String
     func studyStageAccessControl(for senderTag: Int) -> Bool
     func viewModelForSettingAndStatistics() -> SettingsAndStatisticsViewModelProtocol?
-    func viewModelForKitSelection() -> StoryModeKitSelectionViewModelProtocol?
+    func viewModelForKitSelection(chosenStudyStage: Int) -> StoryModeKitSelectionViewModelData & StoryModeKitSelectionViewModelLogic
     func viewModelForExam(_ chosenExam: Int) -> StoryModeExamViewModelData & StoryModeExamViewModelLogic
 }
 
@@ -154,8 +154,8 @@ final class StoryModeViewModel: StoryModeViewModelProtocol {
         return SettingsAndStatisticsViewModel()
     }
     
-    func viewModelForKitSelection() -> StoryModeKitSelectionViewModelProtocol? {
-        return StoryModeKitSelectionViewModel()
+    func viewModelForKitSelection(chosenStudyStage: Int) -> StoryModeKitSelectionViewModelData & StoryModeKitSelectionViewModelLogic {
+        return StoryModeKitSelectionViewModel(chosenStudyStage: chosenStudyStage)
     }
     
     func viewModelForExam(_ chosenExam: Int) -> StoryModeExamViewModelData & StoryModeExamViewModelLogic {

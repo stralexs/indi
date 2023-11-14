@@ -5,46 +5,44 @@
 //  Created by Alexander Sivko on 8.07.23.
 //
 
-import Foundation
+import RxSwift
+import RxCocoa
 
-protocol StoryModeKitSelectionViewModelProtocol {
-    var numberOfItemsInSection: Int { get }
-    func cellViewModel(for indexPath: IndexPath) -> StoryModeKitSelectionCollectionViewCellViewModelProtocol?
-    func postChosenTestNotification(for indexPath: IndexPath)
+protocol StoryModeKitSelectionViewModelData {
+    var kits: BehaviorRelay<[Kit]> { get }
+    init(chosenStudyStage: Int)
+}
+
+protocol StoryModeKitSelectionViewModelLogic {
+    func fetchKits()
+    func cellViewModel(for row: Int) -> StoryModeKitSelectionCollectionViewCellViewModelLogic
     func isBasicKitCheck(for indexPath: IndexPath) -> Bool
     func deleteUserKit(for indexPath: IndexPath)
     func viewModelForTesting(_ indexPath: IndexPath) -> StoryModeTestingViewModelData & StoryModeTestingViewModelLogic
 }
 
-final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelProtocol {
-    //MARK: - Private Variable
-    private var studyStageRawValue = 0
+final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelData {
+    private let studyStageRawValue: Int
     
-    //MARK: - Public Variable
-    var numberOfItemsInSection: Int {
-        return KitsManager.shared.countOfKits(for: studyStageRawValue)
+    let kits: BehaviorRelay<[Kit]> = BehaviorRelay(value: [])
+    
+    required init(chosenStudyStage: Int) {
+        self.studyStageRawValue = chosenStudyStage
+        fetchKits()
+    }
+}
+
+extension StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelLogic {
+    func fetchKits() {
+        let kits = KitsManager.shared.getKits(for: studyStageRawValue)
+        self.kits.accept(kits)
     }
     
-    //MARK: - Private Methods
-    private func createNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(setStudyStage(_:)), name: Notification.Name(rawValue: "com.indi.chosenStudyStage.notificationKey"), object: nil)
-    }
-    
-    @objc private func setStudyStage(_ notification: NSNotification) {
-        if let chosenStudyStage = notification.object as? Int {
-            studyStageRawValue = chosenStudyStage
-        }
-    }
-    
-    //MARK: - Public Methods
-    func cellViewModel(for indexPath: IndexPath) -> StoryModeKitSelectionCollectionViewCellViewModelProtocol? {
-        let kitName = KitsManager.shared.getKitName(for: studyStageRawValue, with: indexPath)
-        let testResult = UserDataManager.shared.getUserResult(for: kitName)
-        return StoryModeKitSelectionCollectionViewCellViewModel(kitName: kitName, testResult: testResult)
-    }
-    
-    func postChosenTestNotification(for indexPath: IndexPath) {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.chosenTest.notificationKey"), object: (indexPath, studyStageRawValue))
+    func cellViewModel(for row: Int) -> StoryModeKitSelectionCollectionViewCellViewModelLogic {
+        let kit = kits.value[row]
+        let testResult = UserDataManager.shared.getUserResult(for: kit.name ?? "")
+        return StoryModeKitSelectionCollectionViewCellViewModel(kit: Observable.just(kit),
+                                                                testResult: Observable.just(testResult))
     }
     
     func isBasicKitCheck(for indexPath: IndexPath) -> Bool {
@@ -57,10 +55,5 @@ final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelProtoc
     
     func viewModelForTesting(_ indexPath: IndexPath) -> StoryModeTestingViewModelData & StoryModeTestingViewModelLogic {
         return StoryModeTestingViewModel(soundManager: SoundManager(), selectedKit: indexPath, studyStage: studyStageRawValue)
-    }
-    
-    //MARK: - Initialization
-    init() {
-        createNotificationCenterObserver()
     }
 }

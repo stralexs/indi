@@ -206,8 +206,7 @@ final class StoryModeViewController: UIViewController {
         } else {
             let sb = UIStoryboard(name: "Main", bundle: nil)
             if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
-                kitSelectionVC.viewModel = viewModel.viewModelForKitSelection()
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.chosenStudyStage.notificationKey"), object: sender.tag)
+                kitSelectionVC.viewModel = viewModel.viewModelForKitSelection(chosenStudyStage: sender.tag)
                 kitSelectionVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(kitSelectionVC, animated: true)
             }
@@ -244,8 +243,7 @@ final class StoryModeViewController: UIViewController {
                 sender.restorationIdentifier = self?.viewModel.saveSelectedStage(for: sender.tag)
                 let sb = UIStoryboard(name: "Main", bundle: nil)
                 if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
-                    kitSelectionVC.viewModel = self?.viewModel.viewModelForKitSelection()
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.chosenStudyStage.notificationKey"), object: sender.tag)
+                    kitSelectionVC.viewModel = self?.viewModel.viewModelForKitSelection(chosenStudyStage: sender.tag)
                     kitSelectionVC.hidesBottomBarWhenPushed = true
                     self?.navigationController?.pushViewController(kitSelectionVC, animated: true)
                 }
@@ -258,8 +256,7 @@ final class StoryModeViewController: UIViewController {
         } else {
             let sb = UIStoryboard(name: "Main", bundle: nil)
             if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
-                kitSelectionVC.viewModel = viewModel.viewModelForKitSelection()
-                NotificationCenter.default.post(name: Notification.Name(rawValue: "com.indi.chosenStudyStage.notificationKey"), object: sender.tag)
+                kitSelectionVC.viewModel = viewModel.viewModelForKitSelection(chosenStudyStage: sender.tag)
                 kitSelectionVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(kitSelectionVC, animated: true)
             }

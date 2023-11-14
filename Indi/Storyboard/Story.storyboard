@@ -472,7 +472,7 @@
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </view>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="Cell" id="44y-YR-feg" customClass="StoryModeKitSelectionCollectionViewCell" customModule="Indi" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="StoryModeKitSelectionCollectionViewCell" id="44y-YR-feg" customClass="StoryModeKitSelectionCollectionViewCell" customModule="Indi" customModuleProvider="target">
                                         <rect key="frame" x="83" y="0.0" width="167" height="144"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="sOt-aA-jCe">
@@ -485,12 +485,12 @@
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sox-9u-VLW">
                                                     <rect key="frame" x="0.0" y="144" width="167" height="0.0"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <color key="backgroundColor" red="0.92941176889999999" green="0.43921568989999998" blue="0.4196078479" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" id="geM-XI-twT"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yb1-vq-0tg">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yb1-vq-0tg">
                                                     <rect key="frame" x="3" y="3" width="161" height="138"/>
                                                     <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="22"/>
                                                     <nil key="textColor"/>
@@ -506,7 +506,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                                    <color key="backgroundColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <constraints>
                                                         <constraint firstItem="aRT-4Y-c07" firstAttribute="leading" secondItem="JXi-1E-wq4" secondAttribute="leading" id="1Qo-Ud-8Yb"/>
                                                         <constraint firstAttribute="width" constant="35" id="BYh-q2-7ux"/>
@@ -532,14 +532,21 @@
                                                 <constraint firstItem="Sox-9u-VLW" firstAttribute="leading" secondItem="sOt-aA-jCe" secondAttribute="leading" id="t3a-02-xfh"/>
                                                 <constraint firstAttribute="bottom" secondItem="5X7-sU-wcu" secondAttribute="bottom" id="ze2-vE-38o"/>
                                             </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="20"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="167" height="144"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <outlet property="background" destination="5X7-sU-wcu" id="Dtk-NH-bMr"/>
                                             <outlet property="label" destination="yb1-vq-0tg" id="ng9-Y8-jZH"/>
-                                            <outlet property="progressView" destination="Sox-9u-VLW" id="UMr-H8-SSh"/>
                                             <outlet property="progressViewHeight" destination="geM-XI-twT" id="nZT-98-QqY"/>
-                                            <outlet property="testResultBackground" destination="JXi-1E-wq4" id="hjc-IH-Sr0"/>
                                             <outlet property="testResultLabel" destination="aRT-4Y-c07" id="PnE-Xe-prw"/>
                                         </connections>
                                     </collectionViewCell>
@@ -1257,13 +1264,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

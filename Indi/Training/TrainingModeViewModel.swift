@@ -24,7 +24,6 @@ protocol TrainingModeViewModelLogic {
 }
 
 final class TrainingModeViewModel: TrainingModeViewModelData {
-    private let disposeBag = DisposeBag()
     let sectionsRelay = PublishRelay<[SectionModel<String, String>]>()
     let sliderMaximumValue = PublishRelay<Float>()
 }
