@@ -85,12 +85,5 @@ extension StoryModeKitSelectionViewController {
     private func tuneUI() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = .indiMainBlue
-                
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 50
-        layout.minimumLineSpacing = 50
-        layout.itemSize = CGSize.init(width: 130, height: 130)
-        collectionView.collectionViewLayout = layout
     }
 }

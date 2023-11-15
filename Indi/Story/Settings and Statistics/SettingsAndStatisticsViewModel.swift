@@ -5,110 +5,80 @@
 //  Created by Alexander Sivko on 21.05.23.
 //
 
-import UIKit
+import RxSwift
+import RxCocoa
 
-protocol SettingsAndStatisticsViewModelProtocol {
+protocol SettingsAndStatisticsViewModelData {
+    var leftAvatarImage: BehaviorRelay<UIImage> { get }
+    var middleAvatarImage: BehaviorRelay<UIImage> { get }
+    var rightAvatarImage: BehaviorRelay<UIImage> { get }
     var userStatisticsCount: Int { get }
+    var userName: String { get }
     var isUserClickedToChangeAvatar: Bool { get set }
-    var resetAchievements: Bool { get set }
-    func applyChanges(for nameTexFieldText: String, and middleAvatarImageName: String) -> String
-    func getUserStatisticsInfo(for position: Int) -> (String, String)
-    func avatarSwipe(_ isLeftButton: Bool) -> (UIImage, UIImage, UIImage)
+    var isSetResetAchievements: Bool { get set }
 }
 
-final class SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelProtocol {
-    //MARK: - Private Variables
-    private var defaultAvatars: [UIImage] = {
-        var tempArr = [UIImage]()
-        
-        let cat = UIImage(named: "Cat_emoji")
-        let dog = UIImage(named: "Dog_emoji")
-        let man = UIImage(named: "Man_emoji")
-        let woman = UIImage(named: "Woman_emoji")
-        
-        tempArr.append(cat!)
-        tempArr.append(dog!)
-        tempArr.append(man!)
-        tempArr.append(woman!)
-        
-        return tempArr
-    }()
-    
-    private var userStatistics: [String: String] = [
+protocol SettingsAndStatisticsViewModelLogic {
+    func applyChanges(for nameTexFieldText: String, and middleAvatarImageName: String) throws
+    func getUserStatisticsInfo(for position: Int) -> (String, String)
+    func avatarSwipe(_ isLeftButton: Bool)
+}
+
+private extension Int {
+    mutating func limitToRange() {
+        if self > 3 {
+            self = 0
+        } else if self < 0 {
+            self = 3
+        }
+    }
+}
+
+private extension UIImage {
+    static let cat = UIImage(named: "Cat_emoji") ?? UIImage()
+    static let dog = UIImage(named: "Dog_emoji") ?? UIImage()
+    static let man = UIImage(named: "Man_emoji") ?? UIImage()
+    static let woman = UIImage(named: "Woman_emoji") ?? UIImage()
+}
+
+final class SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelData {
+    private let defaultAvatars = [UIImage.cat, UIImage.dog, UIImage.man, UIImage.woman]
+    private let userStatistics: [String: String] = [
         "Пройдено тестов": "\(UserDataManager.shared.getUserStatistics().tests)",
         "Сдано экзаменов": "\(UserDataManager.shared.getUserStatistics().exams)",
         "Количество правильных ответов": "\(UserDataManager.shared.getUserStatistics().correct)",
         "Процент правильных ответов": "\(UserDataManager.shared.getUserStatistics().percentage)%"
     ]
 
-    private var leftAvatarIndex = 3 {
-        didSet {
-            if leftAvatarIndex > 3 {
-                leftAvatarIndex = 0
-            }
-            if leftAvatarIndex < 0 {
-                leftAvatarIndex = 3
-            }
-        }
-    }
-    private var middleAvatarIndex = 0 {
-        didSet {
-            if middleAvatarIndex > 3 {
-                middleAvatarIndex = 0
-            }
-            if middleAvatarIndex < 0 {
-                middleAvatarIndex = 3
-            }
-        }
-    }
-    private var rightAvatarIndex = 1 {
-        didSet {
-            if rightAvatarIndex > 3 {
-                rightAvatarIndex = 0
-            }
-            if rightAvatarIndex < 0 {
-                rightAvatarIndex = 3
-            }
-        }
-    }
-    //MARK: - Public Variables
-    var userStatisticsCount: Int {
-        return userStatistics.count
-    }
-    var isUserClickedToChangeAvatar: Bool = false
-    var resetAchievements: Bool = false
+    private var leftAvatarIndex = 3
+    private var middleAvatarIndex = 0
+    private var rightAvatarIndex = 1
     
-    //MARK: - Private Method
-    private func removingSpaces(for text: String) -> String {
-        var outputText = text
-        
-        while outputText.first == " " {
-            outputText.removeFirst()
-        }
-        while outputText.last == " " {
-            outputText.removeLast()
-        }
-        
-        return outputText
-    }
+    let leftAvatarImage: BehaviorRelay<UIImage> = BehaviorRelay(value: UIImage.woman)
+    let middleAvatarImage: BehaviorRelay<UIImage> = BehaviorRelay(value: UIImage.cat)
+    let rightAvatarImage: BehaviorRelay<UIImage> = BehaviorRelay(value: UIImage.man)
     
-    //MARK: - Public Methods
-    func applyChanges(for nameTexFieldText: String, and middleAvatarImageName: String) -> String {
-        var output = ""
-        var countOfChanges = 0
+    var userStatisticsCount: Int { userStatistics.count }
+    var userName: String { UserDataManager.shared.getUserName() }
+    var isUserClickedToChangeAvatar = Bool()
+    var isSetResetAchievements = Bool()
+}
 
-        let nameWithoutSpaces = removingSpaces(for: nameTexFieldText)
+extension SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelLogic {
+    func applyChanges(for nameTexFieldText: String, and middleAvatarImageName: String) throws {
+        var countOfChanges = 0
+        let trimmedName = nameTexFieldText.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        if nameWithoutSpaces == "" {
-            output = "Empty name"
-        } else if nameWithoutSpaces.count > 15 {
-            output = "Too long name"
-        } else if UserDataManager.shared.getUserName() != nameWithoutSpaces {
-            UserDataManager.shared.saveUserName(for: nameWithoutSpaces)
+        if trimmedName == "" {
+            throw SettingsError.emptyName
+        } else if trimmedName.count > 15 {
+            throw SettingsError.tooLongName
+        } else if UserDataManager.shared.getUserName() != trimmedName {
+            UserDataManager.shared.saveUserName(for: trimmedName)
             countOfChanges += 1
         }
         
-        if resetAchievements {
+        if isSetResetAchievements {
             UserDataManager.shared.resetAchievements()
             countOfChanges += 1
         }
@@ -120,10 +90,8 @@ final class SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelProtoc
         }
         
         if countOfChanges != 0 {
-            output = "Changes saved"
+            throw SettingsError.changesOverZero
         }
-        
-        return output
     }
     
     func getUserStatisticsInfo(for position: Int) -> (String, String) {
@@ -138,7 +106,7 @@ final class SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelProtoc
         return output
     }
     
-    func avatarSwipe(_ isLeftButton: Bool) -> (UIImage, UIImage, UIImage) {
+    func avatarSwipe(_ isLeftButton: Bool) {
         if isLeftButton {
             leftAvatarIndex += 1
             middleAvatarIndex += 1
@@ -148,6 +116,13 @@ final class SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelProtoc
             middleAvatarIndex -= 1
             rightAvatarIndex -= 1
         }
-        return (defaultAvatars[leftAvatarIndex], defaultAvatars[middleAvatarIndex], defaultAvatars[rightAvatarIndex])
+        
+        leftAvatarIndex.limitToRange()
+        middleAvatarIndex.limitToRange()
+        rightAvatarIndex.limitToRange()
+        
+        leftAvatarImage.accept(defaultAvatars[leftAvatarIndex])
+        middleAvatarImage.accept(defaultAvatars[middleAvatarIndex])
+        rightAvatarImage.accept(defaultAvatars[rightAvatarIndex])
     }
 }

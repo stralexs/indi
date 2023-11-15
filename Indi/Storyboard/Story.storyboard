@@ -280,6 +280,11 @@
                                             <constraint firstItem="byl-ql-KBW" firstAttribute="leading" secondItem="pz9-9h-fqe" secondAttribute="trailing" constant="29" id="wi4-Ac-1dd"/>
                                             <constraint firstItem="byl-ql-KBW" firstAttribute="centerY" secondItem="Yjc-dR-o0u" secondAttribute="centerY" id="zMn-xc-l3b"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="40"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Имя" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u4F-FA-Ya4">
                                         <rect key="frame" x="180" y="340" width="33.333333333333343" height="20"/>
@@ -290,24 +295,24 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0xM-MT-oj1">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="500"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IS1-M0-bu8">
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IS1-M0-bu8">
                                                 <rect key="frame" x="131.66666666666666" y="200" width="129.99999999999997" height="130"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w0p-Po-HKL">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Woman_emoji" translatesAutoresizingMaskIntoConstraints="NO" id="w0p-Po-HKL">
                                                         <rect key="frame" x="-130" y="0.0" width="130" height="130"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="130" id="8uf-1x-oHP"/>
                                                             <constraint firstAttribute="width" constant="130" id="vQa-oh-yTt"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZPN-6h-whP">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Dog_emoji" translatesAutoresizingMaskIntoConstraints="NO" id="ZPN-6h-whP">
                                                         <rect key="frame" x="130.00000000000003" y="0.0" width="129.99999999999997" height="130"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="130" id="PT9-rW-xzT"/>
                                                             <constraint firstAttribute="height" constant="130" id="UDR-8D-4mS"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1h0-mE-FQO">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cat_emoji" translatesAutoresizingMaskIntoConstraints="NO" id="1h0-mE-FQO">
                                                         <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
                                                     </imageView>
                                                 </subviews>
@@ -327,7 +332,7 @@
                                                     <constraint firstAttribute="bottom" secondItem="w0p-Po-HKL" secondAttribute="bottom" id="xa8-jG-GIY"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlK-nr-2A6">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlK-nr-2A6">
                                                 <rect key="frame" x="281.66666666666669" y="233" width="46" height="34"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="arrowtriangle.right.fill" catalog="system" title="">
@@ -360,7 +365,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemGrayColor"/>
+                                <color key="backgroundColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="0xM-MT-oj1" firstAttribute="leading" secondItem="n96-YR-5oa" secondAttribute="leading" id="1Db-X9-ZYO"/>
                                     <constraint firstAttribute="bottom" secondItem="Yjc-dR-o0u" secondAttribute="bottom" id="1fV-0d-5mF"/>
@@ -372,6 +377,11 @@
                                     <constraint firstItem="u4F-FA-Ya4" firstAttribute="top" secondItem="IS1-M0-bu8" secondAttribute="bottom" constant="10" id="iLO-iN-C8P"/>
                                     <constraint firstAttribute="trailing" secondItem="0xM-MT-oj1" secondAttribute="trailing" id="rK3-JA-UYd"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="40"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name / Имя" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wxl-4v-DgS">
                                 <rect key="frame" x="71.666666666666686" y="320" width="250" height="50"/>
@@ -380,7 +390,7 @@
                                     <constraint firstAttribute="height" constant="50" id="ckO-NA-FkT"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Аватар" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cA-fD-yVb">
                                 <rect key="frame" x="168.33333333333334" y="115" width="56.666666666666657" height="20"/>
@@ -397,6 +407,7 @@
                                             <constraint firstAttribute="height" constant="25" id="ZQn-Uq-9W3"/>
                                         </constraints>
                                         <color key="pageIndicatorTintColor" red="0.99704223869999997" green="0.78450757270000004" blue="0.78082448240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="currentPageIndicatorTintColor" red="0.92941176889999999" green="0.43921568989999998" blue="0.4196078479" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     </pageControl>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -426,8 +437,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="avatarBackground" destination="IS1-M0-bu8" id="nd5-PB-Rb9"/>
-                        <outlet property="leftAvatarButton" destination="qab-uc-JFJ" id="R1q-M1-9vL"/>
                         <outlet property="leftAvatarImage" destination="w0p-Po-HKL" id="8TZ-bE-frG"/>
                         <outlet property="leftAvatarImageLeading" destination="DUK-Hm-y0j" id="3wO-pD-a3v"/>
                         <outlet property="leftAvatarImageTrailing" destination="IUD-Nl-Gsa" id="yVw-TE-DAR"/>
@@ -435,19 +444,15 @@
                         <outlet property="middleAvatarImageLeading" destination="KPw-jw-08E" id="wx1-5f-6Gg"/>
                         <outlet property="middleAvatarImageTrailing" destination="Hzd-ke-55T" id="ZaA-S8-Tz2"/>
                         <outlet property="nameTextField" destination="wxl-4v-DgS" id="7OK-oF-dAY"/>
-                        <outlet property="resetAchievementsBackground" destination="Yjc-dR-o0u" id="xb5-e0-klJ"/>
-                        <outlet property="resetAchievementsSwitch" destination="byl-ql-KBW" id="XR8-rD-1OD"/>
-                        <outlet property="rightAvatarButton" destination="FlK-nr-2A6" id="ifi-bB-g6A"/>
                         <outlet property="rightAvatarImage" destination="ZPN-6h-whP" id="hye-Hj-APV"/>
                         <outlet property="rightAvatarImageLeading" destination="d6R-Ee-4Ln" id="PgN-k6-BAp"/>
-                        <outlet property="settingsBackground" destination="n96-YR-5oa" id="Q9q-XA-x6y"/>
                         <outlet property="statisticsBackground" destination="Uy2-Ve-Nym" id="P82-Y8-QBj"/>
                         <outlet property="statisticsPageControl" destination="IbG-Ng-QtE" id="EDK-1J-xjb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zoX-IU-TYK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8285" y="1363"/>
+            <point key="canvasLocation" x="8284.7328244274813" y="1362.6760563380283"/>
         </scene>
         <!--Story Mode Kit Selection View Controller-->
         <scene sceneID="Jhl-1z-jEB">
@@ -460,8 +465,8 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="f3z-b5-2Ig">
                                 <rect key="frame" x="30" y="79" width="333" height="739"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pcb-Oy-cHv">
-                                    <size key="itemSize" width="167" height="144"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="50" minimumInteritemSpacing="50" id="pcb-Oy-cHv">
+                                    <size key="itemSize" width="130" height="130"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1246,14 +1251,17 @@
     <resources>
         <image name="Baby_png" width="80" height="80"/>
         <image name="Backpack_png" width="80" height="80"/>
+        <image name="Cat_emoji" width="296" height="320"/>
         <image name="ChartIncreasing_png" width="80" height="80"/>
         <image name="Construction_png" width="80" height="80"/>
+        <image name="Dog_emoji" width="320" height="320"/>
         <image name="Girl_png" width="80" height="80"/>
         <image name="Graduation_png" width="80" height="80"/>
         <image name="Map" width="25" height="25"/>
         <image name="Menu" width="25" height="25"/>
         <image name="Money_png" width="80" height="80"/>
         <image name="Programming_png" width="80" height="80"/>
+        <image name="Woman_emoji" width="301" height="320"/>
         <image name="arrowtriangle.backward.fill" catalog="system" width="128" height="113"/>
         <image name="arrowtriangle.right.fill" catalog="system" width="128" height="113"/>
         <image name="diagonal_lines_1" width="481" height="50.5"/>
@@ -1263,11 +1271,8 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

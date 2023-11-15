@@ -5,14 +5,12 @@
 //  Created by Alexander Sivko on 21.05.23.
 //
 
-import UIKit
+import RxSwift
+import RxCocoa
 
 final class SettingsAndStatisticsViewController: UIViewController {
-    //MARK: - Variables
+    //MARK: - Properties
     @IBOutlet var nameTextField: UITextField!
-    @IBOutlet var leftAvatarButton: UIButton!
-    @IBOutlet var rightAvatarButton: UIButton!
-    @IBOutlet var avatarBackground: UIView!
     @IBOutlet var leftAvatarImage: UIImageView!
     @IBOutlet var rightAvatarImage: UIImageView!
     @IBOutlet var middleAvatarImage: UIImageView!
@@ -21,24 +19,55 @@ final class SettingsAndStatisticsViewController: UIViewController {
     @IBOutlet var rightAvatarImageLeading: NSLayoutConstraint!
     @IBOutlet var middleAvatarImageLeading: NSLayoutConstraint!
     @IBOutlet var middleAvatarImageTrailing: NSLayoutConstraint!
-    @IBOutlet var settingsBackground: UIView!
     @IBOutlet var statisticsBackground: UIView!
-    @IBOutlet var resetAchievementsSwitch: UISwitch!
-    @IBOutlet var resetAchievementsBackground: UIView!
     @IBOutlet var statisticsPageControl: UIPageControl!
     
-    private var statisticsScrollView = UIScrollView()
-    var viewModel: SettingsAndStatisticsViewModelProtocol!
+    private let disposeBag = DisposeBag()
+    private let statisticsScrollView = UIScrollView()
+    var viewModel: (SettingsAndStatisticsViewModelData & SettingsAndStatisticsViewModelLogic)!
     
-    //MARK: - Life Cycle
+    //MARK: - ViewController lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         addTapGesture()
         tuneUI()
         createStatisticsPageControlAndScrollView()
+        setupAvatarImages()
+        setupPageControl()
+    }
+}
+
+    // MARK: - Rx setup
+extension SettingsAndStatisticsViewController {
+    func setupAvatarImages() {
+        viewModel.leftAvatarImage.bind(onNext: {
+            self.leftAvatarImage.image = $0
+        })
+        .disposed(by: disposeBag)
+        
+        viewModel.middleAvatarImage.bind(onNext: {
+            self.middleAvatarImage.image = $0
+        })
+        .disposed(by: disposeBag)
+        
+        viewModel.rightAvatarImage.bind(onNext: {
+            self.rightAvatarImage.image = $0
+        })
+        .disposed(by: disposeBag)
     }
     
-    //MARK: - Private Methods
+    func setupPageControl() {
+        statisticsScrollView.rx.didScroll
+            .map { _ in
+                Int(self.statisticsScrollView.contentOffset.x / self.statisticsScrollView.frame.width)
+            }
+            .bind(to: statisticsPageControl.rx.currentPage)
+            .disposed(by: disposeBag)
+    }
+}
+
+    // MARK: - Functionality
+extension SettingsAndStatisticsViewController {
     private func tuneUI() {
         let buttonAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.indiMainYellow,
@@ -48,31 +77,16 @@ final class SettingsAndStatisticsViewController: UIViewController {
         rightBarItem.setTitleTextAttributes(buttonAttributes, for: .normal)
         rightBarItem.setTitleTextAttributes(buttonAttributes, for: .highlighted)
         navigationItem.rightBarButtonItem = rightBarItem
-        
-        settingsBackground.backgroundColor = UIColor.indiMainBlue
-        settingsBackground.layer.cornerRadius = 40
-        
-        resetAchievementsBackground.layer.cornerRadius = 40
-        
-        avatarBackground.clipsToBounds = true
-        leftAvatarImage.image = UIImage(named: "Woman_emoji")
-        middleAvatarImage.image = UIImage(named: "Cat_emoji")
-        rightAvatarImage.image = UIImage(named: "Dog_emoji")
-        
-        nameTextField.text = UserDataManager.shared.getUserName()
-        nameTextField.returnKeyType = .done
+                        
+        nameTextField.text = viewModel.userName
         nameTextField.delegate = self
     }
     
     private func createStatisticsPageControlAndScrollView() {
-        statisticsPageControl.currentPageIndicatorTintColor = UIColor.indiSaturatedPink
-        statisticsPageControl.tintColor = UIColor.indiLightPink
-
         statisticsScrollView.backgroundColor = UIColor.clear
         statisticsScrollView.contentSize = CGSize(width: Double(UIScreen.main.bounds.width) * Double(viewModel.userStatisticsCount), height: statisticsScrollView.frame.height)
         statisticsScrollView.isPagingEnabled = true
         statisticsScrollView.showsHorizontalScrollIndicator = false
-        statisticsScrollView.delegate = self
         statisticsScrollView.frame = CGRect(x: 0, y: 0, width: statisticsBackground.frame.maxX - statisticsBackground.frame.minX, height: UIScreen.main.bounds.height * 0.29)
         
         statisticsBackground.addSubview(statisticsScrollView)
@@ -89,27 +103,27 @@ final class SettingsAndStatisticsViewController: UIViewController {
         createContentForScrollView(for: viewModel.getUserStatisticsInfo(for: 1), and: 1)
         createContentForScrollView(for: viewModel.getUserStatisticsInfo(for: 2), and: 2)
         createContentForScrollView(for: viewModel.getUserStatisticsInfo(for: 3), and: 3)
+    }
+    
+    private func createContentForScrollView(for userInfo: (String, String), and position: CGFloat) {
+        let statisticsDescription = UILabel()
+        statisticsDescription.text = userInfo.0
+        statisticsDescription.font = UIFont(name: "GTWalsheimPro-Regular", size: 20)
+        statisticsDescription.textAlignment = .center
+        statisticsDescription.textColor = UIColor.indiMainBlue
         
-        func createContentForScrollView(for userInfo: (String, String), and position: CGFloat) {
-            let statisticsDescription = UILabel()
-            statisticsDescription.text = userInfo.0
-            statisticsDescription.font = UIFont(name: "GTWalsheimPro-Regular", size: 20)
-            statisticsDescription.textAlignment = .center
-            statisticsDescription.textColor = UIColor.indiMainBlue
-            
-            let screenWidth = UIScreen.main.bounds.width
-            statisticsDescription.frame = CGRect(x: screenWidth * position, y: 0, width: screenWidth, height: statisticsScrollView.frame.height * 0.3)
-            
-            let statisticsUserResult = UILabel()
-            statisticsUserResult.text = userInfo.1
-            statisticsUserResult.font = UIFont(name: "GTWalsheimPro-Regular", size: 85)
-            statisticsUserResult.textAlignment = .center
-            statisticsUserResult.textColor = UIColor.indiMainBlue
-            statisticsUserResult.frame = CGRect(x: screenWidth * position, y: statisticsDescription.frame.maxY, width: screenWidth, height: statisticsScrollView.frame.height * 0.7)
+        let screenWidth = UIScreen.main.bounds.width
+        statisticsDescription.frame = CGRect(x: screenWidth * position, y: 0, width: screenWidth, height: statisticsScrollView.frame.height * 0.3)
+        
+        let statisticsUserResult = UILabel()
+        statisticsUserResult.text = userInfo.1
+        statisticsUserResult.font = UIFont(name: "GTWalsheimPro-Regular", size: 85)
+        statisticsUserResult.textAlignment = .center
+        statisticsUserResult.textColor = UIColor.indiMainBlue
+        statisticsUserResult.frame = CGRect(x: screenWidth * position, y: statisticsDescription.frame.maxY, width: screenWidth, height: statisticsScrollView.frame.height * 0.7)
 
-            statisticsScrollView.addSubview(statisticsDescription)
-            statisticsScrollView.addSubview(statisticsUserResult)
-        }
+        statisticsScrollView.addSubview(statisticsDescription)
+        statisticsScrollView.addSubview(statisticsUserResult)
     }
     
     private func addTapGesture() {
@@ -123,31 +137,25 @@ final class SettingsAndStatisticsViewController: UIViewController {
     
     @IBAction private func changeAvatar(_ sender: UIButton) {
         viewModel.isUserClickedToChangeAvatar = true
-        if sender == leftAvatarButton {
+        if sender.tag == 0 {
             UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut] , animations: {
                 self.rightAvatarImageLeading.constant -= 130
                 self.middleAvatarImageLeading.constant -= 260
                 self.view.layoutIfNeeded()
-            }) { [weak self] _ in
-                let images = self?.viewModel.avatarSwipe(true)
-                self?.leftAvatarImage.image = images?.0
-                self?.middleAvatarImage.image = images?.1
-                self?.rightAvatarImage.image = images?.2
-                self?.middleAvatarImageLeading.constant += 260
-                self?.rightAvatarImageLeading.constant += 130
+            }) { _ in
+                self.viewModel.avatarSwipe(true)
+                self.middleAvatarImageLeading.constant += 260
+                self.rightAvatarImageLeading.constant += 130
             }
         } else {
             UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut] , animations: {
                 self.middleAvatarImageTrailing.constant -= 260
                 self.leftAvatarImageTrailing.constant -= 260
                 self.view.layoutIfNeeded()
-            }) { [weak self] _ in
-                let images = self?.viewModel.avatarSwipe(false)
-                self?.leftAvatarImage.image = images?.0
-                self?.middleAvatarImage.image = images?.1
-                self?.rightAvatarImage.image = images?.2
-                self?.middleAvatarImageTrailing.constant += 260
-                self?.leftAvatarImageTrailing.constant += 260
+            }) { _ in
+                self.viewModel.avatarSwipe(false)
+                self.middleAvatarImageTrailing.constant += 260
+                self.leftAvatarImageTrailing.constant += 260
             }
         }
     }
@@ -157,7 +165,7 @@ final class SettingsAndStatisticsViewController: UIViewController {
             let alertController = UIAlertController(title: "Данное действие удалит ВСЕ ваши достижения и прохождение", message: "После нажатия кнопки 'Готово' данное действие отменить нельзя", preferredStyle: .alert)
             let cancelAction = UIAlertAction(title: "Отмена", style: .default) { _ in
                 sender.isOn = false
-                self.viewModel.resetAchievements = false
+                self.viewModel.isSetResetAchievements = false
             }
             let applyAction = UIAlertAction(title: "Ок", style: .destructive)
             
@@ -165,51 +173,35 @@ final class SettingsAndStatisticsViewController: UIViewController {
             alertController.addAction(applyAction)
             
             self.present(alertController, animated: true)
-            viewModel.resetAchievements = true
+            viewModel.isSetResetAchievements = true
         }
     }
     
     @objc private func applyChangesButtonIsPressed() {
-        let applyChangesResult = viewModel.applyChanges(for: nameTextField.text ?? "", and: middleAvatarImage.image?.imageAsset?.value(forKey: "assetName") as! String)
-        
-        let emptyNameAlert = UIAlertController(title: "Пожалуйста, введите имя", message: nil, preferredStyle: .alert)
-        let tooLongNameAlert = UIAlertController(title: "Имя не может быть длиннее 15 символов", message: nil, preferredStyle: .alert)
-        
-        let okAction = UIAlertAction(title: "Ок", style: .default)
-        emptyNameAlert.addAction(okAction)
-        tooLongNameAlert.addAction(okAction)
-        
-        if applyChangesResult == "Empty name" {
-            self.present(emptyNameAlert, animated: true)
-        } else if applyChangesResult == "Too long name" {
-            self.present(tooLongNameAlert, animated: true)
+        do {
+            try viewModel.applyChanges(for: nameTextField.text ?? "", and: middleAvatarImage.image?.imageAsset?.value(forKey: "assetName") as! String)
+            navigationController?.popToRootViewController(animated: true)
         }
-        
-        let changesAppliedAlert = UIAlertController(title: "Изменения успешно сохранены!", message: nil, preferredStyle: .alert)
-        let okayAction = UIAlertAction(title: "Ок", style: .default) { _ in
-            self.navigationController?.popToRootViewController(animated: true)
-        }
-        
-        changesAppliedAlert.addAction(okayAction)
-        if applyChangesResult == "Changes saved" {
-            self.present(changesAppliedAlert, animated: true)
-        } else {
-            self.navigationController?.popToRootViewController(animated: true)
+        catch let error {
+            switch error as! SettingsError {
+            case .emptyName:
+                presentBasicAlert(title: "Пожалуйста, введите имя", message: nil, actions: [.okAction], completionHandler: nil)
+            case .tooLongName:
+                presentBasicAlert(title: "Имя не может быть длиннее 15 символов", message: nil, actions: [.okAction], completionHandler: nil)
+            case .changesOverZero:
+                presentBasicAlert(title: "Изменения успешно сохранены!", message: nil, actions: [.okAction]) { _ in
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+            }
         }
     }
 }
 
-//MARK: - ScrollView Delegate
-extension SettingsAndStatisticsViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        statisticsPageControl.currentPage = Int(statisticsScrollView.contentOffset.x / UIScreen.main.bounds.width)
-    }
-}
-
-//MARK: - TextFieldDelegate
+    //MARK: - UITextFieldDelegate
 extension SettingsAndStatisticsViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
 }
+
