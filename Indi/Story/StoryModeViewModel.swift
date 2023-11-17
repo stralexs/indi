@@ -5,47 +5,55 @@
 //  Created by Alexander Sivko on 25.05.23.
 //
 
-import Foundation
+import RxSwift
+import RxCocoa
 
-protocol StoryModeViewModelProtocol {
-    var examButtonsCompletion: ObservableObject<[String]> { get }
-    var userName: String { get }
-    var userAvatar: String { get }
-    var isFinalExamCompleted: Bool { get }
-    func setExamButtonAccess(for buttonTag: Int) -> Bool
-    func setExamButtonCompletion(for buttonTag: Int) -> String
-    func examName(for buttonTag: Int) -> String
+protocol StoryModeViewModelData {
+    var userName: PublishRelay<String> { get }
+    var userAvatar: PublishRelay<String> { get }
+    var casualStudyStagesButtonsAccess: PublishRelay<[Bool]> { get }
+    var variabilityStudyStagesButtonsAccess: PublishRelay<[(String, Bool)]> { get }
+    var examButtonsAccess: PublishRelay<[Bool]> { get }
+    var isFinalExamCompleted: PublishRelay<Bool> { get }
+}
+
+protocol StoryModeViewModelLogic {
     func saveSelectedStage(for buttonTag: Int) -> String
-    func setFinalStudyStageButtonSelection(for buttonTag: Int) -> Bool
-    func setFinalStudyStageButtonSelection(for buttonTag: Int) -> String
-    func studyStageAccessControl(for senderTag: Int) -> Bool
+    func fetchData()
     func viewModelForSettingAndStatistics() -> SettingsAndStatisticsViewModelData & SettingsAndStatisticsViewModelLogic
     func viewModelForKitSelection(chosenStudyStage: Int) -> StoryModeKitSelectionViewModelData & StoryModeKitSelectionViewModelLogic
     func viewModelForExam(_ chosenExam: Int) -> StoryModeExamViewModelData & StoryModeExamViewModelLogic
 }
 
-final class StoryModeViewModel: StoryModeViewModelProtocol {
-    //MARK: - Observable Objects
-    var examButtonsCompletion: ObservableObject<[String]> = ObservableObject([])
+final class StoryModeViewModel: StoryModeViewModelData {
+    let userName = PublishRelay<String>()
+    let userAvatar = PublishRelay<String>()
+    let casualStudyStagesButtonsAccess = PublishRelay<[Bool]>()
+    let variabilityStudyStagesButtonsAccess = PublishRelay<[(String, Bool)]>()
+    let examButtonsAccess = PublishRelay<[Bool]>()
+    let isFinalExamCompleted = PublishRelay<Bool>()
+}
+
+extension StoryModeViewModel: StoryModeViewModelLogic {
+    private func fetchUserNameAndAvatar() {
+        let name = UserDataManager.shared.getUserName()
+        let avatar = UserDataManager.shared.getUserAvatar()
+        userName.accept(name)
+        userAvatar.accept(avatar)
+    }
     
-    //MARK: - Private Method
-    private func examAccessControl(for senderRawValue: Int) -> Bool {
-        var result: Bool = true
-                
-        func isHigherThanSeventyFilter(for studyStages: [Int]) -> Bool {
-            var output: Bool = true
-            
-            let kitNames = KitsManager.shared.getKitNamesForStudyStage(with: studyStages)
-            var userResults: [Int] = []
-            kitNames.forEach { name in
-                userResults.append(UserDataManager.shared.getUserResult(for: name))
-            }
-            let filteredResult = userResults.filter { $0 >= 70 }
-            
-            output = filteredResult.count == userResults.count ? true : false
-            return output
-        }
+    // MARK: - Exam methods
+    private func isHigherThanSeventyFilter(for studyStages: [Int]) -> Bool {
+        let kitNames = KitsManager.shared.getKitNamesForStudyStage(with: studyStages)
+        let userResults = kitNames.map { UserDataManager.shared.getUserResult(for: $0) }
+        let filteredResult = userResults.filter { $0 >= 70 }
         
+        let output = filteredResult.count == userResults.count ? true : false
+        return output
+    }
+    
+    private func examAccessControl(for senderRawValue: Int) -> Bool {
+        var result = Bool()
         switch senderRawValue {
         case 0:
             result = isHigherThanSeventyFilter(for: [0])
@@ -66,46 +74,63 @@ final class StoryModeViewModel: StoryModeViewModelProtocol {
         return result
     }
     
-    //MARK: - Public Variables
-    var userName: String {
-        return UserDataManager.shared.getUserName()
-    }
-    var userAvatar: String {
-        return UserDataManager.shared.getUserAvatar()
-    }
-    var isFinalExamCompleted: Bool {
-        return UserDataManager.shared.getUserResult(for: "Final exam") >= 50
-    }
-    
-    //MARK: - Public Methods    
-    func setExamButtonAccess(for buttonTag: Int) -> Bool {
-        var output: Bool = true
-        
-        let restorationIdentifier = UserDataManager.shared.getExamCompletion(for: buttonTag)
-        if restorationIdentifier == "Uncompleted" {
-            if examAccessControl(for: buttonTag) {
-                output = true
-            } else {
-                output = false
+    private func fetchExamAccess() {
+        let examButtonsAccess = (0...4).map {
+            let examCompletion = UserDataManager.shared.getExamCompletion(for: $0)
+            let examRusult = UserDataManager.shared.getUserResult(for: StudyStage.getExamName(studyStage: $0))
+            
+            if examRusult >= 50 {
+                UserDataManager.shared.saveExamCompletion(for: $0)
             }
+            
+            var output = true
+            if examCompletion == "Uncompleted" {
+                if examAccessControl(for: $0) {
+                    output = true
+                } else {
+                    output = false
+                }
+            }
+            return output
         }
-        
-        return output
+        self.examButtonsAccess.accept(examButtonsAccess)
     }
     
-    func setExamButtonCompletion(for buttonTag: Int) -> String {
-        var output = ""
-        
-        if UserDataManager.shared.getUserResult(for: StudyStage.getExamName(studyStage: buttonTag)) >= 50 {
-            UserDataManager.shared.saveExamCompletion(for: buttonTag)
-        }
-        output = UserDataManager.shared.getExamCompletion(for: buttonTag)
-        
-        return output
+    private func fetchFinalExamCompletion() {
+        let completion = UserDataManager.shared.getUserResult(for: "Final exam") >= 50
+        isFinalExamCompleted.accept(completion)
     }
     
-    func examName(for buttonTag: Int) -> String {
-        return StudyStage.getExamName(studyStage: buttonTag)
+    // MARK: - Study Stage buttons methods
+    private func studyStageAccessControl(for senderTag: Int) -> Bool {
+        switch senderTag {
+        case 0:
+            return true
+        case 1:
+            return UserDataManager.shared.getUserResult(for: "Newborn exam") >= 50 ? true : false
+        case 2:
+            return UserDataManager.shared.getUserResult(for: "Preschool exam") >= 50 ? true : false
+        case 3,4:
+            return UserDataManager.shared.getUserResult(for: "Early school exam") >= 50 ? true : false
+        default:
+            return UserDataManager.shared.getUserResult(for: "High school exam") >= 50 ? true : false
+        }
+    }
+    
+    private func fetchCasualStudyStagesButtonsAccess() {
+        let buttonsAccess = (0...5).map {
+            return studyStageAccessControl(for: $0)
+        }
+        casualStudyStagesButtonsAccess.accept(buttonsAccess)
+    }
+    
+    private func fetchVariabilityStudyStagesButtonsSelection() {
+        let buttonsAccess = (0...7).map {
+            let stageSelection = UserDataManager.shared.getStageSelection(for: $0)
+            let access = studyStageAccessControl(for: $0)
+            return (stageSelection, access)
+        }
+        variabilityStudyStagesButtonsAccess.accept(buttonsAccess)
     }
     
     func saveSelectedStage(for buttonTag: Int) -> String {
@@ -114,42 +139,16 @@ final class StoryModeViewModel: StoryModeViewModelProtocol {
         return UserDataManager.shared.getStageSelection(for: buttonTag)
     }
     
-    func setFinalStudyStageButtonSelection(for buttonTag: Int) -> Bool {
-        var output: Bool = true
-        
-        let restorationIdentifier = UserDataManager.shared.getStageSelection(for: buttonTag)
-        if restorationIdentifier == "Unselected" {
-            output = true
-        } else {
-            output = false
-        }
-        
-        return output
+    // MARK: - General method
+    func fetchData() {
+        fetchUserNameAndAvatar()
+        fetchExamAccess()
+        fetchFinalExamCompletion()
+        fetchCasualStudyStagesButtonsAccess()
+        fetchVariabilityStudyStagesButtonsSelection()
     }
-    
-    func setFinalStudyStageButtonSelection(for buttonTag: Int) -> String {
-        return UserDataManager.shared.getStageSelection(for: buttonTag)
-    }
-    
-    func studyStageAccessControl(for senderTag: Int) -> Bool {
-        var result: Bool = true
-        
-        switch senderTag {
-        case 0:
-            result = true
-        case 1:
-            result = UserDataManager.shared.getUserResult(for: "Newborn exam") >= 50 ? true : false
-        case 2:
-            result = UserDataManager.shared.getUserResult(for: "Preschool exam") >= 50 ? true : false
-        case 3,4:
-            result = UserDataManager.shared.getUserResult(for: "Early school exam") >= 50 ? true : false
-        default:
-            result = UserDataManager.shared.getUserResult(for: "High school exam") >= 50 ? true : false
-        }
-        
-        return result
-    }
-    
+
+    // MARK: - ViewModels methods
     func viewModelForSettingAndStatistics() -> SettingsAndStatisticsViewModelData & SettingsAndStatisticsViewModelLogic {
         return SettingsAndStatisticsViewModel()
     }
