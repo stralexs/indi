@@ -27,7 +27,6 @@ protocol StoryModeExamViewModelLogic {
 final class StoryModeExamViewModel: StoryModeExamViewModelData {
     private let chosenExam: Int
     private var examName = String()
-    private var examQuestions = [Question]()
     private var totalQuestionsCount: Int = 10
     private var correctAnswersCount: Int = 0
     private var soundManager: SoundManagerLogic
@@ -79,12 +78,20 @@ extension StoryModeExamViewModel: StoryModeExamViewModelLogic {
             kitsForExam = UserDataManager.shared.getSelectedStages()
             examName = "Final exam"
         }
+                
+        let questionsForExam = kitsForExam.map { kitForExam in
+            let studyStageKits = KitsManager.shared.kits.value.filter { $0.studyStage == kitForExam }
+            let studyStageQuestions = studyStageKits.map { $0.questions?.allObjects as! [Question] }
+                .flatMap { $0 }
+            return studyStageQuestions
+        }
         
-        let questionsSequence = KitsManager.shared.getKitsForExam(with: kitsForExam)
+        let questionsSequence = questionsForExam.flatMap { $0 }
             .shuffled()
             .prefix(10)
         
         questions.accept(Array(questionsSequence))
+        countQuestions()
     }
     
     func exam(textField text: String?) {

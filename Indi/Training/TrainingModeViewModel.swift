@@ -11,11 +11,10 @@ import RxDataSources
 
 protocol TrainingModeViewModelData {
     var sliderMaximumValue: PublishRelay<Float> { get }
-    var sectionsRelay: PublishRelay<[SectionModel<String, String>]> { get }
+    var sectionsRelay: BehaviorRelay<[SectionModel<String, String>]> { get }
 }
 
 protocol TrainingModeViewModelLogic {
-    func fetchKitsNamesAndSections()
     func setSliderMaximumValue(for indexPaths: [IndexPath])
     func cellViewModel(with item: SectionModel<String, String>.Item) -> TrainingModeTableViewCellViewModelLogic
     func isBasicKitCheck(for indexPath: IndexPath, for indexPathSection: Int) -> Bool
@@ -24,26 +23,42 @@ protocol TrainingModeViewModelLogic {
 }
 
 final class TrainingModeViewModel: TrainingModeViewModelData {
-    let sectionsRelay = PublishRelay<[SectionModel<String, String>]>()
+    private let disposeBag = DisposeBag()
+    let sectionsRelay = BehaviorRelay<[SectionModel<String, String>]>(value: [])
     let sliderMaximumValue = PublishRelay<Float>()
+    
+    init() {
+        fetchKitsNamesAndSections()
+    }
 }
 
 extension TrainingModeViewModel: TrainingModeViewModelLogic {
-    func fetchKitsNamesAndSections() {
-        let countOfSections = StudyStage.countOfStudyStages
-        
-        let sectionModels = (0..<countOfSections).map {
-            let sectionName = StudyStage[$0]
-            let kitsNames = KitsManager.shared.getKitNamesForStudyStage(with: [$0])
-            return SectionModel(model: sectionName, items: kitsNames)
-        }
-        
-        sectionsRelay.accept(sectionModels)
+    private func fetchKitsNamesAndSections() {        
+        KitsManager.shared.kits
+            .bind { kits in
+                let countOfSections = StudyStage.countOfStudyStages
+                
+                let sectionModels = (0..<countOfSections).map { stage in
+                    let sectionName = StudyStage[stage]
+                    let kitsNames = kits.filter { $0.studyStage == stage }
+                        .sorted { $0.name ?? "" < $1.name ?? "" }
+                        .map { $0.name ?? "" }
+                    return SectionModel(model: sectionName, items: kitsNames)
+                }
+                
+                self.sectionsRelay.accept(sectionModels)
+            }
+            .disposed(by: disposeBag)
     }
     
     func setSliderMaximumValue(for indexPaths: [IndexPath]) {
-        let questionsCount = indexPaths.map { Float(KitsManager.shared.getKitForTesting(for: $0[0], and: $0[1]).count) }
-            .reduce(0) { $0 + $1 }
+        let questionsCount = indexPaths.map { indexPath in
+            let studyStageKits = KitsManager.shared.kits.value.filter { $0.studyStage == indexPath.section }
+            let kit = studyStageKits[indexPath.row]
+            let questionsCount = kit.questions?.allObjects.count
+            return Float(questionsCount ?? 0)
+        }
+        .reduce(0) { $0 + $1 }
         sliderMaximumValue.accept(questionsCount)
     }
     

@@ -45,6 +45,14 @@ final class LocalNotificationsManager {
         return titlesArr.randomElement()!
     }
     
+    private func getExamName(_ studyStages: [Int]) -> [String] {
+        return studyStages.map { studyStage in
+            return KitsManager.shared.kits.value.filter { $0.studyStage == studyStage }
+        }
+            .flatMap { $0 }
+            .map { $0.name ?? "" }
+    }
+    
     private func bodyGenerator() -> String {
         var completionInfo: [String] = []
         (0...4).forEach { num in
@@ -57,29 +65,26 @@ final class LocalNotificationsManager {
         
         switch currentStage {
         case 0:
-            kitsNames = KitsManager.shared.getKitNamesForStudyStage(with: [0])
+            kitsNames = getExamName([0])
             examName = StudyStage.getExamName(studyStage: 0)
         case 1:
-            kitsNames = KitsManager.shared.getKitNamesForStudyStage(with: [1])
+            kitsNames = getExamName([1])
             examName = StudyStage.getExamName(studyStage: 1)
         case 2:
-            kitsNames = KitsManager.shared.getKitNamesForStudyStage(with: [2])
+            kitsNames = getExamName([2])
             examName = StudyStage.getExamName(studyStage: 2)
         case 3:
-            kitsNames = KitsManager.shared.getKitNamesForStudyStage(with: [3,4])
+            kitsNames = getExamName([3,4])
             examName = StudyStage.getExamName(studyStage: 3)
         case 4:
-            kitsNames = KitsManager.shared.getKitNamesForStudyStage(with: UserDataManager.shared.getSelectedStages())
+            kitsNames = getExamName(UserDataManager.shared.getSelectedStages())
             examName = StudyStage.getExamName(studyStage: 4)
         default:
             kitsNames = []
             examName = "None"
         }
                 
-        var userResults: [Int] = []
-        kitsNames.forEach { name in
-            userResults.append(UserDataManager.shared.getUserResult(for: name))
-        }
+        let userResults = kitsNames.map { UserDataManager.shared.getUserResult(for: $0) }
         let unsolvedTestsCount = userResults.filter { $0 < 70 }.count
         
         var output = ""

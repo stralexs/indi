@@ -122,9 +122,8 @@ final class UserDataManager {
     }
     
     func resetAchievements() {
-        KitsManager.shared.getAllKitsNames().forEach { name in
-            UserDefaults.standard.removeObject(forKey: name)
-        }
+        let allKitsNames = KitsManager.shared.kits.value.map { $0.name ?? "" }
+        let _ = allKitsNames.map { UserDefaults.standard.removeObject(forKey: $0) }
         
         newbornExamResult = 0
         preschoolExamResult = 0

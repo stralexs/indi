@@ -45,10 +45,11 @@ final class NetworkNewKitViewModel: NetworkNewKitViewModelData {
 
 extension NetworkNewKitViewModel: NetworkNewKitViewModelLogic {
     private func bindToNewKitStudyStage() {
-        newKitStudyStage.bind { name in
-            guard let name = name else { return }
-            self.namesOfKitsOfSelectedStudyStage = KitsManager.shared.getKitNamesForStudyStage(with: [name])
-            self.newKitStudyStageName.accept(StudyStage[name])
+        newKitStudyStage.bind { studyStage in
+            guard let studyStage = studyStage else { return }
+            self.namesOfKitsOfSelectedStudyStage = KitsManager.shared.kits.value.filter { $0.studyStage == studyStage }
+                .map { $0.name?.capitalized ?? "" }
+            self.newKitStudyStageName.accept(StudyStage[studyStage])
         }
         .disposed(by: disposeBag)
     }
@@ -84,7 +85,7 @@ extension NetworkNewKitViewModel: NetworkNewKitViewModelLogic {
             throw KitCreationError.noKitName
         } else if newKitStudyStage.value == nil {
             throw KitCreationError.noStudyStage
-        } else if namesOfKitsOfSelectedStudyStage.contains(newKitName.value) {
+        } else if namesOfKitsOfSelectedStudyStage.contains(newKitName.value.capitalized) {
             throw KitCreationError.nameAlreadyExists
         } else {
             KitsManager.shared.createNewKit(newKitName.value, newKitStudyStage.value ?? 0, questions.value)

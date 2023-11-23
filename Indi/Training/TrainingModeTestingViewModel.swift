@@ -50,8 +50,14 @@ final class TrainingModeTestingViewModel: TrainingModeTestingViewModelData {
     // MARK: - TrainingModeTestingViewModelLogic
 extension TrainingModeTestingViewModel: TrainingModeTestingViewModelLogic {
     private func testStart(selectedKits: [IndexPath], selectedQuestionsCount: Int) {
-        let questionsSequence = selectedKits.map { KitsManager.shared.getKitForTesting(for: $0[0], and: $0[1]) }
-            .flatMap { $0 }
+        let questions = selectedKits.map { selectedKit in
+            let studyStageKits = KitsManager.shared.kits.value.filter { $0.studyStage == selectedKit.section }
+                                     .sorted { $0.name ?? "" < $1.name ?? "" }
+            let kit = studyStageKits[selectedKit.row]
+            return kit.questions?.allObjects.shuffled() as! [Question]
+        }
+        
+        let questionsSequence = questions.flatMap { $0 }
             .shuffled()
             .prefix(selectedQuestionsCount)
         
@@ -63,8 +69,8 @@ extension TrainingModeTestingViewModel: TrainingModeTestingViewModelLogic {
                                          randomAnswers: incorrectAnswers.shuffled())
         }
         
-        questions.onNext(questionsWithRandomAnswers)
-        totalQuestionsCount = questionsWithRandomAnswers.count
+        self.questions.onNext(questionsWithRandomAnswers)
+        self.totalQuestionsCount = questionsWithRandomAnswers.count
     }
     
     private func countProgress() {

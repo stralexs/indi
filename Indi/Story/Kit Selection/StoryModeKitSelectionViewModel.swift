@@ -14,7 +14,6 @@ protocol StoryModeKitSelectionViewModelData {
 }
 
 protocol StoryModeKitSelectionViewModelLogic {
-    func fetchKits()
     func cellViewModel(for row: Int) -> StoryModeKitSelectionCollectionViewCellViewModelLogic
     func isBasicKitCheck(for indexPath: IndexPath) -> Bool
     func deleteUserKit(for indexPath: IndexPath)
@@ -23,6 +22,7 @@ protocol StoryModeKitSelectionViewModelLogic {
 
 final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelData {
     private let studyStageRawValue: Int
+    private let disposeBag = DisposeBag()
     
     let kits: BehaviorRelay<[Kit]> = BehaviorRelay(value: [])
     
@@ -33,9 +33,14 @@ final class StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelData {
 }
 
 extension StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelLogic {
-    func fetchKits() {
-        let kits = KitsManager.shared.getKits(for: studyStageRawValue)
-        self.kits.accept(kits)
+    private func fetchKits() {
+        KitsManager.shared.kits
+            .bind { kits in
+                let studyStageKits = kits.filter { $0.studyStage == self.studyStageRawValue }
+                                         .sorted { $0.name ?? "" < $1.name ?? "" }
+                self.kits.accept(studyStageKits)
+            }
+            .disposed(by: disposeBag)
     }
     
     func cellViewModel(for row: Int) -> StoryModeKitSelectionCollectionViewCellViewModelLogic {

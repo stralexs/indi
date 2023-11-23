@@ -5,31 +5,25 @@
 //  Created by Alexander Sivko on 9.05.23.
 //
 
-import Foundation
 import CoreData
 
-final class CoreDataManager {
-    static let shared = CoreDataManager()
-    
-    private init() {}
-    
-    lazy var context: NSManagedObjectContext = {
-        return persistentContainer.viewContext
-    }()
-    
+protocol CoreDataManagerDataAndLogic {
+    var context: NSManagedObjectContext { get }
+    func save(completion: (Error?) -> Void)
+}
+
+final class CoreDataManager: CoreDataManagerDataAndLogic {   
     lazy private var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Model")
-        
-        container.loadPersistentStores {
-            storeDescription, error in
-        }
-        
-    return container
+        container.loadPersistentStores { storeDescription, error in }
+        return container
     }()
     
-    func save(completion: (Error?) -> ()) {
+    lazy var context: NSManagedObjectContext = { persistentContainer.viewContext }()
+    
+    func save(completion: (Error?) -> Void) {
         guard context.hasChanges else {
-            completion(CoreDataManagerError.noData)
+            completion(CoreDataError.noData)
             return
         }
         
@@ -41,8 +35,4 @@ final class CoreDataManager {
             completion(error)
         }
     }
-}
-
-enum CoreDataManagerError: Error {
-    case noData
 }

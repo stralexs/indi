@@ -24,11 +24,6 @@ final class UserNewKitViewController: UIViewController {
         setupTableView()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        reloadTableViewOfTrainingMode()
-    }
-    
     // MARK: - Initialization
     init?(coder: NSCoder, viewModel: UserNewKitViewModelData & UserNewKitViewModelLogic) {
         self.viewModel = viewModel
@@ -63,11 +58,7 @@ extension UserNewKitViewController {
 }
 
     // MARK: - Functionality
-extension UserNewKitViewController {
-    private func reloadTableViewOfTrainingMode() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: String.reloadTableView), object: nil)
-    }
-    
+extension UserNewKitViewController {    
     @IBAction private func nameKitButtonIsPressed(_ sender: UIButton?) {
         let newKitNameAlert = UIAlertController(title: "Введите название нового набора слов:", message: nil, preferredStyle: .alert)
         newKitNameAlert.addTextField() { $0.clearButtonMode = .whileEditing }

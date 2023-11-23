@@ -46,6 +46,7 @@
 		429536382A1797BB0028DBA4 /* Kit+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429536342A1797BB0028DBA4 /* Kit+CoreDataProperties.swift */; };
 		429536392A1797BB0028DBA4 /* Question+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429536352A1797BB0028DBA4 /* Question+CoreDataClass.swift */; };
 		4295363A2A1797BB0028DBA4 /* Question+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429536362A1797BB0028DBA4 /* Question+CoreDataProperties.swift */; };
+		42A675CA2B077B8C004186E4 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A675C92B077B8C004186E4 /* CoreDataError.swift */; };
 		42BEC5CB2AF5005200B5F6F3 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BEC5CA2AF5005200B5F6F3 /* AlertController.swift */; };
 		42C1B4AE2A3B3D2500D79211 /* NetworkNewKitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1B4AD2A3B3D2500D79211 /* NetworkNewKitViewModel.swift */; };
 		42C1B4B32A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1B4B22A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift */; };
@@ -110,6 +111,7 @@
 		429536342A1797BB0028DBA4 /* Kit+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kit+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		429536352A1797BB0028DBA4 /* Question+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Question+CoreDataClass.swift"; sourceTree = "<group>"; };
 		429536362A1797BB0028DBA4 /* Question+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Question+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		42A675C92B077B8C004186E4 /* CoreDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataError.swift; sourceTree = "<group>"; };
 		42BEC5CA2AF5005200B5F6F3 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		42C1B4AD2A3B3D2500D79211 /* NetworkNewKitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkNewKitViewModel.swift; sourceTree = "<group>"; };
 		42C1B4B22A3B41DE00D79211 /* NewKitTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewKitTableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				42FF60502A1A545900375ACF /* Training */,
 				42050C372A4EFF7300DF9725 /* Storyboard */,
 				42C1B4B42A3B45A600D79211 /* SupportingFiles */,
+				42A675CB2B077C42004186E4 /* Errors */,
 				42C1B4B52A3B45D600D79211 /* Resources */,
 			);
 			path = Indi;
@@ -272,6 +275,16 @@
 			path = NewKit;
 			sourceTree = "<group>";
 		};
+		42A675CB2B077C42004186E4 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				424CDEA92AF3B7DC00051196 /* NewKitErrors.swift */,
+				42A675C92B077B8C004186E4 /* CoreDataError.swift */,
+				425421AF2B0380F60070519E /* SettingsError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
 		42C1B4AF2A3B403F00D79211 /* NewKitTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,8 +297,6 @@
 		42C1B4B42A3B45A600D79211 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				424CDEA92AF3B7DC00051196 /* NewKitErrors.swift */,
-				425421AF2B0380F60070519E /* SettingsError.swift */,
 				42BEC5CA2AF5005200B5F6F3 /* AlertController.swift */,
 				42CCBD062AFFD82E00FA8980 /* RandomAnswersQuestion.swift */,
 				42EAAC362AF24598008926B0 /* NotificationCenterStringExtension.swift */,
@@ -489,6 +500,7 @@
 				421E2CC12A1FD4DD002A495E /* NewKitTableViewCell.swift in Sources */,
 				424B53A929FFABC0002AE9D9 /* StoryModeTestingViewController.swift in Sources */,
 				42202CDB2A5830C200C34921 /* TrainingModeViewModel.swift in Sources */,
+				42A675CA2B077B8C004186E4 /* CoreDataError.swift in Sources */,
 				42EF1AAE29FFD67800D1CD77 /* KitsManager.swift in Sources */,
 				42DE84652A18BEAE00E48956 /* StoryModeExamViewController.swift in Sources */,
 				42210DEF29FD243300CE37D1 /* AppDelegate.swift in Sources */,

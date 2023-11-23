@@ -44,8 +44,13 @@ extension StoryModeViewModel: StoryModeViewModelLogic {
     
     // MARK: - Exam methods
     private func isHigherThanSeventyFilter(for studyStages: [Int]) -> Bool {
-        let kitNames = KitsManager.shared.getKitNamesForStudyStage(with: studyStages)
-        let userResults = kitNames.map { UserDataManager.shared.getUserResult(for: $0) }
+        let kitsNames = studyStages.map { studyStage in
+            return KitsManager.shared.kits.value.filter { $0.studyStage == studyStage }
+        }
+            .flatMap { $0 }
+            .map { $0.name ?? "" }
+        
+        let userResults = kitsNames.map { UserDataManager.shared.getUserResult(for: $0) }
         let filteredResult = userResults.filter { $0 >= 70 }
         
         let output = filteredResult.count == userResults.count ? true : false

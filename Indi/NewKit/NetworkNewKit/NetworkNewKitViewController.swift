@@ -27,12 +27,7 @@ final class NetworkNewKitViewController: UIViewController {
         setupTableView()
         performNetworkCall()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        reloadTableViewOfTrainingMode()
-    }
-    
+
     // MARK: - Initialization
     init?(coder: NSCoder, viewModel: NetworkNewKitViewModelData & NetworkNewKitViewModelLogic) {
         self.viewModel = viewModel
@@ -85,10 +80,6 @@ extension NetworkNewKitViewController {
         catch {
             presentBasicAlert(title: "Не удалось загрузить вопросы", message: "Попробуйте позже", actions: [.okAction], completionHandler: nil)
         }
-    }
-    
-    private func reloadTableViewOfTrainingMode() {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: String.reloadTableView), object: nil)
     }
     
     @IBAction private func nameKitButtonIsPressed(_ sender: UIButton?) {

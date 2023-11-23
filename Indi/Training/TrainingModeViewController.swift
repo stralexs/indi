@@ -25,16 +25,10 @@ final class TrainingModeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tuneUI()
-        addNotificationCenterObserver()
         addLongGesture()
         setupTableView()
         setupSlider()
         setupStartButton()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        reloadTableViewData()
     }
 }
 
@@ -115,7 +109,6 @@ extension TrainingModeViewController {
                     let alert = UIAlertController(title: "Вы действительно хотите удалить этот набор слов?", message: nil, preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "Ок", style: .destructive) { _ in
                         self.viewModel.deleteUserKit(for: indexPath, for: indexPath.section)
-                        self.viewModel.fetchKitsNamesAndSections()
                     }
                     let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
                     alert.addAction(okAction)
@@ -146,14 +139,6 @@ extension TrainingModeViewController {
         tableView.sectionHeaderTopPadding = 0
         tableView.layer.borderWidth = 5
         tableView.layer.borderColor = UIColor.indiMainYellow.cgColor
-    }
-    
-    private func addNotificationCenterObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadTableViewData), name: Notification.Name(rawValue: String.reloadTableView), object: nil)
-    }
-    
-    @objc private func reloadTableViewData() {
-        viewModel.fetchKitsNamesAndSections()
     }
 }
 

@@ -22,11 +22,6 @@ final class StoryModeKitSelectionViewController: UIViewController {
         addLongGesture()
         tuneUI()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.fetchKits()
-    }
 }
 
     // MARK: - Rx setup
@@ -67,7 +62,6 @@ extension StoryModeKitSelectionViewController {
                     let alert = UIAlertController(title: "Вы действительно хотите удалить этот набор слов?", message: nil, preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "Ок", style: .destructive) { _ in
                         self.viewModel.deleteUserKit(for: indexPath)
-                        self.viewModel.fetchKits()
                     }
                     let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
                     alert.addAction(okAction)

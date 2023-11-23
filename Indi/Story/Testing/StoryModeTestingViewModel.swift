@@ -27,8 +27,8 @@ protocol StoryModeTestingViewModelLogic {
 final class StoryModeTestingViewModel: StoryModeTestingViewModelData {
     private let selectedStudyStage: Int
     private let selectedKit: Int
-    private let selectedKitName: String
-    private let totalQuestionsCount: Int
+    private var selectedKitName = String()
+    private var totalQuestionsCount = Int()
     private var correctAnswersCount: Int = 0
     private var soundManager: SoundManagerLogic
     
@@ -41,8 +41,6 @@ final class StoryModeTestingViewModel: StoryModeTestingViewModelData {
         self.soundManager = soundManager
         self.selectedStudyStage = studyStage
         self.selectedKit = selectedKit.row
-        self.selectedKitName = KitsManager.shared.getKitName(for: studyStage, with: selectedKit)
-        self.totalQuestionsCount = KitsManager.shared.getKitForTesting(for: selectedStudyStage, and: self.selectedKit).count
         testStart()
         countQuestions()
     }
@@ -57,7 +55,10 @@ extension StoryModeTestingViewModel: StoryModeTestingViewModelLogic {
     }
     
     func testStart() {
-        let questions = KitsManager.shared.getKitForTesting(for: selectedStudyStage, and: selectedKit).shuffled()
+        let studyStageKits = KitsManager.shared.kits.value.filter { $0.studyStage == self.selectedStudyStage }
+            .sorted { $0.name ?? "" < $1.name ?? "" }
+        let kit = studyStageKits[self.selectedKit]
+        guard let questions = kit.questions?.allObjects.shuffled() as? [Question] else { return }
         
         let questionsWithRandomAnswers: [RandomAnswersQuestion] = questions.map {
             var incorrectAnswers = $0.incorrectAnswers ?? []
@@ -67,7 +68,10 @@ extension StoryModeTestingViewModel: StoryModeTestingViewModelLogic {
                                          randomAnswers: incorrectAnswers.shuffled())
         }
         
+        selectedKitName = kit.name ?? ""
+        totalQuestionsCount = questionsWithRandomAnswers.count
         self.questions.accept(questionsWithRandomAnswers)
+        countQuestions()
     }
     
     func test(titleLabel text: String?) {
