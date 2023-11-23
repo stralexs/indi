@@ -1,8 +1,8 @@
 //
 //  Kit+CoreDataClass.swift
-//  Indi
+//  
 //
-//  Created by Alexander Sivko on 19.05.23.
+//  Created by Alexander Strelnikov on 23.11.23.
 //
 //
 

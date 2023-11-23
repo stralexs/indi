@@ -14,7 +14,7 @@ protocol CoreDataManagerDataAndLogic {
 
 final class CoreDataManager: CoreDataManagerDataAndLogic {   
     lazy private var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Model")
+        let container = NSPersistentContainer(name: "KitQuestionDataModel")
         container.loadPersistentStores { storeDescription, error in }
         return container
     }()

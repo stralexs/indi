@@ -47,13 +47,13 @@ extension KitsManager: KitsManagerLogic {
         newKit.studyStage = Int64(studyStage)
         newKit.questions = newKit.questions?.addingObjects(from: questions) as NSSet?
         newKit.name = kitName
+        newKit.isBasicKit = false
         kits.accept(kits.value + [newKit])
         save()
     }
     
     func isBasicKitCheck(for indexPath: IndexPath, for studyStageRawValue: Int) -> Bool {
         var selectedKit = Kit()
-        
         do {
             let fetchRequest = basicFetch(studyStage: studyStageRawValue)
             selectedKit = try coreDataManager.context.fetch(fetchRequest)[indexPath.row]
@@ -61,9 +61,7 @@ extension KitsManager: KitsManagerLogic {
         catch {
             logger.error("\(error.localizedDescription)")
         }
-        
-        guard let selectedKitName = selectedKit.name else { return false }
-        return basicKitsNames.contains(selectedKitName)
+        return selectedKit.isBasicKit
     }
     
     func deleteUserKit(for indexPath: IndexPath, for studyStageRawValue: Int) {
@@ -72,6 +70,11 @@ extension KitsManager: KitsManagerLogic {
             let selectedKit = try coreDataManager.context.fetch(fetchRequest)[indexPath.row]
             coreDataManager.context.delete(selectedKit)
             
+            let questionsRequest = Question.fetchRequest()
+            let _ = try coreDataManager.context.fetch(questionsRequest)
+                .filter { $0.kit == nil }
+                .map { coreDataManager.context.delete($0) }
+            
             var kits = kits.value
             kits.removeAll(where: { $0.name == selectedKit.name })
             self.kits.accept(kits)
@@ -79,7 +82,6 @@ extension KitsManager: KitsManagerLogic {
         catch {
             logger.error("\(error.localizedDescription)")
         }
-        
         save()
     }
 }
@@ -120,8 +122,6 @@ extension KitsManager {
             logger.error("\(error.localizedDescription)")
         }
     }
-    
-    private var basicKitsNames: [String] { return ["Basic words", "More basic words", "Basic colors", "Farm animals", "Basic alphabet", "Body parts", "Maths", "Basic English grammar", "Irregular verbs", "Geography", "Biology", "Advanced English grammar", "Entertainment and media", "Sports", "Shopping", "Swift", "Computer", "Construction materials", "Construction participants", "Waiter", "Taxi driver", "Courier"]}
 }
 
     // MARK: - Kits creation
@@ -173,6 +173,7 @@ extension KitsManager {
         newbornBasicWordsKit.studyStage = StudyStage.newborn.rawValue
         newbornBasicWordsKit.questions = [mother, father, iLoveYou, he, she, it, car, house, ball, table]
         newbornBasicWordsKit.name = "Basic words"
+        newbornBasicWordsKit.isBasicKit = true
         
         let blue = Question(context: coreDataManager.context)
         blue.question = "Cиний"
@@ -215,6 +216,7 @@ extension KitsManager {
         newbornBasicColorsKit.studyStage = StudyStage.newborn.rawValue
         newbornBasicColorsKit.questions = [blue, red, green, yellow, orange, purple, pink, black, white]
         newbornBasicColorsKit.name = "Basic colors"
+        newbornBasicColorsKit.isBasicKit = true
         
         let cat = Question(context: coreDataManager.context)
         cat.question = "Кот"
@@ -261,6 +263,7 @@ extension KitsManager {
         newbornFarmAnimalsKit.studyStage = StudyStage.newborn.rawValue
         newbornFarmAnimalsKit.questions = [cat, dog, cow, hen, horse, pig, mouse, duck, goose, sheep]
         newbornFarmAnimalsKit.name = "Farm animals"
+        newbornFarmAnimalsKit.isBasicKit = true
         
         // MARK: Preschool Kits
         let missingB = Question(context: coreDataManager.context)
@@ -308,6 +311,7 @@ extension KitsManager {
         preschoolBasicAlphabet.studyStage = StudyStage.preschool.rawValue
         preschoolBasicAlphabet.questions = [missingB, missingY, missingO, missingF, missingQ, missingD, missingR, missingN, missingG, missingI]
         preschoolBasicAlphabet.name = "Basic alphabet"
+        preschoolBasicAlphabet.isBasicKit = true
         
         let hand = Question(context: coreDataManager.context)
         hand.question = "Ладонь"
@@ -354,6 +358,7 @@ extension KitsManager {
         preschoolBodyParts.studyStage = StudyStage.preschool.rawValue
         preschoolBodyParts.questions = [hand, nose, head, neck, cheek, ear, shoulder, arm, finger, mouth]
         preschoolBodyParts.name = "Body parts"
+        preschoolBodyParts.isBasicKit = true
         
         let left = Question(context: coreDataManager.context)
         left.question = "Лево"
@@ -400,6 +405,7 @@ extension KitsManager {
         preschoolBasicWords.studyStage = StudyStage.preschool.rawValue
         preschoolBasicWords.questions = [left, right, spoon, plate, fork, knife, please, thanks, howOldAreYou, tea]
         preschoolBasicWords.name = "More basic words"
+        preschoolBasicWords.isBasicKit = true
         
         // MARK: Early School Kits
         let twoPlusTwo = Question(context: coreDataManager.context)
@@ -447,6 +453,7 @@ extension KitsManager {
         earlySchoolMathsKit.studyStage = StudyStage.earlySchool.rawValue
         earlySchoolMathsKit.questions = [twoPlusTwo, nintySix, fiveHundred, tenMinusThree, seventyThree, nineteen, sixPlusTen, equals, threeTimesFour, twentyOneBySeven]
         earlySchoolMathsKit.name = "Maths"
+        earlySchoolMathsKit.isBasicKit = true
         
         let did = Question(context: coreDataManager.context)
         did.question = "Переведите предложение: Я это сделал"
@@ -481,6 +488,7 @@ extension KitsManager {
         earlySchoolBasicEnglishKit.studyStage = StudyStage.earlySchool.rawValue
         earlySchoolBasicEnglishKit.questions = [did, pencilQuestion, pen, menMultiple, women, amazing, appleArticle]
         earlySchoolBasicEnglishKit.name = "Basic English grammar"
+        earlySchoolBasicEnglishKit.isBasicKit = true
         
         // MARK: High School Kits
         let friends = Question(context: coreDataManager.context)
@@ -520,6 +528,7 @@ extension KitsManager {
         highSchoolAdvancedEnglishKit.studyStage = StudyStage.highSchool.rawValue
         highSchoolAdvancedEnglishKit.questions = [friends, whereWasBorn, usedTo, summarise, inOrderThat, theMost, whoever, didntThink]
         highSchoolAdvancedEnglishKit.name = "Advanced English grammar"
+        highSchoolAdvancedEnglishKit.isBasicKit = true
         
         let river = Question(context: coreDataManager.context)
         river.question = "Река"
@@ -566,6 +575,7 @@ extension KitsManager {
         highSchoolGeographyKit.studyStage = StudyStage.highSchool.rawValue
         highSchoolGeographyKit.questions = [river, lake, earth, mountain, earthsCrust, ocean, tide, migration, map, naturalDisaster]
         highSchoolGeographyKit.name = "Geography"
+        highSchoolGeographyKit.isBasicKit = true
         
         let cell = Question(context: coreDataManager.context)
         cell.question = "Клетка"
@@ -612,6 +622,7 @@ extension KitsManager {
         highSchoolBiologyKit.studyStage = StudyStage.highSchool.rawValue
         highSchoolBiologyKit.questions = [cell, photosynthesis, metabolism, genetics, molecule, evolution, naturalSelection, humanBrain, population, animal]
         highSchoolBiologyKit.name = "Biology"
+        highSchoolBiologyKit.isBasicKit = true
         
         let broken = Question(context: coreDataManager.context)
         broken.question = "Break, broke, ___"
@@ -658,6 +669,7 @@ extension KitsManager {
         highSchoolIrregularVerbsKit.studyStage = StudyStage.highSchool.rawValue
         highSchoolIrregularVerbsKit.questions = [broken, chose, cut, understood, think, written, drew, found, cost, driven]
         highSchoolIrregularVerbsKit.name = "Irregular verbs"
+        highSchoolIrregularVerbsKit.isBasicKit = true
         
         // MARK: Life Activities Kits
         let commercial = Question(context: coreDataManager.context)
@@ -705,6 +717,7 @@ extension KitsManager {
         entertainmentAndMediaKit.studyStage = StudyStage.lifeActivities.rawValue
         entertainmentAndMediaKit.questions = [commercial, camera, screen, theatre, boardGame, cinema, newspaper, competition, chess, magazine]
         entertainmentAndMediaKit.name = "Entertainment and media"
+        entertainmentAndMediaKit.isBasicKit = true
         
         let basketball = Question(context: coreDataManager.context)
         basketball.question = "A team game, where goal is to shoot a ball through the hoop with hands"
@@ -747,6 +760,7 @@ extension KitsManager {
         sportsKit.studyStage = StudyStage.lifeActivities.rawValue
         sportsKit.questions = [basketball, volleyball, course, draw, trophy, amateur, rules, score, jockey]
         sportsKit.name = "Sports"
+        sportsKit.isBasicKit = true
         
         let change = Question(context: coreDataManager.context)
         change.question = "The balance of money received when the amount you tender is greater than the amount due"
@@ -793,6 +807,7 @@ extension KitsManager {
         shoppingKit.studyStage = StudyStage.lifeActivities.rawValue
         shoppingKit.questions = [change, cheque, credit, bill, cash, inexpensive, luxury, mall, payForPurchase, bargain]
         shoppingKit.name = "Shopping"
+        shoppingKit.isBasicKit = true
         
         //MARK: Programming University Kits
         let varr = Question(context: coreDataManager.context)
@@ -836,6 +851,7 @@ extension KitsManager {
         swiftKit.studyStage = StudyStage.programmingUniversity.rawValue
         swiftKit.questions = [varr, arr, enums, int, extensions, classs, closure, viewDidLoad, singleton]
         swiftKit.name = "Swift"
+        swiftKit.isBasicKit = true
         
         let software = Question(context: coreDataManager.context)
         software.question = "A computer program is a piece of ___"
@@ -882,6 +898,7 @@ extension KitsManager {
         computerKit.studyStage = StudyStage.programmingUniversity.rawValue
         computerKit.questions = [software, hardDisk, browser, icon, cpu, formatting, processing, cookies, motherboard, mouseInput]
         computerKit.name = "Computer"
+        computerKit.isBasicKit = true
         
         // MARK: Construction University Kits
         let concrete = Question(context: coreDataManager.context)
@@ -921,6 +938,7 @@ extension KitsManager {
         constructionMaterialsKit.studyStage = StudyStage.constructionUniversity.rawValue
         constructionMaterialsKit.questions = [concrete, cement, steel, tile, brick, clay, gravel, asphalt]
         constructionMaterialsKit.name = "Construction materials"
+        constructionMaterialsKit.isBasicKit = true
         
         let foreman = Question(context: coreDataManager.context)
         foreman.question = "A person who exercises control over workers"
@@ -947,6 +965,7 @@ extension KitsManager {
         constructionParticipantsKit.studyStage = StudyStage.constructionUniversity.rawValue
         constructionParticipantsKit.questions = [foreman, contractor, subcontractor, architect, designer]
         constructionParticipantsKit.name = "Construction participants"
+        constructionParticipantsKit.isBasicKit = true
         
         // MARK: Side Job Kits
         let waiter = Question(context: coreDataManager.context)
@@ -974,6 +993,7 @@ extension KitsManager {
         waiterKit.studyStage = StudyStage.sideJob.rawValue
         waiterKit.questions = [waiter, tip, cocktail, wineglass, etiquette]
         waiterKit.name = "Waiter"
+        waiterKit.isBasicKit = true
         
         let driver = Question(context: coreDataManager.context)
         driver.question = "A person who drives a vehichle"
@@ -996,6 +1016,7 @@ extension KitsManager {
         taxiDriverKit.studyStage = StudyStage.sideJob.rawValue
         taxiDriverKit.questions = [driver, vehicle, route, seatBelt]
         taxiDriverKit.name = "Taxi driver"
+        taxiDriverKit.isBasicKit = true
         
         let courier = Question(context: coreDataManager.context)
         courier.question = "A person who delivers a package"
@@ -1018,6 +1039,7 @@ extension KitsManager {
         courierKit.studyStage = StudyStage.sideJob.rawValue
         courierKit.questions = [courier, package, late, politeness]
         courierKit.name = "Courier"
+        courierKit.isBasicKit = true
         
         save()
     }

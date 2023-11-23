@@ -1,8 +1,8 @@
 //
 //  Question+CoreDataProperties.swift
-//  Indi
+//  
 //
-//  Created by Alexander Sivko on 19.05.23.
+//  Created by Alexander Strelnikov on 23.11.23.
 //
 //
 
@@ -16,13 +16,9 @@ extension Question {
         return NSFetchRequest<Question>(entityName: "Question")
     }
 
-    @NSManaged public var question: String?
     @NSManaged public var correctAnswer: String?
+    @NSManaged public var question: String?
     @NSManaged public var incorrectAnswers: [String]?
     @NSManaged public var kit: Kit?
-
-}
-
-extension Question : Identifiable {
 
 }

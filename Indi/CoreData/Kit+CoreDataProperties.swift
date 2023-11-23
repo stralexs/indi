@@ -1,8 +1,8 @@
 //
 //  Kit+CoreDataProperties.swift
-//  Indi
+//  
 //
-//  Created by Alexander Sivko on 19.05.23.
+//  Created by Alexander Strelnikov on 23.11.23.
 //
 //
 
@@ -16,8 +16,9 @@ extension Kit {
         return NSFetchRequest<Kit>(entityName: "Kit")
     }
 
-    @NSManaged public var studyStage: Int64
     @NSManaged public var name: String?
+    @NSManaged public var studyStage: Int64
+    @NSManaged public var isBasicKit: Bool
     @NSManaged public var questions: NSSet?
 
 }
@@ -36,9 +37,5 @@ extension Kit {
 
     @objc(removeQuestions:)
     @NSManaged public func removeFromQuestions(_ values: NSSet)
-
-}
-
-extension Kit : Identifiable {
 
 }
