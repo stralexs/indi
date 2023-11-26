@@ -4,9 +4,7 @@
 An English learning app
 </p>
 
-![1](https://github.com/stralexs/indi/assets/123239625/651ecc98-f3d3-412a-b7b6-d04e21649513)
-
-![2](https://github.com/stralexs/indi/assets/123239625/6ff435ed-769b-4690-a639-5b35ecb15611)
+![PresentationIndi (1)](https://github.com/stralexs/indi/assets/123239625/bee68527-a00e-4c2a-a19f-8f59c1595359)
 
 ## Concept
 ### Problem: how to make a person with 0-level English knowledge a native speaker?
@@ -16,8 +14,8 @@ An English learning app
 
 ## Gameplay
 
-![General overlook](https://github.com/stralexs/indi/assets/123239625/b1f25e0a-8c13-45fb-b470-e30ed1beea34)
-<p align="center">
+<![1](https://github.com/stralexs/indi/assets/123239625/c229062e-ed9a-4cb2-8160-85b776add872)
+p align="center">
 General app overlook
 </p>
 
@@ -43,95 +41,83 @@ And on the last stage User can choose what to learn, as well as any native speak
 - *Construction university*
 - *Side jobs*
 
-![StudyStage tree](https://github.com/stralexs/indi/assets/123239625/93478094-089a-4bd2-8fc3-12efee07d2b2)
+![2](https://github.com/stralexs/indi/assets/123239625/bc5ee907-fa19-4374-8d83-01b23c8acc72)
 <p align="center">
-Study stages learning tree and the last stage Variability
+Study stages learning tree, last stage Variability and game ending
 </p>
-In order to advance further, User must score at least 70% on each words Kit of the current Study stage. After this condition is met, access to the Exam is opened, in which User must score at least 50% in order to open access to the next Study stage. User cannot learn inaccessible words Kits (an alert will be shown). As soon as access to the next Study stage opens, all Buttons and lines are no longer translucent: their alpha equals 1. Study stages are accessed by setting button's restoration identifiers values of "Completed" or "Uncompleted". In addition, it does not allow blocking the walkthrough if User adds his own custom Kit to the already opened and completed Study stage. In the last stage with Variability, the buttons' restoration identifiers are also assigned values of "Selected" or "Unselected" indicating whether User has selected that Study stage.
+In order to advance further, User must score at least 70% on each words Kit of the current Study stage. After this condition is met, access to the Exam is opened, in which User must score at least 50% in order to open access to the next Study stage. User cannot learn inaccessible words Kits (an alert will be shown). As soon as access to the next Study stage opens, all Buttons and lines are no longer translucent: their alpha equals 1. Study stages are accessed by binding to "Completed" or "Uncompleted" data of that stage. In addition, it does not allow blocking the walkthrough if User adds his own custom Kit to the already opened and completed Study stage. In the last stage with Variability, the buttons' are also binded to values of "Selected" or "Unselected" indicating whether User has selected that Study stage.
 
 ### Testing
 
-![Testing](https://github.com/stralexs/indi/assets/123239625/31f6638a-3f14-41bf-87b9-3623080402db)
+![3](https://github.com/stralexs/indi/assets/123239625/9ff150f6-060c-4bca-a0bc-5629dafc7d8b)
 
 When User selects the Study stage on the Story Mode screen, the Kit Selection screen is shown to User. Here, in the form of a vertically oriented CollectionView, Kits are located: each has a name, result of User in the upper right corner, while the background is filled with a more saturated color depending on the result of the Test.
 The Test itself is a question with four buttons with answer options. WhenUser answers correctly, a green check mark is shown, when answers incorrectly, a red cross is shown (as well as sounds). Upon completion, User is shown an alert with the result.
 
 ### Exam
 
-![Exam](https://github.com/stralexs/indi/assets/123239625/348c7a73-0d65-4619-a4d6-cdeae9322d2c)
+![4](https://github.com/stralexs/indi/assets/123239625/2470c6e3-5490-4fbf-88b3-5863f5514ade)
 
 Exam consists of 10 random questions from the completed words Kits, but now User must confirm his knowledge by answering essentially the same questions, but enter the answers into the TextField on their own. Any hints and auto-correction of the keyboard are disabled.
 
 ### Settings and Statistics
-![SettingsAndStatistics](https://github.com/stralexs/indi/assets/123239625/734471a8-e546-45ee-8209-01cadddef547)
 
-At the top of the Story Mode screen there is a button that leads to the Settings and Statistics screen. Here User can view his general statistics, change his avatar and name.
+![5](https://github.com/stralexs/indi/assets/123239625/01677df7-fb6a-4adf-bd53-434f05c7dcb0)
 
-![Deleting User achievements](https://github.com/stralexs/indi/assets/123239625/c1a9ab75-cfa1-4370-9834-1b846450f046)
-
-In addition, there is also a Switch that resets all User's achievements. Before the changes are applied, User is additionally notified that the action is irreversible.
+At the top of the Story Mode screen there is a button that leads to the Settings and Statistics screen. Here User can view his general statistics, change his avatar and name. In addition, there is also a Switch that resets all User's achievements. Before the changes are applied, User is additionally notified that the action is irreversible.
 
 ## Training Mode
-![Training](https://github.com/stralexs/indi/assets/123239625/7138c959-ea47-48ca-bbd7-87023b4b777b)
+
+![6](https://github.com/stralexs/indi/assets/123239625/0f414e74-5662-467f-949b-5ccfed07cb28)
 
 In case User doesn't want to learn words in the Story Mode, and the walkthrough does not allow him to learn the Kits that he needs, he can select the Training Mode. Here, in the form of a TableView, all the same words Kits are presented, but access to them is already granted. Here User selects Kits with a check mark, and then with a Slider chooses the number of words from the selected Kits, where the maximum is the sum of the words of all selected Kits. In fact, Training Mode is similar to Testing, but with a significant difference: at the top of the screen there is a Progress View that fills in as User answers correctly. Upon completion, User will be asked to complete the incorrectly answered words. The Progress View will be completely filled when User answers correctly to all the initially selected words.
 
 ## New Kit
 ### User New Kit
-![User New Kit](https://github.com/stralexs/indi/assets/123239625/fc1351c6-ca75-4b7a-9244-8e6bc95a2a56)
+
+![7](https://github.com/stralexs/indi/assets/123239625/229b56e9-74ab-4fc1-83e2-2289684f85e6)
 
 On the User Kit creation screen, User enters a name for the new Kit, selects Study stage, and then enters questions for Kit via an AlertController with TextFields. Alert has restrictions, for example, incorrect answers cannot contain the correct answer. In addition, User is not required to enter all 3 incorrect answers. When User adds a Kit, it appears in the selected Study stage. Also, User can delete the added Kit by long pressing (basic Kits cannot be deleted).
 
 ### Network New Kit
-![Network New Kit](https://github.com/stralexs/indi/assets/123239625/5c855920-0f09-40de-a524-786a99809e96)
 
-When creating a Kit via the Internet, the process is identical, but now the words Kit is loaded using the theoretical response from the server (the json is stored on jsonbin website).
+![8](https://github.com/stralexs/indi/assets/123239625/c52a9951-15e5-4fd7-87cd-3d94e61f099a)
 
-![No Internet](https://github.com/stralexs/indi/assets/123239625/7ba9fd09-9227-4388-bb38-ce3e0b1b2bc3)
-
-The application also handles the situation when User has no Internet connection using NWPathMonitor: User is shown an alert with a classic dinosaur.
+When creating a Kit via the Internet, the process is identical, but now the words Kit is loaded using the theoretical response from the server (the json is stored on jsonbin website). The application also handles the situation when User has no Internet connection using NWPathMonitor: User is shown an alert with a classic dinosaur.
 
 ## Structure of an app
 ### Data
-All data with Kits and questions in "indi" is stored in Core Data in a form of Entities and its attributesd and relationships, but for a more visual representation, here I will write them as structures:
+All data with Kits and questions in "indi" is stored in Core Data in a form of Entities and its attributesd and relationships:
 ```
-struct Question {
-    var question: String?
-    var correctAnswer: String?
-    var incorrectAnswers: [String]?
+public class Kit: NSManagedObject {
+    @NSManaged public var name: String?
+    @NSManaged public var studyStage: Int64
+    @NSManaged public var isBasicKit: Bool
+    @NSManaged public var questions: NSSet?
 }
 
-struct Kit {
-    var name: String?
-    var studyStage: Int64?
-    var questions: [Question]? 
+public class Question: NSManagedObject {
+    @NSManaged public var correctAnswer: String?
+    @NSManaged public var question: String?
+    @NSManaged public var incorrectAnswers: [String]?
+    @NSManaged public var kit: Kit?
 }
 ```
-KitsManger class is responsible for fetching data, creating Kits and working with Core Data.
+KitsManger class is responsible for fetching data, creating Kits and and the CoreDataManager is used as a layer between CoreData and KitsManager.
 User's achievements are stored in User Defaults and UserDataManager class is responsible for storing, saving and deleting User data.
 
 ### Architecture
-![4](https://github.com/stralexs/indi/assets/123239625/a552ba60-d3d0-41b5-b91c-e25d1cdb2944)
-<p ![Uploading 4.jpg…]()
-align="center">
-App's MVVM Architecture
-</p>
 Architecture of the application is MVVM: each View Controller has a View Model, that interacts with KitsManger and UserDataManager classes, that are responsible for processing of data.
 Some ViewModels also interact with other managers, for instance NetworkViewModel interacts with NetworkManager, when a request to the server is made, and TestingViewModel interacts with SoundManager, when a correct or wrong answer sound should be played.
-Protocols are used all around the app to reduce coupling between modules. ViewModels inject dependency to ViewControllers through special functions that initialize an instance of a certain protocol, for example:
+Protocols are used all around the app to reduce coupling between modules. ViewModels inject dependency to ViewControllers through special functions that initialize an instance of a certain protocol.
 
-```
-func viewModelForSettingAndStatistics() -> SettingsAndStatisticsViewModelProtocol? {
-    return SettingsAndStatisticsViewModel()
-}
-```
 
-The singleton pattern is used for UserDataManager and KitsManager because almost all ViewModels need access to them. These classes themselves are quite large and constantly initializing them with dependency injection rather than doing it once with a start of an app will cost performance (confirmed).
+The singleton pattern is used for UserDataManager and KitsManager because almost all ViewModels need access to them and in this case it is better that all ViewModels have the same data source. These classes themselves are quite large and constantly initializing them with dependency injection rather than doing it once with a start of an app will cost performance (confirmed).
 
 ### Study stage enumeration
 To determine which Study stage a words Kit belongs to, enumeration StudyStage is used:
 ```
-enum StudyStage: Int64  {
+enum StudyStage: Int64, CaseIterable  {
     case newborn
     case preschool
     case earlySchool
@@ -149,14 +135,14 @@ Int64 is used due to requirements of Core Data.
 ## Stack
 - Swift
 - UIKit
-- RxSwift, RxCocoa
+- RxSwift, RxCocoa, RxDataSources
 - MVVM
-- Dependency Injection, Singleton
-- Notification Center
 - Storyboard
-- URLSession
+- Dependency Injection, Singleton
+- URLSession, JSON
 - GCD
 - Core Data, User Defaults
+- CocoaPods
 
 ![5](https://github.com/stralexs/indi/assets/123239625/06fb4eb1-bee6-4bb5-8b4a-a4323c11d6d9)
 
