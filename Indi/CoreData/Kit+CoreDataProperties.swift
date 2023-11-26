@@ -2,16 +2,14 @@
 //  Kit+CoreDataProperties.swift
 //  
 //
-//  Created by Alexander Strelnikov on 23.11.23.
+//  Created by Alexander Sivko on 23.11.23.
 //
 //
 
 import Foundation
 import CoreData
 
-
 extension Kit {
-
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Kit> {
         return NSFetchRequest<Kit>(entityName: "Kit")
     }
@@ -20,12 +18,10 @@ extension Kit {
     @NSManaged public var studyStage: Int64
     @NSManaged public var isBasicKit: Bool
     @NSManaged public var questions: NSSet?
-
 }
 
 // MARK: Generated accessors for questions
 extension Kit {
-
     @objc(addQuestionsObject:)
     @NSManaged public func addToQuestions(_ value: Question)
 
@@ -37,5 +33,4 @@ extension Kit {
 
     @objc(removeQuestions:)
     @NSManaged public func removeFromQuestions(_ values: NSSet)
-
 }

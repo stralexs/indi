@@ -306,7 +306,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bNN-K1-1FG">
                                         <rect key="frame" x="60" y="40" width="273" height="277.33333333333331"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ryx-ss-HYE">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ryx-ss-HYE">
                                                 <rect key="frame" x="10" y="10" width="253" height="257.33333333333331"/>
                                                 <fontDescription key="fontDescription" name="GTWalsheimPro-Regular" family="GT Walsheim Pro" pointSize="30"/>
                                                 <color key="textColor" red="0.21960783" green="0.2470588088" blue="0.91372549530000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

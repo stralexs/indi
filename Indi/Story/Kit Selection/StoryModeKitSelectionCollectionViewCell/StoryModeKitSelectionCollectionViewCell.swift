@@ -23,14 +23,17 @@ final class StoryModeKitSelectionCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupBinders() {
-        viewModel.kit.bind {
-            self.label.text = $0.name
-            self.progressViewHeight.constant = self.viewModel.countProgressHeight(with:  self.frame.height, kitName: $0.name ?? "")
-        }
+        viewModel.kitName.bind { self.label.text = $0 }
         .disposed(by: disposeBag)
         
         viewModel.testResult.bind {
             self.testResultLabel.text = "\($0)%"
+            self.viewModel.countProgressHeight(with: self.frame.height)
+        }
+        .disposed(by: disposeBag)
+        
+        viewModel.progressHeight.bind {
+            self.progressViewHeight.constant = $0
         }
         .disposed(by: disposeBag)
     }

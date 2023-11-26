@@ -9,28 +9,40 @@ import RxSwift
 import RxCocoa
 
 protocol StoryModeKitSelectionCollectionViewCellViewModelLogic {
-    var kit: Observable<Kit> { get }
-    var testResult: Observable<Int> { get }
-    func countProgressHeight(with cellHeight: CGFloat, kitName: String) -> CGFloat
-    init(kit: Observable<Kit>, testResult: Observable<Int>)
+    var kitName: BehaviorRelay<String> { get }
+    var testResult: BehaviorRelay<Int> { get }
+    var progressHeight: BehaviorRelay<CGFloat> { get }
+    func countProgressHeight(with cellHeight: CGFloat)
+    init(kitName: String)
 }
 
 final class StoryModeKitSelectionCollectionViewCellViewModel: StoryModeKitSelectionCollectionViewCellViewModelLogic {
-    let kit: Observable<Kit>
-    let testResult: Observable<Int>
+    private let disposeBag = DisposeBag()
+    let kitName = BehaviorRelay<String>(value: "")
+    let testResult = BehaviorRelay<Int>(value: 0)
+    let progressHeight = BehaviorRelay<CGFloat>(value: 0)
     
-    func countProgressHeight(with cellHeight: CGFloat, kitName: String) -> CGFloat {
-        var totalHeight: Double {
-            Double(cellHeight)
-        }
-        var coefficient: Double {
-            totalHeight / 100
-        }
-        return CGFloat(Double(UserDataManager.shared.getUserResult(for: kitName)) * coefficient)
+    required init(kitName: String) {
+        self.kitName.accept(kitName)
+        setupUserResults(kitName)
+    }
+}
+
+extension StoryModeKitSelectionCollectionViewCellViewModel {
+    private func setupUserResults(_ kitName: String) {
+        UserDataManager.shared.userResults
+            .bind(onNext: { result in
+                let testResult = result[kitName] ?? 0
+                self.testResult.accept(testResult)
+            })
+            .disposed(by: disposeBag)
     }
     
-    required init(kit: Observable<Kit>, testResult: Observable<Int>) {
-        self.kit = kit
-        self.testResult = testResult
+    func countProgressHeight(with cellHeight: CGFloat) {
+        var totalHeight: CGFloat { CGFloat(cellHeight) }
+        var coefficient: CGFloat { totalHeight / 100 }
+        let kitName = self.kitName.value
+        let progressHeight = CGFloat(UserDataManager.shared.userResults.value[kitName] ?? 0) * coefficient
+        self.progressHeight.accept(progressHeight)
     }
 }

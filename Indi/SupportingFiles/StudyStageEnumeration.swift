@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StudyStage: Int64, CaseIterable  {
+enum StudyStage: Int64, CaseIterable {
     case newborn
     case preschool
     case earlySchool
@@ -18,47 +18,39 @@ enum StudyStage: Int64, CaseIterable  {
     case sideJob
     
     static subscript(studyStageRawValue: Int) -> String {
-        var output = ""
-        
         switch studyStageRawValue {
         case 0:
-            output = "Newborn"
+            return "Newborn"
         case 1:
-            output = "Preschool"
+            return "Preschool"
         case 2:
-            output = "Early school"
+            return "Early school"
         case 3:
-            output = "High school"
+            return "High school"
         case 4:
-            output = "Life activities"
+            return "Life activities"
         case 5:
-            output = "Programming university"
+            return "Programming university"
         case 6:
-            output = "Construction university"
+            return "Construction university"
         default:
-            output = "Side jobs"
+            return "Side jobs"
         }
-        
-        return output
     }
     
     static func getExamName(studyStage rawValue: Int) -> String {
-        var output = ""
-        
         switch rawValue {
         case 0:
-            output = "Newborn exam"
+            return "Newborn exam"
         case 1:
-            output = "Preschool exam"
+            return "Preschool exam"
         case 2:
-            output = "Early school exam"
+            return "Early school exam"
         case 3:
-            output = "High school exam"
+            return "High school exam"
         default:
-            output = "Final exam"
+            return "Final exam"
         }
-        
-        return output
     }
     
     static var countOfStudyStages: Int {

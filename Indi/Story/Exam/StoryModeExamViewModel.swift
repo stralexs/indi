@@ -54,8 +54,12 @@ extension StoryModeExamViewModel: StoryModeExamViewModelLogic {
     }
     
     private func getUserExamResults() {
-        let result = UserDataManager.shared.getUserResult(for: examName)
-        userExamResults.accept(result)
+        UserDataManager.shared.userResults
+            .bind { results in
+                let result = results[self.examName] ?? 0
+                self.userExamResults.accept(result)
+            }
+            .disposed(by: DisposeBag())
     }
     
     func examStart() {
@@ -92,6 +96,7 @@ extension StoryModeExamViewModel: StoryModeExamViewModelLogic {
         
         questions.accept(Array(questionsSequence))
         countQuestions()
+        getUserExamResults()
     }
     
     func exam(textField text: String?) {
@@ -113,15 +118,19 @@ extension StoryModeExamViewModel: StoryModeExamViewModelLogic {
         questions.removeFirst()
         
         if questions.isEmpty {
-            let testResult = Int(round(Double(correctAnswersCount) / Double(totalQuestionsCount) * 100))
-            examResult.accept(testResult)
+            let examResult = Int(round(Double(correctAnswersCount) / Double(totalQuestionsCount) * 100))
+            self.examResult.accept(examResult)
             
-            UserDataManager.shared.saveUserResult(newResult: testResult,
+            UserDataManager.shared.saveUserResult(newResult: examResult,
                                            kitName: examName,
                                            completedTests: 0,
                                            completedExams: 1,
                                            correctAnswers: correctAnswersCount,
                                            totalQuestions: totalQuestionsCount)
+            
+            if examResult >= 50 {
+                UserDataManager.shared.saveExamCompletion(for: examName)
+            }
             
             correctAnswersCount = 0
         } else {

@@ -56,7 +56,6 @@
 		42DC4B2B2A1754D000028E29 /* StoryModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DC4B2A2A1754D000028E29 /* StoryModeViewController.swift */; };
 		42DE84652A18BEAE00E48956 /* StoryModeExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE84642A18BEAE00E48956 /* StoryModeExamViewController.swift */; };
 		42DE84672A18BEC500E48956 /* StoryModeExamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DE84662A18BEC500E48956 /* StoryModeExamViewModel.swift */; };
-		42EAAC372AF24598008926B0 /* NotificationCenterStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EAAC362AF24598008926B0 /* NotificationCenterStringExtension.swift */; };
 		42EF1AAE29FFD67800D1CD77 /* KitsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF1AAD29FFD67800D1CD77 /* KitsManager.swift */; };
 		42EF93D12A3B6CB000C42646 /* StudyStageEnumeration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF93D02A3B6CB000C42646 /* StudyStageEnumeration.swift */; };
 		42F4956D2A17853E006B92F2 /* StoryModeKitSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F4956C2A17853E006B92F2 /* StoryModeKitSelectionViewController.swift */; };
@@ -121,7 +120,6 @@
 		42DC4B2A2A1754D000028E29 /* StoryModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeViewController.swift; sourceTree = "<group>"; };
 		42DE84642A18BEAE00E48956 /* StoryModeExamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeExamViewController.swift; sourceTree = "<group>"; };
 		42DE84662A18BEC500E48956 /* StoryModeExamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeExamViewModel.swift; sourceTree = "<group>"; };
-		42EAAC362AF24598008926B0 /* NotificationCenterStringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterStringExtension.swift; sourceTree = "<group>"; };
 		42EF1AAD29FFD67800D1CD77 /* KitsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KitsManager.swift; sourceTree = "<group>"; };
 		42EF93D02A3B6CB000C42646 /* StudyStageEnumeration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyStageEnumeration.swift; sourceTree = "<group>"; };
 		42F4956C2A17853E006B92F2 /* StoryModeKitSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryModeKitSelectionViewController.swift; sourceTree = "<group>"; };
@@ -299,7 +297,6 @@
 			children = (
 				42BEC5CA2AF5005200B5F6F3 /* AlertController.swift */,
 				42CCBD062AFFD82E00FA8980 /* RandomAnswersQuestion.swift */,
-				42EAAC362AF24598008926B0 /* NotificationCenterStringExtension.swift */,
 				428DC3622A3F41BA00708F37 /* TabBarController.swift */,
 				425A1EB42AEF8E1D00B56675 /* UIViewCornerRadiusExtension.swift */,
 				42EF93D02A3B6CB000C42646 /* StudyStageEnumeration.swift */,
@@ -537,7 +534,6 @@
 				420A703F2B0F46E8006791F2 /* KitQuestionDataModel.xcdatamodeld in Sources */,
 				426B89CD2A5975B500EF1361 /* StoryModeKitSelectionViewModel.swift in Sources */,
 				420EE8152A17BB8C00E55188 /* StoryModeTestingViewModel.swift in Sources */,
-				42EAAC372AF24598008926B0 /* NotificationCenterStringExtension.swift in Sources */,
 				428DC3632A3F41BA00708F37 /* TabBarController.swift in Sources */,
 				42DC4B2B2A1754D000028E29 /* StoryModeViewController.swift in Sources */,
 				420A704D2B0F48A2006791F2 /* Kit+CoreDataClass.swift in Sources */,

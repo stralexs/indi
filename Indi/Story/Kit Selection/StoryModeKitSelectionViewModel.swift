@@ -44,10 +44,8 @@ extension StoryModeKitSelectionViewModel: StoryModeKitSelectionViewModelLogic {
     }
     
     func cellViewModel(for row: Int) -> StoryModeKitSelectionCollectionViewCellViewModelLogic {
-        let kit = kits.value[row]
-        let testResult = UserDataManager.shared.getUserResult(for: kit.name ?? "")
-        return StoryModeKitSelectionCollectionViewCellViewModel(kit: Observable.just(kit),
-                                                                testResult: Observable.just(testResult))
+        let kitName = kits.value[row].name ?? ""
+        return StoryModeKitSelectionCollectionViewCellViewModel(kitName: kitName)
     }
     
     func isBasicKitCheck(for indexPath: IndexPath) -> Bool {

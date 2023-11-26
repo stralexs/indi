@@ -59,7 +59,7 @@ final class SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelData {
     let rightAvatarImage: BehaviorRelay<UIImage> = BehaviorRelay(value: UIImage.man)
     
     var userStatisticsCount: Int { userStatistics.count }
-    var userName: String { UserDataManager.shared.getUserName() }
+    var userName: String { UserDataManager.shared.userNameAndAvatar.value["UserName"] ?? "UserName" }
     var isUserClickedToChangeAvatar = Bool()
     var isSetResetAchievements = Bool()
 }
@@ -73,7 +73,7 @@ extension SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelLogic {
             throw SettingsError.emptyName
         } else if trimmedName.count > 15 {
             throw SettingsError.tooLongName
-        } else if UserDataManager.shared.getUserName() != trimmedName {
+        } else if UserDataManager.shared.userNameAndAvatar.value["UserName"] ?? "UserName" != trimmedName {
             UserDataManager.shared.saveUserName(for: trimmedName)
             countOfChanges += 1
         }
@@ -83,7 +83,7 @@ extension SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelLogic {
             countOfChanges += 1
         }
         
-        let currentUserAvatar = UserDataManager.shared.getUserAvatar()
+        let currentUserAvatar = UserDataManager.shared.userNameAndAvatar.value["UserName"] ?? "UserName"
         if isUserClickedToChangeAvatar && middleAvatarImageName != currentUserAvatar {
             UserDataManager.shared.saveUserAvatar(for: middleAvatarImageName)
             countOfChanges += 1

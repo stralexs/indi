@@ -54,13 +54,10 @@ final class LocalNotificationsManager {
     }
     
     private func bodyGenerator() -> String {
-        var completionInfo: [String] = []
-        (0...4).forEach { num in
-            completionInfo.append(UserDataManager.shared.getExamCompletion(for: num))
-        }
+        let completionInfo = (0...4).map { UserDataManager.shared.stagesCompletionAndSelection.value["\($0)"] ?? "Uncompleted" }
         let currentStage = completionInfo.firstIndex(of: "Uncompleted")
         
-        var kitsNames: [String] = []
+        var kitsNames = [String]()
         var examName = ""
         
         switch currentStage {
@@ -84,11 +81,11 @@ final class LocalNotificationsManager {
             examName = "None"
         }
                 
-        let userResults = kitsNames.map { UserDataManager.shared.getUserResult(for: $0) }
+        let userResults = kitsNames.map { UserDataManager.shared.userResults.value[$0] ?? 0 }
         let unsolvedTestsCount = userResults.filter { $0 < 70 }.count
         
         var output = ""
-        let name = UserDataManager.shared.getUserName()
+        let name = UserDataManager.shared.userNameAndAvatar.value["UserName"] ?? "UserName"
         
         if unsolvedTestsCount == 0 && examName == "None" {
             output = "\(name), может выполним все тесты на 100%? Или начнём новую игру?"

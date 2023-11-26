@@ -31,7 +31,6 @@ final class StoryModeViewController: UIViewController {
         super.viewDidLoad()
         createLines()
         tuneUI()
-        viewModel.fetchData()
         setupUserData()
         setupCasualStudyStagesButtons()
         setupVariabilityStudyStagesButtons()
@@ -48,7 +47,6 @@ final class StoryModeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fetchData()
         setNavigationBarHidden(true)
     }
     
@@ -87,20 +85,29 @@ extension StoryModeViewController {
     
     private func setupVariabilityStudyStagesButtons() {
         variabilityStudyStageButtons.forEach { button in
-            viewModel.variabilityStudyStagesButtonsAccess
+            viewModel.variabilityStudyStagesButtonsSelection
                 .map { $0[button.tag] }
-                .bind { stageInfo in
-                    let stageSelection = stageInfo.0
-                    let access = stageInfo.1
+                .bind { stageSelection in
                     if stageSelection == "Unselected" {
-                        button.backgroundColor = access ? .indiLightPink : .clear
-                        button.tintColor = access ? .black : .indiLightPink
-                        button.alpha = access ? 1 : 0.5
+                        button.restorationIdentifier = "Unselected"
                         self.variabilityStudyStageButtonsLines[button.tag].opacity = Float(0.5)
                     } else {
                         button.backgroundColor = .clear
                         button.tintColor = UIColor.indiLightPink
                         self.variabilityStudyStageButtonsLines[button.tag].opacity = Float(1)
+                    }
+                }
+                .disposed(by: disposeBag)
+        }
+        
+        variabilityStudyStageButtons.forEach { button in
+            viewModel.variabilityStudyStagesButtonsAccess
+                .map { $0[button.tag] }
+                .bind { access in
+                    if button.restorationIdentifier == "Unselected" {
+                        button.backgroundColor = access ? .indiLightPink : .clear
+                        button.tintColor = access ? .black : .indiLightPink
+                        button.alpha = access ? 1 : 0.5
                     }
                 }
                 .disposed(by: disposeBag)
@@ -115,7 +122,6 @@ extension StoryModeViewController {
                     let alpha = accessProvided ? 1 : 0.5
                     button.alpha = alpha
                     self.examButtonsLines[button.tag].opacity = Float(alpha)
-
                 }
                 .disposed(by: disposeBag)
         }
@@ -187,7 +193,7 @@ extension StoryModeViewController {
         } else if sender.backgroundColor == .indiLightPink {
             let alert = UIAlertController(title: "Пора выбирать!", message: "На этом этапе вы можете выбирать, что хотите учить. Открыть эту стадию обучения? (Вопросы из этой стадии появятся на финальном экзамене)", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Ок", style: .cancel) { _ in
-                sender.restorationIdentifier = self.viewModel.saveSelectedStage(for: sender.tag)
+                self.viewModel.saveSelectedStage(for: sender.tag)
                 let sb = UIStoryboard(name: "Main", bundle: nil)
                 if let kitSelectionVC = sb.instantiateViewController(withIdentifier: "KitSelectionVC") as? StoryModeKitSelectionViewController {
                     kitSelectionVC.viewModel = self.viewModel.viewModelForKitSelection(chosenStudyStage: sender.tag)
