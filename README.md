@@ -14,8 +14,8 @@ An English learning app
 
 ## Gameplay
 
-<![1](https://github.com/stralexs/indi/assets/123239625/c229062e-ed9a-4cb2-8160-85b776add872)
-p align="center">
+![1](https://github.com/stralexs/indi/assets/123239625/c229062e-ed9a-4cb2-8160-85b776add872)
+<p align="center">
 General app overlook
 </p>
 
