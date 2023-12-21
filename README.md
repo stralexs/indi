@@ -1,9 +1,5 @@
 # indi
 
-<p align="center">
-An English learning app
-</p>
-
 ![PresentationIndi (1)](https://github.com/stralexs/indi/assets/123239625/bee68527-a00e-4c2a-a19f-8f59c1595359)
 
 ## Concept
