@@ -12,6 +12,8 @@ final class NewKitSelectionViewController: UIViewController {
     @IBOutlet var topBlurredView: UIVisualEffectView!
     var viewModel: NewKitSelectionViewModelLogic?
     
+    private let animationDuration: TimeInterval = 0.3
+    
     //MARK: - ViewController lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +32,7 @@ final class NewKitSelectionViewController: UIViewController {
     }
     
     private func animateBlurredView() {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: animationDuration) {
             self.topBlurredView.effect = UIBlurEffect(style: UIBlurEffect.Style.systemUltraThinMaterialDark)
         }
     }

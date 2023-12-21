@@ -27,7 +27,7 @@ protocol UserDataManagerLogic {
     func getSelectedStages() -> [Int]
 }
 
-private extension String {
+fileprivate extension String {
     static let newbornExam = "Newborn exam"
     static let preschoolExam = "Preschool exam"
     static let earlySchoolExam = "Early school exam"

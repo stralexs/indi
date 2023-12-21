@@ -8,6 +8,11 @@
 import RxSwift
 import RxCocoa
 
+fileprivate extension CGFloat {
+    static let avatarsBackgroundWidth: CGFloat = 130
+    static let avatarsBackroundDoubleWidth: CGFloat = 260
+}
+
 final class SettingsAndStatisticsViewController: UIViewController {
     //MARK: - Properties
     @IBOutlet var nameTextField: UITextField!
@@ -24,6 +29,7 @@ final class SettingsAndStatisticsViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     private let statisticsScrollView = UIScrollView()
+    private let avatarSwipeAnimationDuration: TimeInterval = 0.5
     var viewModel: (SettingsAndStatisticsViewModelData & SettingsAndStatisticsViewModelLogic)!
     
     //MARK: - ViewController lifecycle
@@ -138,24 +144,24 @@ extension SettingsAndStatisticsViewController {
     @IBAction private func changeAvatar(_ sender: UIButton) {
         viewModel.isUserClickedToChangeAvatar = true
         if sender.tag == 0 {
-            UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut] , animations: {
-                self.rightAvatarImageLeading.constant -= 130
-                self.middleAvatarImageLeading.constant -= 260
+            UIView.animate(withDuration: avatarSwipeAnimationDuration, delay: 0, options: [.curveEaseInOut] , animations: {
+                self.rightAvatarImageLeading.constant -= .avatarsBackgroundWidth
+                self.middleAvatarImageLeading.constant -= .avatarsBackroundDoubleWidth
                 self.view.layoutIfNeeded()
             }) { _ in
                 self.viewModel.avatarSwipe(true)
-                self.middleAvatarImageLeading.constant += 260
-                self.rightAvatarImageLeading.constant += 130
+                self.middleAvatarImageLeading.constant += .avatarsBackroundDoubleWidth
+                self.rightAvatarImageLeading.constant += .avatarsBackgroundWidth
             }
         } else {
-            UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut] , animations: {
-                self.middleAvatarImageTrailing.constant -= 260
-                self.leftAvatarImageTrailing.constant -= 260
+            UIView.animate(withDuration: avatarSwipeAnimationDuration, delay: 0, options: [.curveEaseInOut] , animations: {
+                self.middleAvatarImageTrailing.constant -= .avatarsBackroundDoubleWidth
+                self.leftAvatarImageTrailing.constant -= .avatarsBackroundDoubleWidth
                 self.view.layoutIfNeeded()
             }) { _ in
                 self.viewModel.avatarSwipe(false)
-                self.middleAvatarImageTrailing.constant += 260
-                self.leftAvatarImageTrailing.constant += 260
+                self.middleAvatarImageTrailing.constant += .avatarsBackroundDoubleWidth
+                self.leftAvatarImageTrailing.constant += .avatarsBackroundDoubleWidth
             }
         }
     }

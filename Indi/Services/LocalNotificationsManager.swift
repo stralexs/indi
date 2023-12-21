@@ -35,12 +35,12 @@ final class LocalNotificationsManager {
     }
     
     private func randomTitleGenerator() -> String {
-        let first = "Пора узнать новые слова!"
-        let second = "Время английского!"
-        let third = "English time!"
-        let fourth = "Got tests?"
+        let firstTitleVariant = "Пора узнать новые слова!"
+        let secondTitleVariant = "Время английского!"
+        let thirdTitleVariant = "English time!"
+        let fourthTitleVariant = "Got tests?"
         
-        let titlesArr = [first, second, third, fourth]
+        let titlesArr = [firstTitleVariant, secondTitleVariant, thirdTitleVariant, fourthTitleVariant]
         
         return titlesArr.randomElement()!
     }

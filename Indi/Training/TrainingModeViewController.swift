@@ -9,6 +9,13 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
+fileprivate extension CGFloat {
+    static let borderWidth: CGFloat = 5
+    static let sectionHeaderTopPadding: CGFloat = 0
+    static let tableViewHeaderViewHeight: CGFloat = 30
+    static let tableViewHeaderLabelHeight: CGFloat = 50
+}
+
 final class TrainingModeViewController: UIViewController {
     // MARK: - Properties
     @IBOutlet var tableView: UITableView!
@@ -132,12 +139,12 @@ extension TrainingModeViewController {
         standardAppearance.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.standardAppearance = standardAppearance
                         
-        sliderBackgroundView.layer.borderWidth = 5
+        sliderBackgroundView.layer.borderWidth = .borderWidth
         sliderBackgroundView.layer.borderColor = UIColor.indiMainYellow.cgColor
         
         tableView.delegate = self
-        tableView.sectionHeaderTopPadding = 0
-        tableView.layer.borderWidth = 5
+        tableView.sectionHeaderTopPadding = .sectionHeaderTopPadding
+        tableView.layer.borderWidth = .borderWidth
         tableView.layer.borderColor = UIColor.indiMainYellow.cgColor
     }
 }
@@ -145,9 +152,9 @@ extension TrainingModeViewController {
     // MARK: - UITableViewDelegate
 extension TrainingModeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 30))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: .tableViewHeaderViewHeight))
         view.backgroundColor = UIColor.indiSaturatedPink
-        let titleLabel = UILabel(frame: CGRect(x: 20, y: 0, width: view.frame.width, height: 50))
+        let titleLabel = UILabel(frame: CGRect(x: 20, y: 0, width: view.frame.width, height: .tableViewHeaderLabelHeight))
         titleLabel.textColor = .black
         titleLabel.font = UIFont(name: "GTWalsheimPro-Regular", size: 20)
         titleLabel.text = dataSource[section].model

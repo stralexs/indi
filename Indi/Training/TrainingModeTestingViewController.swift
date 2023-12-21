@@ -101,8 +101,7 @@ extension TrainingModeTestingViewController {
         questionBackground.layer.borderWidth = 5
                             
         for button in answersButtons {
-            button.layer.cornerRadius = 20
-            button.backgroundColor = UIColor.indiMainBlue
+            button.backgroundColor = .indiMainBlue
             button.titleLabel?.numberOfLines = 3
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.titleLabel?.textAlignment = .center
@@ -111,12 +110,13 @@ extension TrainingModeTestingViewController {
     
     private func presentResult(isAnswerCorrect: Bool) {
         let image = isAnswerCorrect ? UIImage(named: "Right_png") : UIImage(named: "Wrong_png")
+        let timerInterval: TimeInterval = 0.5
         
         self.viewModel.playSound(isAnswerCorrect)
         self.answerResultImage.image = image
         self.questionLabel.isHidden = true
         self.answerResultImage.isHidden = false
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+        Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: false) { _ in
             self.viewModel.nextQuestion()
             self.answersButtons.forEach { $0.backgroundColor = .indiMainBlue }
             self.questionLabel.isHidden = false

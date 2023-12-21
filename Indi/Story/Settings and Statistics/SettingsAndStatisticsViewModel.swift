@@ -24,7 +24,7 @@ protocol SettingsAndStatisticsViewModelLogic {
     func avatarSwipe(_ isLeftButton: Bool)
 }
 
-private extension Int {
+fileprivate extension Int {
     mutating func limitToRange() {
         if self > 3 {
             self = 0
@@ -34,7 +34,7 @@ private extension Int {
     }
 }
 
-private extension UIImage {
+fileprivate extension UIImage {
     static let cat = UIImage(named: "Cat_emoji") ?? UIImage()
     static let dog = UIImage(named: "Dog_emoji") ?? UIImage()
     static let man = UIImage(named: "Man_emoji") ?? UIImage()
@@ -107,14 +107,15 @@ extension SettingsAndStatisticsViewModel: SettingsAndStatisticsViewModelLogic {
     }
     
     func avatarSwipe(_ isLeftButton: Bool) {
+        let indexIncrement = 1
         if isLeftButton {
-            leftAvatarIndex += 1
-            middleAvatarIndex += 1
-            rightAvatarIndex += 1
+            leftAvatarIndex += indexIncrement
+            middleAvatarIndex += indexIncrement
+            rightAvatarIndex += indexIncrement
         } else {
-            leftAvatarIndex -= 1
-            middleAvatarIndex -= 1
-            rightAvatarIndex -= 1
+            leftAvatarIndex -= indexIncrement
+            middleAvatarIndex -= indexIncrement
+            rightAvatarIndex -= indexIncrement
         }
         
         leftAvatarIndex.limitToRange()

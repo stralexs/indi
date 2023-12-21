@@ -100,12 +100,13 @@ extension StoryModeTestingViewController {
     
     private func presentResult(isAnswerCorrect: Bool) {
         let image = isAnswerCorrect ? UIImage(named: "Right_png") : UIImage(named: "Wrong_png")
+        let timerInterval: TimeInterval = 0.5
         
         self.viewModel.playSound(isAnswerCorrect)
         self.answerResultImage.image = image
         self.questionLabel.isHidden = true
         self.answerResultImage.isHidden = false
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+        Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: false) { _ in
             self.viewModel.nextQuestion()
             self.answersButtons.forEach { $0.backgroundColor = .indiMainBlue }
             self.questionLabel.isHidden = false

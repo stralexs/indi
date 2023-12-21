@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import OSLog
 
 protocol SoundManagerLogic {
     func playCorrectSound()
@@ -13,35 +14,58 @@ protocol SoundManagerLogic {
 }
 
 final class SoundManager: SoundManagerLogic {
-    private var player = AVAudioPlayer()
+    private var correctSoundPlayer = AVAudioPlayer()
+    private var wrongSoundPlayer = AVAudioPlayer()
+    private let logger = Logger()
 
     func playCorrectSound() {
-        let soundUrl = Bundle.main.url(forResource: "Correct-answer-sound", withExtension: "mp3")
-        do {
-            player = try AVAudioPlayer(contentsOf: soundUrl!)
-            player.volume = 2
-            DispatchQueue.global().async {
-                self.player.play()
-            }
-        }
-        catch {
-            print(error)
-        }
+        correctSoundPlayer.play()
     }
     
     func playWrongSound() {
-        let soundUrl = Bundle.main.url(forResource: "Wrong-answer-sound", withExtension: "mp3")
-        do {
-            player = try AVAudioPlayer(contentsOf: soundUrl!)
-            player.volume = 6
-            DispatchQueue.global().async {
-                self.player.play()
-            }
+        wrongSoundPlayer.play()
+    }
+    
+    init() {
+        createCorrectSoundPlayer { [weak self] player in
+            self?.correctSoundPlayer = player
         }
-        catch {
-            print(error)
+        createWrongSoundPlayer { [weak self] player in
+            self?.wrongSoundPlayer = player
+        }
+    }
+}
+
+extension SoundManager {
+    private func createCorrectSoundPlayer(completion: @escaping (AVAudioPlayer) -> Void) {
+        DispatchQueue.global().async {
+            guard let soundUrl = Bundle.main.url(forResource: "Correct-answer-sound", withExtension: "mp3") else { return completion(AVAudioPlayer()) }
+            var player = AVAudioPlayer()
+            do {
+                player = try AVAudioPlayer(contentsOf: soundUrl)
+                player.volume = 2
+                player.prepareToPlay()
+                completion(player)
+            }
+            catch {
+                self.logger.error("\(error.localizedDescription)")
+            }
         }
     }
     
-    init() { player.prepareToPlay() }
+    private func createWrongSoundPlayer(completion: @escaping (AVAudioPlayer) -> Void) {
+        DispatchQueue.global().async {
+            guard let soundUrl = Bundle.main.url(forResource: "Wrong-answer-sound", withExtension: "mp3") else { return completion(AVAudioPlayer()) }
+            var player = AVAudioPlayer()
+            do {
+                player = try AVAudioPlayer(contentsOf: soundUrl)
+                player.volume = 6
+                player.prepareToPlay()
+                completion(player)
+            }
+            catch {
+                self.logger.error("\(error.localizedDescription)")
+            }
+        }
+    }
 }
