@@ -23,7 +23,7 @@ struct CustomAlertAction: Equatable {
 }
 
 extension UIViewController {
-    func presentBasicAlert(title: String, message: String?, alertStyle: UIAlertController.Style = .alert, actions: [CustomAlertAction], completionHandler: ((_ action: CustomAlertAction) -> Void)?) {
+    func presentBasicAlert(title: String?, message: String?, alertStyle: UIAlertController.Style = .alert, actions: [CustomAlertAction], completionHandler: ((_ action: CustomAlertAction) -> Void)?) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: alertStyle)
         
         for action in actions {

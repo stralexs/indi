@@ -91,17 +91,13 @@ extension NetworkNewKitViewController {
             do {
                 try self.viewModel.newKitName(newKitNameAlert.textFields?.first?.text ?? "")
             }
-            catch let error {
-                switch error as! KitNameError {
-                case .empty:
-                    self.presentBasicAlert(title: "Пожалуйста, введите корректное название набора", message: nil, actions: [.okAction]) { _ in
-                        self.present(newKitNameAlert, animated: true)
-                    }
-                case .tooLong:
-                    self.presentBasicAlert(title: "Название набора не может быть длиннее 30 символов", message: nil, actions: [.okAction]) { _ in
-                        self.present(newKitNameAlert, animated: true)
-                    }
+            catch let error as KitNameError {
+                self.presentBasicAlert(title: error.errorDescription, message: nil, actions: [.okAction]) { _ in
+                    self.present(newKitNameAlert, animated: true)
                 }
+            }
+            catch {
+                self.presentBasicAlert(title: "Произошла ошибка", message: "\(error.localizedDescription)", actions: [.okAction], completionHandler: nil)
             }
         }
         newKitNameAlert.addAction(cancelAction)
@@ -149,19 +145,18 @@ extension NetworkNewKitViewController {
                 self.view.window!.rootViewController?.dismiss(animated: true, completion: nil)
             }
         }
-        catch let error {
-            switch error as! KitCreationError {
-            case .noQuestions:
-                presentBasicAlert(title: "В наборе должен быть хотя бы один вопрос", message: nil, actions: [.okAction], completionHandler: nil)
-            case .noKitName:
-                presentBasicAlert(title: "Пожалуйста, введите название набора слов", message: nil, actions: [.okAction], completionHandler: nil)
-            case .noStudyStage:
-                presentBasicAlert(title: "Пожалуйста, выберите стадию обучения, в которую нужно добавить набор", message: nil, actions: [.okAction], completionHandler: nil)
+        catch let error as KitCreationError {
+            switch error {
             case .nameAlreadyExists:
-                presentBasicAlert(title: "В выбранной стадии обучения уже существует набор с таким названием", message: "Выберите другое название", actions: [.okAction]) { _ in
+                presentBasicAlert(title: error.errorDescription, message: nil, actions: [.okAction]) { _ in
                     self.nameKitButtonIsPressed(nil)
                 }
+            default:
+                presentBasicAlert(title: error.errorDescription, message: nil, actions: [.okAction], completionHandler: nil)
             }
+        }
+        catch {
+            presentBasicAlert(title: "Произошла ошибка", message: "\(error.localizedDescription)", actions: [.okAction], completionHandler: nil)
         }
     }
     

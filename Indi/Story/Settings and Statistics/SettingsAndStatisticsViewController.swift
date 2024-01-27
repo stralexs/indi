@@ -188,17 +188,18 @@ extension SettingsAndStatisticsViewController {
             try viewModel.applyChanges(for: nameTextField.text ?? "", and: middleAvatarImage.image?.imageAsset?.value(forKey: "assetName") as! String)
             navigationController?.popToRootViewController(animated: true)
         }
-        catch let error {
-            switch error as! SettingsError {
-            case .emptyName:
-                presentBasicAlert(title: "Пожалуйста, введите имя", message: nil, actions: [.okAction], completionHandler: nil)
-            case .tooLongName:
-                presentBasicAlert(title: "Имя не может быть длиннее 15 символов", message: nil, actions: [.okAction], completionHandler: nil)
+        catch let error as SettingsError {
+            switch error {
             case .changesOverZero:
-                presentBasicAlert(title: "Изменения успешно сохранены!", message: nil, actions: [.okAction]) { _ in
+                presentBasicAlert(title: error.errorDescription, message: nil, actions: [.okAction]) { _ in
                     self.navigationController?.popToRootViewController(animated: true)
                 }
+            default:
+                presentBasicAlert(title: error.errorDescription, message: nil, actions: [.okAction], completionHandler: nil)
             }
+        }
+        catch {
+            presentBasicAlert(title: "Произошла ошибка", message: "\(error.localizedDescription)", actions: [.okAction], completionHandler: nil)
         }
     }
 }
