@@ -134,8 +134,9 @@ Int64 is used due to requirements of Core Data.
 - RxSwift, RxCocoa, RxDataSources
 - MVVM
 - Storyboard
+- Local notifications
 - Dependency Injection, Singleton
-- URLSession, JSON
+- URLSession, JSON, NWPathMonitor
 - GCD
 - Core Data, User Defaults
 - CocoaPods
