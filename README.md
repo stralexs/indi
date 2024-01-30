@@ -135,6 +135,7 @@ Int64 is used due to requirements of Core Data.
 - MVVM
 - Storyboard
 - Local notifications
+- AVFoundation
 - Dependency Injection, Singleton
 - URLSession, JSON, NWPathMonitor
 - GCD
