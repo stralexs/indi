@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 protocol NetworkManagerDataAndLogic {
-    var isConnectedToInternet: PublishRelay<Bool> { get set }
+    var isConnectedToInternet: PublishRelay<Bool> { get }
     func retrieveQuestions() -> Observable<[Question]>
 }
 
@@ -28,18 +28,13 @@ final class NetworkManager: NetworkManagerDataAndLogic {
     
     private lazy var jsonDecoder = JSONDecoder()
     private let urlSession = URLSession(configuration: .default)
+    private let monitor = NWPathMonitor()
+    private let queue = DispatchQueue.global()
         
     private func internetConnectionMonitoring() {
-        let monitor = NWPathMonitor()
-        monitor.pathUpdateHandler = { path in
-            if path.status == .satisfied {
-                self.isConnectedToInternet.accept(true)
-            } else {
-                self.isConnectedToInternet.accept(false)
-            }
+        monitor.pathUpdateHandler = { [weak self] path in
+            self?.isConnectedToInternet.accept(path.status == .satisfied)
         }
-
-        let queue = DispatchQueue(label: "NetworkMonitor")
         monitor.start(queue: queue)
     }
     
@@ -62,18 +57,18 @@ final class NetworkManager: NetworkManagerDataAndLogic {
         
         return Observable.create { observer -> Disposable in
             self.urlSession.dataTask(with: url) { [weak self] data, response, error in
-                guard let self = self else { return }
+                guard let self else { return }
                 if let httpResponse = response as? HTTPURLResponse {
                     let statusCode = httpResponse.statusCode
                     
                     do {
-                        guard let data = data else { return }
+                        guard let data else { return }
                         if (200...399).contains(statusCode) {
                             let questions = try self.jsonDecoder.decode([QuestionNetwork].self, from: data)
                             let result = self.questionsTransformation(for: questions)
                             observer.onNext(result)
                         } else {
-                            guard let error = error else { return }
+                            guard let error else { return }
                             observer.onError(error)
                         }
                     }
